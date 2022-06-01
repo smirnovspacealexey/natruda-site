@@ -18,3 +18,4 @@ venv/
 env/
 .env/
 /config/celery_local_settings.py
+/log/
