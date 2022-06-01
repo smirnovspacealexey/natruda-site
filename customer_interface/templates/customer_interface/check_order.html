@@ -1,0 +1,28 @@
+{% extends 'customer_interface/index.html' %}
+
+{% block content %}
+    <div class="form-container">
+        <form method="post" action="{% url 'check_order' %}">
+            {% include 'customer_interface/default_form_body.html' with form=form %}
+            <button type="submit" class="flat-btn success">Отправить</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_content %}
+    <div class="order-info {% if order_status %}active{% endif %}">
+        <div class="container">
+            <div class="order-info-body">
+                <div class="reloadSingle"></div>
+                <span>{{ order_status }}</span>
+            </div>
+        </div>
+    </div>
+    <input hidden id="urls" check-order-url="{% url 'check_order_ajax' %}">
+{% endblock %}
+
+{% block extra_statics %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'customer_interface/js/check_order_handlers.js' %}"></script>
+    <script type="text/javascript" src="{% static 'customer_interface/js/jquery.inputmask.min.js' %}"></script>
+{% endblock %}

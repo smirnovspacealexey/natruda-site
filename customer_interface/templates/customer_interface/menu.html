@@ -1,0 +1,19 @@
+{% extends 'customer_interface/index.html' %}
+{% block content %}
+    <div class="block">
+        {% for category in categories %}
+            <div class="block-item">
+                {% include 'customer_interface/menu_category.html' with category=category %}
+            </div>
+        {% empty %}
+            <div class="block-item">
+                На данный момент, меню не доступно.
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_statics %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'customer_interface/js/menu_handlers.js' %}"></script>
+{% endblock %}

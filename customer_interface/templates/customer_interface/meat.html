@@ -1,0 +1,52 @@
+{% extends 'customer_interface/index.html' %}
+
+{% load static %}
+
+{% block additional_CSS %}
+    <link rel="stylesheet" href="{% static 'customer_interface/css/meat.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="main_top">
+            <a href="{% url 'index' %}"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
+            <h1>ШАУРМА</h1>
+        </div>
+        <div class="cards">
+            <ul class="cards_list">
+                <li>
+                    <a class="cards_item" href="{% url 'char' %}"><span class="cards_item-text">КУРИЦА</span><img
+                            src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                </li>
+                <li>
+                    <a class="cards_item" href="char.html"><span class="cards_item-text">СВИНИНА</span><img
+                            src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                </li>
+                <li>
+                    <a class="cards_item" href="char.html"><span class="cards_item-text">ГОВЯДИНА</span><img
+                            src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                </li>
+                <li>
+                    <a class="cards_item" href="char.html"><span class="cards_item-text">БАРАНИНА</span><img
+                            src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                </li>
+                <li>
+                    <a class="cards_item" href="char.html"><span class="cards_item-text">СЕМГА</span><img
+                            src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                </li>
+                <li>
+                    <a class="cards_item" href="char.html"><span class="cards_item-text">КРЕВЕТКА</span><img
+                            src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                </li>
+                <li>
+                    <a class="cards_item" href="char.html"><span class="cards_item-text">ШЕЯ</span><img
+                            src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                </li>
+                <li>
+                    <a class="cards_item" href="char.html"><span class="cards_item-text">ВЕГЕТАРИАНСКАЯ</span><img
+                            src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                </li>
+            </ul>
+        </div>
+    </main>
+{% endblock %}

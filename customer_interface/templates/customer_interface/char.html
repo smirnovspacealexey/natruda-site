@@ -1,0 +1,244 @@
+{% extends 'customer_interface/index.html' %}
+
+{% load static %}
+
+{% block additional_CSS %}
+    <link rel="stylesheet" href="{% static 'customer_interface/css/char.css' %}">
+{% endblock %}
+
+{% comment %}
+		<header class="header_pc">
+			<a href="basket.html"><img src="img/head_ico.png" alt="#" class="head_ico"></a>
+			<ul class="head_menu">
+				<li>
+					<a class="head_menu-li" href="about.html">
+						О нас
+					</a>
+				</li>
+				<li>
+					<a class="head_menu-li" href="contacts.html">
+						Контакты
+					</a>
+				</li>
+			</ul>
+			<img src="img/head_logo.png" alt="#" class="head_logo">
+			<p class="head_phone">
+				<span class="head_phone-num">
+					700-700-1
+				</span>
+			</p>
+			<p class="head_adr">
+				<span class="head_adr-txt">
+					Труда 148
+				</span>
+				<span class="head_adr-txt">
+					Пр-т Победы 396/1
+				</span>
+				<span class="head_adr-txt">
+					Копейское шоссе 58
+				</span>
+			</p>
+		</header>
+		<header class="header_mobile">
+			<img src="img/head_logo.png" alt="#" class="head_logo">
+			<p class="head_phone">
+				<span class="head_phone-num">
+					700-700-1
+				</span>
+			</p>
+			<ul class="head_menu">
+				<li>
+					<a class="head_menu-li" href="about.html">
+						О нас
+					</a>
+				</li>
+				<li>
+					<a class="head_menu-li" href="contacts.html">
+						Контакты
+					</a>
+				</li>
+			</ul>
+			<a href="basket.html"><img src="img/head_ico.png" alt="#" class="head_ico"></a>
+		</header>
+		{% endcomment %}
+
+{% block content %}
+    <main>
+        <input id="product-properties" hidden product-id="12" product-title="ШАУРМА С КУРИЦЕЙ">
+        <div class="main_top">
+            <a href="{% url 'meat' 10 %}"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
+            <a href="{% url 'meat' 10 %}" class="main_menu">Меню</a>
+            <h1>ШАУРМА С КУРИЦЕЙ</h1>
+        </div>
+        <div class="main_content">
+            <div class="main_prop">
+                <div class="prop">
+                    <span class="prop_size-text">Размер</span>
+                    <p>
+                        <label class="radio_label"><input type="radio" name="size" value="Маленькая" product-id="12"
+                                                          price="90">Маленькая</label>
+                        <label class="radio_label"><input type="radio" name="size" value="Средняя" product-id="13"
+                                                          price="150">Средняя</label>
+                        <label class="radio_label"><input type="radio" name="size" value="Большая" product-id="14"
+                                                          price="180">Большая</label>
+                    </p>
+                </div>
+            </div>
+            <form class="main_desc">
+                <span class="adds_text">Добавки</span>
+                <ul class="adds_list">
+                    <li>
+                        <span class="add_text">Сыр</span>
+                        <div class="form-check form-switch">
+                            <input value="Сыр" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                   name="topping" product-id="22" price="90">
+                        </div>
+                    </li>
+                    <li>
+                        <span class="add_text">Картофель фри</span>
+                        <div class="form-check form-switch">
+                            <input value="Картофель фри" class="form-check-input" type="checkbox"
+                                   id="flexSwitchCheckDefault" name="topping" product-id="23" price="10">
+                        </div>
+                    </li>
+                    <li>
+                        <span class="add_text">Халапеньо</span>
+                        <div class="form-check form-switch">
+                            <input value="Халапеньо" class="form-check-input" type="checkbox"
+                                   id="flexSwitchCheckDefault" name="topping" product-id="24" price="20">
+                        </div>
+                    </li>
+                    <li>
+                        <span class="add_text">Перец чили</span>
+                        <div class="form-check form-switch">
+                            <input value="Перец чили" class="form-check-input" type="checkbox"
+                                   id="flexSwitchCheckDefault" name="topping" product-id="25" price="50">
+                        </div>
+                    </li>
+                    <li>
+                        <span class="add_text">Болгарский перец</span>
+                        <div class="form-check form-switch">
+                            <input value="Болгарский перец" class="form-check-input" type="checkbox"
+                                   id="flexSwitchCheckDefault" name="topping" product-id="26" price="40">
+                        </div>
+                    </li>
+                    <li>
+                        <span class="add_text">Грибы</span>
+                        <div class="form-check form-switch">
+                            <input value="Грибы" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                   name="topping" product-id="27" price="90">
+                        </div>
+                    </li>
+                    <li>
+                        <span class="add_text">Двойные овощи</span>
+                        <div class="form-check form-switch">
+                            <input value="Двойные овощи" class="form-check-input" type="checkbox"
+                                   id="flexSwitchCheckDefault" name="topping" product-id="28" price="60">
+                        </div>
+                    </li>
+                </ul>
+                <div class="adds_wrap">
+                    <span class="adds_text">Убрать</span>
+                    <ul class="adds_list">
+                        <li>
+                            <span class="add_text">Без лука</span>
+                            <div class="form-check form-switch">
+                                <input value="Без лука" class="form-check-input" type="checkbox"
+                                       id="flexSwitchCheckDefault" name="topping" product-id="29" price="70">
+                            </div>
+                        </li>
+                        <li>
+                            <span class="add_text">Без помидор</span>
+                            <div class="form-check form-switch">
+                                <input value="Без помидор" class="form-check-input" type="checkbox"
+                                       id="flexSwitchCheckDefault" name="topping" product-id="30" price="80">
+                            </div>
+                        </li>
+                        <li>
+                            <span class="add_text">Без огурцов</span>
+                            <div class="form-check form-switch">
+                                <input value="Без огурцов" class="form-check-input" type="checkbox"
+                                       id="flexSwitchCheckDefault" name="topping" product-id="31" price="90">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="adds_wrap">
+                    <span class="adds_text">Соус</span>
+                    <ul class="adds_list">
+                        <li>
+                            <span class="add_text">Двойная порция мяса</span>
+                            <div class="form-check form-switch">
+                                <input value="Двойная порция мяса" class="form-check-input" type="checkbox"
+                                       id="flexSwitchCheckDefault" name="topping" product-id="32" price="5">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="adds_submit">
+                    <div class="adds_submit-btn btn" onclick="AddToOrder()">Заказать</div>
+                    <div class="adds_submit-num">
+                        <button type="button" onclick="this.nextElementSibling.stepDown()"
+                                class="adds_plus-btn"></button>
+                        <input type="number" min="1" max="10" value="1" readonly class="adds_plus-inp">
+                        <button type="button" onclick="this.previousElementSibling.stepUp()"
+                                class="adds_plus-btn"></button>
+                    </div>
+                    <span class="main_cost">150<span> руб</span></span>
+                </div>
+            </form>
+            <div class="main_card">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="{% static 'customer_interface/img/main_card-1.png' %}"
+                                 class="d-block w-100 carousel_img" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'customer_interface/img/main_card-1.png' %}" class="d-block w-100"
+                                 alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{% static 'customer_interface/img/main_card-1.png' %}" class="d-block w-100"
+                                 alt="...">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                <div class="card_desc">
+                    <span class="card_head">Описание товара</span>
+                    <p class="card_desc-text">
+                        Крупные кусочки постного, нежного мяса. <br>С натуральным вкусом и без лишних специй,<br>приготовленные
+                        на открытом огне. <br> Подается с гарниром из картофеля фри, <br> хрустящего репчатого лука и
+                        салата “Коул Слоу”
+                    </p>
+                    <p class="card_char">
+							<span class="card_char-head">
+								Вес мяса:
+							</span>
+                        <span class="card_char-num">
+								220-250 г
+							</span>
+                    </p>
+                    <p class="card_char">
+							<span class="card_char-head">
+								Вес порции:
+							</span>
+                        <span class="card_char-num">
+								350-380 г
+							</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% comment %}<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script> {% endcomment %}

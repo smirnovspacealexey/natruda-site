@@ -1,0 +1,90 @@
+{% extends 'customer_interface/index.html' %}
+{% load static %}
+
+{% block additional_CSS %}
+    <link rel="stylesheet" href="{% static 'customer_interface/css/about.css' %}">
+{% endblock %}
+
+{% block header %}
+    <header style="text-align: center; display: block;">
+        <a href="{% url 'index' %}"><img src="{% static 'customer_interface/img/head_logo.png' %}" alt="#"
+                                         class="head_logo"></a>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="main_top">
+            <a href="{% url 'index' %}"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
+            <a href="{% url 'index' %}" class="main_menu">Меню</a>
+            <h1>О НАС</h1>
+        </div>
+        <div class="about_workers">
+            <span class="workers_title">Наши сотрудники</span>
+            <ul class="workers_list">
+                <div class="workers_list-wrap">
+                    <li id="li_1">
+                        <img src="{% static 'customer_interface/img/worker_img.png' %}" alt="">
+                        <span class="worker_name">
+              Иванов Иван <br> Иванович
+            </span>
+                        <span class="worker_job">
+              Генеральный директор
+            </span>
+                    </li>
+                    <li id="li_2">
+                        <img src="{% static 'customer_interface/img/worker_img.png' %}" alt="">
+                        <span class="worker_name">
+              Иванов Иван <br> Иванович
+            </span>
+                        <span class="worker_job">
+              Генеральный директор
+            </span>
+                    </li>
+                    <br>
+                    <li id="li_3">
+                        <img src="{% static 'customer_interface/img/worker_img.png' %}" alt="">
+                        <span class="worker_name">
+              Иванов Иван <br> Иванович
+            </span>
+                        <span class="worker_job">
+              Генеральный директор
+            </span>
+                    </li>
+                    <li id="li_4">
+                        <img src="{% static 'customer_interface/img/worker_img.png' %}" alt="">
+                        <span class="worker_name">
+              Иванов Иван <br> Иванович
+            </span>
+                        <span class="worker_job">
+              Генеральный директор
+            </span>
+                    </li>
+                    <br>
+                    <li id="li_5">
+                        <img src="{% static 'customer_interface/img/worker_img.png' %}" alt="">
+                        <span class="worker_name">
+              Иванов Иван <br> Иванович
+            </span>
+                        <span class="worker_job">
+              Генеральный директор
+            </span>
+                    </li>
+                    <li id="li_6">
+                        <img src="{% static 'customer_interface/img/worker_img.png' %}" alt="">
+                        <span class="worker_name">
+              Иванов Иван <br> Иванович
+            </span>
+                        <span class="worker_job">
+              Генеральный директор
+            </span>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </main>
+{% endblock %}
+
+{% block additional_JS %}
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+{% endblock %}

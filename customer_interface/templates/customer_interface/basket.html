@@ -1,0 +1,414 @@
+{% extends 'customer_interface/index.html' %}
+
+{% load static %}
+
+{% block additional_CSS %}
+    <link rel="stylesheet" href="{% static 'customer_interface/css/basket.css' %}">
+{% endblock %}
+
+{% block header %}
+    <header style="text-align: center; display: block;">
+        <a href="{% url 'index' %}"><img src="{% static 'customer_interface/img/head_logo.png' %}" alt="#"
+                                         class="head_logo"></a>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <main class="main_visible">
+        <div class="main_top">
+            <a href="{% url 'index' %}"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
+            <a href="{% url 'index' %}" class="main_menu">Меню</a>
+            <h1>КОРЗИНА</h1>
+        </div>
+        <div class="basket_wrap">
+            <div class="basket_prod">
+              <span class="prod_name">
+                Шаурма с курицей
+              </span>
+                <div class="tooltip_info-wrap">
+                    <button id="info_btn" aria-describedby="tooltip" class="tooltip-btn info_btn"><img
+                            src="{% static 'customer_interface/img/info_ico.png' %}" alt=""></button>
+                    <div id="tooltip" class="tooltip_info" role="tooltip">
+                        <p>Крупные кусочки постного, нежного мяса. <br>С натуральным вкусом и без лишних специй,
+                            <br>приготовленные
+                            на открытом огне. <br>Подается с гарниром из картофеля фри, <br>хрустящего репчатого
+                            лука и
+                            салата “Коул Слоу”</p>
+                        <div id="arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+                <div class="tooltip_adds-wrap">
+                    <button id="adds_btn" aria-describedby="tooltip" class="tooltip-btn adds_btn"><img
+                            src="{% static 'customer_interface/img/adds_ico.png' %}" alt=""></button>
+                    <div id="tooltip" role="tooltip" class="tooltip_adds">
+                        <form class="main_desc main_desc-basket">
+                            <span class="adds_text">Добавки</span>
+                            <ul class="adds_list">
+                                <li>
+                                    <span class="add_text">Сыр</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Сыр" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Картофель фри</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Картофель фри" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Халапеньо</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Халапеньо" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Перец чили</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Перец чили" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Болгарский перец</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Болгарский перец" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Грибы</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Грибы" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Двойные овощи</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Двойные овощи" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="adds_wrap">
+                                <span class="adds_text">Убрать</span>
+                                <ul class="adds_list">
+                                    <li>
+                                        <span class="add_text">Без лука</span>
+                                        <div class="form-check form-switch">
+                                            <input value="Без лука" class="form-check-input" type="checkbox"
+                                                   id="flexSwitchCheckDefault">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="add_text">Без помидор</span>
+                                        <div class="form-check form-switch">
+                                            <input value="Без помидор" class="form-check-input" type="checkbox"
+                                                   id="flexSwitchCheckDefault">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="add_text">Без огурцов</span>
+                                        <div class="form-check form-switch">
+                                            <input value="Без огурцов" class="form-check-input" type="checkbox"
+                                                   id="flexSwitchCheckDefault">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="adds_wrap">
+                                <span class="adds_text">Соус</span>
+                                <ul class="adds_list">
+                                    <li>
+                                        <span class="add_text">Двойная порция мяса</span>
+                                        <div class="form-check form-switch">
+                                            <input value="Двойная порция мяса" class="form-check-input"
+                                                   type="checkbox"
+                                                   id="flexSwitchCheckDefault">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                        <div id="arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+                <div class="adds_submit">
+                    <div class="adds_submit-num">
+                        <button type="button" onclick="this.nextElementSibling.stepDown()"
+                                class="adds_plus-btn"></button>
+                        <input type="number" min="1" max="10" value="1" readonly class="adds_plus-inp">
+                        <button type="button" onclick="this.previousElementSibling.stepUp()"
+                                class="adds_plus-btn"></button>
+                    </div>
+                    <a class="remove_btn"><img src="{% static 'customer_interface/img/basket.png' %}" alt=""></a>
+                    <span class="main_cost">150<span> руб</span></span>
+                </div>
+            </div>
+            <div class="basket_prod">
+              <span class="prod_name">
+                Шаурма с курицей
+              </span>
+                <div class="tooltip_info-wrap">
+                    <button id="info_btn" aria-describedby="tooltip" class="tooltip-btn info_btn"><img
+                            src="{% static 'customer_interface/img/info_ico.png' %}" alt=""></button>
+                    <div id="tooltip" class="tooltip_info" role="tooltip">
+                        <p>Крупные кусочки постного, нежного мяса. <br>С натуральным вкусом и без лишних специй,
+                            <br>приготовленные
+                            на открытом огне. <br>Подается с гарниром из картофеля фри, <br>хрустящего репчатого
+                            лука и
+                            салата “Коул Слоу”</p>
+                        <div id="arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+                <div class="tooltip_adds-wrap">
+                    <button id="adds_btn" aria-describedby="tooltip" class="tooltip-btn adds_btn"><img
+                            src="{% static 'customer_interface/img/adds_ico.png' %}" alt=""></button>
+                    <div id="tooltip" role="tooltip" class="tooltip_adds">
+                        <form class="main_desc main_desc-basket">
+                            <span class="adds_text">Добавки</span>
+                            <ul class="adds_list">
+                                <li>
+                                    <span class="add_text">Сыр</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Сыр" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Картофель фри</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Картофель фри" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Халапеньо</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Халапеньо" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Перец чили</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Перец чили" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Болгарский перец</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Болгарский перец" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Грибы</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Грибы" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="add_text">Двойные овощи</span>
+                                    <div class="form-check form-switch">
+                                        <input value="Двойные овощи" class="form-check-input" type="checkbox"
+                                               id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="adds_wrap">
+                                <span class="adds_text">Убрать</span>
+                                <ul class="adds_list">
+                                    <li>
+                                        <span class="add_text">Без лука</span>
+                                        <div class="form-check form-switch">
+                                            <input value="Без лука" class="form-check-input" type="checkbox"
+                                                   id="flexSwitchCheckDefault">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="add_text">Без помидор</span>
+                                        <div class="form-check form-switch">
+                                            <input value="Без помидор" class="form-check-input" type="checkbox"
+                                                   id="flexSwitchCheckDefault">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="add_text">Без огурцов</span>
+                                        <div class="form-check form-switch">
+                                            <input value="Без огурцов" class="form-check-input" type="checkbox"
+                                                   id="flexSwitchCheckDefault">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="adds_wrap">
+                                <span class="adds_text">Соус</span>
+                                <ul class="adds_list">
+                                    <li>
+                                        <span class="add_text">Двойная порция мяса</span>
+                                        <div class="form-check form-switch">
+                                            <input value="Двойная порция мяса" class="form-check-input"
+                                                   type="checkbox"
+                                                   id="flexSwitchCheckDefault">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                        <div id="arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+                <div class="adds_submit">
+                    <div class="adds_submit-num">
+                        <button type="button" onclick="this.nextElementSibling.stepDown()"
+                                class="adds_plus-btn"></button>
+                        <input type="number" min="1" max="10" value="1" readonly class="adds_plus-inp">
+                        <button type="button" onclick="this.previousElementSibling.stepUp()"
+                                class="adds_plus-btn"></button>
+                    </div>
+                    <a class="remove_btn"><img src="{% static 'customer_interface/img/basket.png' %}" alt=""></a>
+                    <span class="main_cost">150<span> руб</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="payment_block">
+            <div class="payment_wrap">
+                <span>Всего: </span>
+                <span class="payment_sum"><span> руб</span></span>
+                <button class="adds_submit-btn btn basket_clear">Очистить корзину</button>
+            </div>
+            <div class="payment_info">
+                <div class="payment_info-text">
+                    <span class="payment_info-title">Минимальная сумма <br> заказа: </span><br>
+                    <span class="payment_info-main">500 руб</span>
+                </div>
+                <div class="payment_info-text">
+                    <span class="payment_info-title">Время ожидания: </span><br>
+                    <span class="payment_info-main">от 1 часа</span>
+                </div>
+            </div>
+        </div>
+        <form action="" class="basket_form">
+            <div class="form_title">
+                Оформление заказа
+            </div>
+            <div class="form_textInp">
+                <label for="name">
+                    <span>Ваше имя</span>
+                    <input type="name" name="name" id="">
+                </label>
+                <label for="phone">
+                    <span>Ваш телефон</span>
+                    <input type="phone" name="phone" id="">
+                </label>
+            </div>
+            <div class="prop prop_time">
+                <p>
+                    <label class="radio_label"><input type="radio" name="time" value="Ближайшее время"
+                                                      class="closest_time-inp">Ближайшее время</label>
+                    <label class="radio_label"><input type="radio" name="time" value="Точное время"
+                                                      class="exact_time-inp">Точное время</label>
+                </p>
+                <p class="nearest_time">Курьер доставит ваш заказ в скором времени <br> (от 1 часа)</p>
+                <p class="exact_time">Выберите удобное для вас время и получите заказ в назначенный час (от 1
+                    часа)</p>
+                <div class="exact_time-select" style="display: none">
+                    <label for="select" class="date_select">
+                        <span>Дата</span>
+                        <select class="form-select date_select-inp" aria-label="Default select example"
+                                name="select">
+                            <option selected></option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </label>
+                    <label for="select" class="time_select">
+                        <span>Время</span>
+                        <select class="form-select time_select-inp" aria-label="Default select example"
+                                name="select">
+                            <option selected></option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="prop prop_del">
+                <p>
+                    <label class="radio_label"><input type="radio" name="delivery" value="Самовывоз"
+                                                      class="delivery_inp-hide">Самовывоз</label>
+                    <label class="radio_label"><input type="radio" name="delivery" value="Доставка"
+                                                      class="delivery_inp">Доставка</label>
+                </p>
+                <div class="delivery_inputs">
+                    <label for="street" class="street_label">
+                        <span>Улица</span>
+                        <input type="text" name="street" id="">
+                    </label>
+                    <label for="house" class="house_label">
+                        <span>Дом</span>
+                        <input type="text" name="house" id="">
+                    </label>
+                    <label for="flat" class="flat_label">
+                        <span>Квартира</span>
+                        <input type="text" name="flat" id="">
+                    </label>
+                    <label for="com" class="com_label">
+                        <span>Комментарий</span>
+                        <textarea name="com" class="com_textarea"></textarea>
+                    </label>
+                </div>
+            </div>
+            <label for="select" class="delivery_place">
+                <span>Пункт выдачи</span>
+                <select class="form-select delivery_place-inp" aria-label="Default select example" name="select">
+                    <option selected></option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </label>
+            <div class="prop prop_pay">
+                <p>
+                    <label class="radio_label"><input type="radio" name="payment" value="Картой"
+                                                      class="card_pay-rad">Картой</label>
+                    <label class="radio_label"><input type="radio" name="payment" value="Наличными"
+                                                      class="notcard_pay-rad">Наличными</label>
+                </p>
+                <label for="card_pay" class="cash_pay-label">
+                    <span>Сдача с:</span>
+                    <input type="text" name="card_pay" id="" class="cash_pay-inp">
+                </label>
+            </div>
+            <div class="checkbox">
+                <a class="checkbox_inp"></a>
+                <span class="checkbox_text">Обратный звонок оператора</span>
+            </div>
+            <button class="adds_submit-btn btn form_submit-btn">Заказать</button>
+        </form>
+    </main>
+    <main class="main_hidden">
+        <div class="main_top">
+            <a href="index.html"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
+            <a href="index.html" class="main_menu">Меню</a>
+            <h1>КОРЗИНА</h1>
+        </div>
+        <p class="empty-text">
+            <span>В корзине пока ничего нет. Выберите что-нибудь из меню, чтобы заказать</span>
+            <a class="btn adds_submit-btn basket_hidden-btn" href="index.html">Меню</a>
+        </p>
+    </main>
+{% endblock %}
+
+{% block additional_JS %}
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+{% endblock %}

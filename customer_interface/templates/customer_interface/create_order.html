@@ -1,0 +1,20 @@
+{% extends 'customer_interface/index.html' %}
+
+{% block content %}
+    <div class="form-container">
+        <form method="post" action="{% url 'confirm_order' %}"
+              object-pk="{{ object_pk }}">
+            {% include 'customer_interface/default_form_body.html' with form=form %}
+            <button type="submit" class="flat-btn success">Отправить</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block extra_content %}
+{% endblock %}
+
+{% block extra_statics %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'customer_interface/js/create_order_handlers.js' %}"></script>
+    <script type="text/javascript" src="{% static 'customer_interface/js/jquery.inputmask.min.js' %}"></script>
+{% endblock %}

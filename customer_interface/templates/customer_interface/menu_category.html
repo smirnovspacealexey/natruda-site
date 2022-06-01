@@ -1,0 +1,10 @@
+<div class="block-title">
+    {{ category.title }}
+</div>
+<div class="block-content">
+    {% for item in category.items %}
+        <div class="block-content-item">
+            {% include 'customer_interface/menu_item.html' with item=item %}
+        </div>
+    {% endfor %}
+</div>

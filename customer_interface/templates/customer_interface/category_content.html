@@ -1,0 +1,27 @@
+{% extends 'customer_interface/index.html' %}
+
+{% load static %}
+
+{% block additional_CSS %}
+    <link rel="stylesheet" href="{% static 'customer_interface/css/meat.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="main_top">
+            <a href="{% url 'index' %}"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
+            <h1>{{ category.customer_title|upper }}</h1>
+        </div>
+        <div class="cards">
+            <ul class="cards_list">
+                {% for content in contents %}
+                    <li>
+                        <a class="cards_item" href="{% url 'char' content.id %}"><span
+                                class="cards_item-text">{{ content.customer_title|upper }}</span><img
+                                src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+{% endblock %}
