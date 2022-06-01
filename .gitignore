@@ -12,6 +12,7 @@ pg_data/
 db_dumps/
 static/
 logs/
+log/
 db/
 venv/
 env/
