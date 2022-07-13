@@ -9,15 +9,19 @@ from .models import MacroProduct, SizeOption, ProductVariant, ProductOption, Con
 from shawarma_site.settings import SHAW_QUEUE_URL, SEND_ORDER_URL, CHECK_ORDER_STATUS_URL, GET_MENU_URL
 from raven.contrib.django.raven_compat.models import client
 from urllib.parse import unquote
+import sys, traceback
 import re
 import json
 import time
 import random
 import requests
+from shawarma_site.settings import DEBUG
+from apps.yookassa.backend import Yookassa
 
 
 # Create your views here.
 def index(request):
+    update_menu(None)
     template = loader.get_template('customer_interface/index.html')
     context = {
         'categories': [
@@ -99,6 +103,8 @@ def menu(request):
 def meat(request, category_slug):
     template = loader.get_template('customer_interface/category_content.html')
     # context = update_menu()
+    print(MacroProduct.objects.get(slug=category_slug))
+    print(MacroProductContent.objects.filter(macro_product__slug=category_slug))
     context = {
         'category': MacroProduct.objects.get(slug=category_slug),
         'contents': MacroProductContent.objects.filter(macro_product__slug=category_slug)
@@ -130,7 +136,8 @@ def basket(request):
             ]
         }
     }
-
+    print(product_ids)
+    print(current_order)
     for item in current_order:
         product_variant = ProductVariant.objects.get(menu_item__id=item['id'])
         product_options = [
@@ -182,10 +189,15 @@ def create_order(request):
     if request.method == 'POST':
         form = ConfirmOrderForm(request.POST)
         if form.is_valid():
+            yk = Yookassa('870966', 'test_k7g0-DyY5U4lbtDdF2nr7EmwRl7TmsUDwbX7BH9x8O8', )
+            url = yk.create_payment()
             cleaned_data = form.cleaned_data
             cleaned_data['phone_number'] = clean_phone_number(cleaned_data['phone_number'])
             cleaned_data['order_content'] = adjust_ids(json.loads(cleaned_data['order_content']))
             response_data = send_order_data(cleaned_data)
+            print(response_data)
+            if DEBUG:
+                return JsonResponse({'success': True, 'url': url})
             return JsonResponse(data=response_data)
         else:
             context = {
@@ -461,16 +473,21 @@ def update_menu(request):
                                                                                            macro_product_content[
                                                                                                'title']))
             except ObjectDoesNotExist:
-                according_macro = MacroProduct.objects.get(internal_id=macro_product_content['macro_product_id'])
-                according_content = ContentOption.objects.get(internal_id=macro_product_content['content_option_id'])
-                new_mpc_option = ContentOption(title=macro_product_content['title'],
-                                               customer_title=macro_product_content['customer_title'],
-                                               internal_id=macro_product_content['id'],
-                                               macro_product=according_macro,
-                                               content_option=according_content,
-                                               slug=slugify("{} {}".format(according_macro.customer_title,
-                                                                           according_content.customer_title)))
-                new_mpc_option.save()
+                # continue
+                try:
+                    according_macro = MacroProduct.objects.get(internal_id=macro_product_content['macro_product_id'])
+                    print(ContentOption.objects.filter(internal_id=macro_product_content['content_option_id']))
+                    according_content = ContentOption.objects.get(internal_id=macro_product_content['content_option_id'])
+                    new_mpc_option = MacroProductContent(title=macro_product_content['title'],
+                                                   customer_title=macro_product_content['customer_title'],
+                                                   internal_id=macro_product_content['id'],
+                                                   macro_product=according_macro,
+                                                   content_option=according_content,
+                                                   slug=slugify("{} {}".format(according_macro.customer_title,
+                                                                               according_content.customer_title)))
+                    new_mpc_option.save()
+                except:
+                    print(f'ERROR: {traceback.format_exc()}')
 
         for size_option in response['size_options']:
             try:
@@ -512,15 +529,15 @@ def update_menu(request):
                 local_product_variant = ProductVariant.objects.get(internal_id=product_variant['id'])
                 local_product_variant.title = product_variant['title']
                 local_product_variant.customer_title = product_variant['customer_title']
-                local_product_variant.menu_item = Menu.objects.get(internal_id=product_variant['menu_item_id'])
+                local_product_variant.menu_item = Menu.objects.get(internal_id=product_variant.get('menu_item_id', None))
                 local_product_variant.size_option = SizeOption.objects.get(
-                    internal_id=product_variant['size_option_id'])
-                # local_product_variant.content_option = ContentOption.objects.get(
-                #     internal_id=product_variant['content_option_id'])
-                # local_product_variant.macro_product = MacroProduct.objects.get(
-                #     internal_id=product_variant['category_id'])
+                    internal_id=product_variant.get('size_option_id', None))
+                local_product_variant.content_option = ContentOption.objects.get(
+                    internal_id=product_variant.get('content_option_id', None))
+                local_product_variant.macro_product = MacroProduct.objects.get(
+                    internal_id=product_variant.get('category_id', None))
                 local_product_variant.macro_product_content = MacroProductContent.objects.get(
-                    internal_id=product_variant['macro_product_content_id'])
+                    internal_id=product_variant.get('macro_product_content_id', None))
                 local_product_variant.save()
 
                 local_product_variant__product_options__ids = ProductOption.objects.filter(
@@ -536,10 +553,16 @@ def update_menu(request):
                 print("Failed to update category id{} {} because multiple are found!".format(product_variant['id'],
                                                                                              product_variant['name']))
             except ObjectDoesNotExist:
+                # continue
                 menu_item = Menu.objects.get(internal_id=product_variant['menu_item_id'])
-                content_option = ContentOption.objects.get(internal_id=product_variant['content_option_id'])
-                size_option = SizeOption.objects.get(internal_id=product_variant['size_option_id'])
-                category = MacroProduct.objects.get(internal_id=product_variant['category_id'])
+                content_option = ContentOption.objects.get(internal_id=product_variant['content_option_id']) if \
+                    'content_option_id' in product_variant else None
+
+                size_option = SizeOption.objects.get(internal_id=product_variant['size_option_id']) if \
+                    'size_option_id' in product_variant else None
+
+                category = MacroProduct.objects.get(internal_id=product_variant['category_id']) if \
+                    'category_id' in product_variant else None
                 new_product_variant = ProductVariant(title=product_variant['title'],
                                                      customer_title=product_variant['customer_title'],
                                                      internal_id=product_variant['id'],

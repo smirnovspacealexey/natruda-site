@@ -138,13 +138,21 @@
                     </li>
                     {% endcomment %}
                     {% for category in categories %}
-                        <li style="background: url('{{ category.picture.url }}')">
-                            <a class="cards_item" href="{% url 'meat' category.slug %}">
+                        {% if category.contents.all %}
+                            <li
+                                    {% if category.picture %}
+                                        style="background: url('{{ category.picture.url }}')"
+                                    {% else %}
+                                        style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
+                                    {% endif %}
+                            >
+                                <a class="cards_item" href="{% url 'meat' category.slug %}">
                             <span class="cards_item-text">
                                 {{ category.customer_title|upper }}
                             </span>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>

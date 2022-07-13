@@ -23,7 +23,7 @@ class Menu(models.Model):
     icon = models.ImageField(upload_to="img/icons", blank=True, null=True, verbose_name="Иконка")
 
     def __str__(self):
-        return u"{}".format(self.title)
+        return u"{}".format(self.title) if self.title else f'Noname id:{self.internal_id}'
 
 
 class MacroProduct(models.Model):
@@ -36,9 +36,13 @@ class MacroProduct(models.Model):
     picture = models.ImageField(upload_to="img/category_pictures", blank=True, null=True, verbose_name="Иконка")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
     customer_appropriate = models.BooleanField(verbose_name="Подходит для демонстрации покупателю", default=False)
+    ordering = models.IntegerField('ordering', default=0)
 
     def __str__(self):
         return u"{}".format(self.title) if bool(self.picture) else u"{} [No Photo]".format(self.title)
+
+    class Meta:
+        ordering = ('ordering', )
 
 
 class SizeOption(models.Model):
@@ -77,7 +81,7 @@ class MacroProductContent(models.Model):
     picture = models.ImageField(upload_to="img/category_pictures", blank=True, null=True, verbose_name="Иконка")
     customer_appropriate = models.BooleanField(verbose_name="Подходит для демонстрации покупателю", default=False)
     content_option = models.ForeignKey(ContentOption, on_delete=models.CASCADE, verbose_name="Вариант содержимого")
-    macro_product = models.ForeignKey(MacroProduct, on_delete=models.CASCADE, verbose_name="Макротовар")
+    macro_product = models.ForeignKey(MacroProduct, related_name='contents', on_delete=models.CASCADE, verbose_name="Макротовар")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
 
     def __str__(self):
@@ -91,9 +95,9 @@ class ProductVariant(models.Model):
     title = models.CharField(max_length=200)
     customer_title = models.CharField(max_length=200, default="", verbose_name="Название для покупателя")
     menu_item = models.ForeignKey(Menu, on_delete=models.CASCADE, verbose_name="Товар из меню 1С")
-    size_option = models.ForeignKey(SizeOption, on_delete=models.CASCADE, verbose_name="Вариант размера")
-    # content_option = models.ForeignKey(ContentOption, on_delete=models.CASCADE, verbose_name="Вариант содержимого")
-    # macro_product = models.ForeignKey(MacroProduct, on_delete=models.CASCADE, verbose_name="Макротовар")
+    size_option = models.ForeignKey(SizeOption, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Вариант размера")
+    content_option = models.ForeignKey(ContentOption, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Вариант содержимого")
+    macro_product = models.ForeignKey(MacroProduct, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Макротовар")
     macro_product_content = models.ForeignKey(MacroProductContent, on_delete=models.CASCADE,
                                               verbose_name="Содержимое макротовара", null=True)
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")

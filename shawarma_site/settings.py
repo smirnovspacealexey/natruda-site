@@ -39,13 +39,14 @@ ALLOWED_HOSTS = allowed_hosts
 # Application definition
 
 INSTALLED_APPS = [
-    'customer_interface.apps.CustomerInterfaceConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'customer_interface.apps.CustomerInterfaceConfig',
+    'apps.yookassa',
 ]
 
 MIDDLEWARE = [
