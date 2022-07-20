@@ -203,7 +203,7 @@ USE_TZ = True
 
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static_content', 'static'),
+    os.path.join(BASE_DIR, 'template_static'),
 )
 
 STATIC_URL = '/static/'
