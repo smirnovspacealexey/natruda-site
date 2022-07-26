@@ -81,7 +81,7 @@
             <div class="main_prop">
                 <div class="prop">
                     <span class="prop_size-text">Размер</span>
-                    <p>
+                    <p>{{ product_variants }}
                         {% comment %}      {% for size in product.sizes %}
                             <label class="radio_label"><input type="radio" name="size" value="{{ size.title }}"
                                                               product-id="{{ size.menu.id }}"
@@ -89,6 +89,7 @@
                         {% endfor %}{% endcomment %}
                         {% localize off %}
                             {% for product_variant in product_variants %}
+                                <h4>-----{{ product_variant.obj.menu_item.id }}--</h4>
                                 <label class="radio_label"><input type="radio" name="size"
                                                                   value="{{ product_variant.obj.size_option.title }}"
                                                                   customer-title="{{ product_variant.obj.customer_title }}"
@@ -96,6 +97,7 @@
                                                                   price="{{ product_variant.obj.menu_item.price }}">{{ product_variant.obj.size_option.title }}
                                 </label>
                             {% endfor %}
+
                         {% endlocalize %}
                     </p>
                 </div>

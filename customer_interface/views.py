@@ -21,6 +21,7 @@ from apps.yookassa.backend import Yookassa
 
 # Create your views here.
 def index(request):
+    print('index')
     update_menu(None)
     template = loader.get_template('customer_interface/index.html')
     context = {
@@ -139,7 +140,7 @@ def basket(request):
     print(product_ids)
     print(current_order)
     for item in current_order:
-        product_variant = ProductVariant.objects.get(menu_item__id=item['id'])
+        product_variant = ProductVariant.objects.filter(menu_item__id=item['id']).first()
         product_options = [
             {
                 'obj': product_option,
@@ -156,6 +157,7 @@ def basket(request):
 
 def char(request, macroproduct_content_id):
     template = loader.get_template('customer_interface/char_template.html')
+    print(ProductVariant.objects.filter(macro_product_content__id=macroproduct_content_id))
     context = {
         'product': MacroProductContent.objects.get(id=macroproduct_content_id),
         'product_variants': [
@@ -428,7 +430,7 @@ def update_menu(request):
                 local_category.customer_title = category['customer_title']
                 local_category.slug = slugify(category['title'])
                 if not local_category.picture:
-                    local_category.customer_appropriate = False
+                    local_category.customer_appropriate = True  # временно, пока нет картинок
                 local_category.save()
             except MultipleObjectsReturned:
                 client.captureException()
@@ -524,8 +526,11 @@ def update_menu(request):
                                                                               product_option['menu_item_id']))
                 new_product_option.save()
 
+        print(response['product_variants'])
+        print('\n\n\n\n\n\n')
         for product_variant in response['product_variants']:
             try:
+                print(ProductVariant.objects.filter(internal_id=product_variant['id']))
                 local_product_variant = ProductVariant.objects.get(internal_id=product_variant['id'])
                 local_product_variant.title = product_variant['title']
                 local_product_variant.customer_title = product_variant['customer_title']
@@ -536,6 +541,9 @@ def update_menu(request):
                     internal_id=product_variant.get('content_option_id', None))
                 local_product_variant.macro_product = MacroProduct.objects.get(
                     internal_id=product_variant.get('category_id', None))
+                print(product_variant.get('macro_product_content_id', None))
+                print(MacroProductContent.objects.get(
+                    internal_id=product_variant.get('macro_product_content_id', None)))
                 local_product_variant.macro_product_content = MacroProductContent.objects.get(
                     internal_id=product_variant.get('macro_product_content_id', None))
                 local_product_variant.save()
@@ -549,10 +557,12 @@ def update_menu(request):
                     local_product_variant__new_product_option.product_variants.add(local_product_variant)
 
             except MultipleObjectsReturned:
+                print('MultipleObjectsReturned')
                 client.captureException()
                 print("Failed to update category id{} {} because multiple are found!".format(product_variant['id'],
-                                                                                             product_variant['name']))
+                                                                                             product_variant['name'] if 'name' in product_variant else 'noname'))
             except ObjectDoesNotExist:
+                print('ObjectDoesNotExist')
                 # continue
                 menu_item = Menu.objects.get(internal_id=product_variant['menu_item_id'])
                 content_option = ContentOption.objects.get(internal_id=product_variant['content_option_id']) if \
@@ -563,13 +573,20 @@ def update_menu(request):
 
                 category = MacroProduct.objects.get(internal_id=product_variant['category_id']) if \
                     'category_id' in product_variant else None
+
+                print(product_variant['macro_product_content_id'])
+                macro_product_content = MacroProductContent.objects.filter(internal_id=
+                                                                           product_variant['macro_product_content_id']).first()\
+                    if 'macro_product_content_id' in product_variant else None
+
                 new_product_variant = ProductVariant(title=product_variant['title'],
                                                      customer_title=product_variant['customer_title'],
                                                      internal_id=product_variant['id'],
                                                      menu_item=menu_item,
                                                      content_option=content_option,
                                                      size_option=size_option,
-                                                     macro_product=category)
+                                                     macro_product=category,
+                                                     macro_product_content=macro_product_content)
                 new_product_variant.save()
                 for new_product_variant__new_product_option in ProductOption.objects.filter(
                         internal_id__in=product_variant['product_options_ids']):

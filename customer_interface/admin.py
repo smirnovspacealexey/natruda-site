@@ -5,7 +5,6 @@ from .models import Menu, MacroProduct, ContentOption, ProductOption, ProductVar
 
 # Register your models here.
 
-
 class MacroProductContentInline(admin.TabularInline):
     model = MacroProductContent
     extra = 0
@@ -13,6 +12,11 @@ class MacroProductContentInline(admin.TabularInline):
 
 class ProductVariantInline(admin.TabularInline):
     model = ProductVariant
+    extra = 0
+
+
+class ProductOptionInline(admin.TabularInline):
+    model = ProductOption
     extra = 0
 
 
@@ -25,9 +29,14 @@ class MacroProductAdmin(admin.ModelAdmin):
 
 class MacroProductContentAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ('title',)}
+    inlines = [ProductVariantInline]
 
 
-admin.site.register(Menu)
+class MenuAdmin(admin.ModelAdmin):
+    inlines = [ProductVariantInline, ProductOptionInline]
+
+
+admin.site.register(Menu, MenuAdmin)
 admin.site.register(MacroProduct, MacroProductAdmin)
 admin.site.register(MacroProductContent, MacroProductContentAdmin)
 admin.site.register(ContentOption)
