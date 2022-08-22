@@ -245,6 +245,8 @@ CHECK_ORDER_STATUS_URL = check_order_status_url
 GET_MENU_URL = get_menu_url
 SEND_ORDER_URL = send_order_url
 
+HOST = "https://natruda.ru/"
+
 try:
     from .local_settings import *
 except:

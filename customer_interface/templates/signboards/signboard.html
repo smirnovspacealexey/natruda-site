@@ -4,9 +4,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style>
+        body, html {
+            height: 100%;
+        }
+
+        .bg {
+            background-image: url({{ signboard.image.url }});
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
     <title>{{ slug }}</title>
 </head>
 <body>
-<a href="{% url 'signboards' %}"><img src="{{ signboard.image.url }}" alt=""></a>
+<a href="{% url 'signboards' %}">
+    <div class="bg"></div>
+</a>
 </body>
 </html>

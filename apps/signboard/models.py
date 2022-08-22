@@ -1,5 +1,6 @@
 from django.db import models
 from apps.tools.slugify import slugify
+from shawarma_site.settings import HOST
 
 
 class Signboard(models.Model):
@@ -15,4 +16,8 @@ class Signboard(models.Model):
         if self.active:
             type(self).objects.exclude(pk=self.pk).filter(slug=self.slug).update(active=False)
         super().save()
+
+    @property
+    def signboard_url(self):
+        return HOST + self.slug
 
