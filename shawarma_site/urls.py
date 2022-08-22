@@ -19,10 +19,13 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path
+from apps.signboard.urls import urlpatterns as urlpatterns_signboard
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/customer_interface/', permanent=True)),
     url(r'^customer_interface/', include('customer_interface.urls')),
     url(r'^admin/', admin.site.urls),
 ]
+
+urlpatterns += urlpatterns_signboard
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

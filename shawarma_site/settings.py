@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'customer_interface.apps.CustomerInterfaceConfig',
     'apps.yookassa',
+    'apps.signboard',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список вывесок</title>
+</head>
+<body>
+<br/>
+{%  for signboard in signboards.all %}
+    <a href="{% url 'signboard' signboard.slug %}"><img src="{{ signboard.image.url  }}" height="150" title="{{ signboard.slug }}" alt=""></a>
+{% endfor %}
+</body>
+</html>
