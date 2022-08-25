@@ -7,7 +7,7 @@ class Yookassa:
     def __init__(self, acc_id, key):
         Configuration.configure(acc_id, key)
 
-    def create_payment(self, total_price=0):
+    def create_payment(self, total_price=0, description='Заказ'):
         idempotence_key = str(uuid.uuid4())
         payment = Payment.create({
             "amount": {
@@ -21,7 +21,7 @@ class Yookassa:
                 "type": "redirect",
                 "return_url": "https://www.merchant-website.com/return_url"
             },
-            "description": "Заказ №1"
+            "description": description
         }, idempotence_key)
 
         # get confirmation url
