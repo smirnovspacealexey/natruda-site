@@ -1,6 +1,7 @@
 from yookassa import Configuration
 from yookassa import Payment
 import uuid
+from shawarma_site.settings import HOST
 
 
 class Yookassa:
@@ -19,7 +20,7 @@ class Yookassa:
             },
             "confirmation": {
                 "type": "redirect",
-                "return_url": "https://www.merchant-website.com/return_url"
+                "return_url": HOST
             },
             "description": description
         }, idempotence_key)
