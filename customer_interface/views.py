@@ -191,7 +191,8 @@ def create_order(request):
     if request.method == 'POST':
         form = ConfirmOrderForm(request.POST)
         if form.is_valid():
-            yk = Yookassa('870966', 'test_k7g0-DyY5U4lbtDdF2nr7EmwRl7TmsUDwbX7BH9x8O8', )
+            # yk = Yookassa('870966', 'test_k7g0-DyY5U4lbtDdF2nr7EmwRl7TmsUDwbX7BH9x8O8', ) # dell me
+            yk = Yookassa('936939', 'test_NrlH-8JYGRxaDHH0BfoLrh_Z65a1g2e7r4d4BzfgMiY', )
             cleaned_data = form.cleaned_data
             phone_number = clean_phone_number(cleaned_data['phone_number'])
             url = yk.create_payment(cleaned_data['total_price'], f'{phone_number}')
