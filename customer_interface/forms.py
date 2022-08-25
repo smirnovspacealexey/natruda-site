@@ -48,6 +48,7 @@ class ConfirmOrderForm(forms.Form):
     cash_pay = forms.CharField(widget=forms.TextInput(attrs={
         'pattern': '[0-9]',
     }), required=False)
+    total_price = forms.CharField(required=True)
 
 
 class CheckOrderStatus(forms.Form):

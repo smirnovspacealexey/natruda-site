@@ -7,11 +7,11 @@ class Yookassa:
     def __init__(self, acc_id, key):
         Configuration.configure(acc_id, key)
 
-    def create_payment(self):
+    def create_payment(self, total_price=0):
         idempotence_key = str(uuid.uuid4())
         payment = Payment.create({
             "amount": {
-                "value": "500.00",
+                "value": total_price,
                 "currency": "RUB"
             },
             "payment_method_data": {
