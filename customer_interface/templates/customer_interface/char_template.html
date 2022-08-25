@@ -81,7 +81,7 @@
             <div class="main_prop">
                 <div class="prop">
                     <span class="prop_size-text">Размер</span>
-                    <p>{{ product_variants }}
+                    <p>
                         {% comment %}      {% for size in product.sizes %}
                             <label class="radio_label"><input type="radio" name="size" value="{{ size.title }}"
                                                               product-id="{{ size.menu.id }}"
@@ -210,6 +210,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </main>
 {% endblock %}
 
