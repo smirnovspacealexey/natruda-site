@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Тестовая страница</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://3dsec.sberbank.ru/payment/docsite/assets/js/ipay.js"></script>
+    <script>
+        var ipay = new IPAY({api_token: 'YRF3C5RFICWISEWFR6GJ'});
+    </script>
+</head>
+<body>
+<a onclick="ipayCheckout({
+    amount:499.99,
+    currency:'RUB',
+    order_number:'',
+    description: 'А. С. Пушкин. Избранное (подарочное издание)',
+    },
+    function(order) { showSuccessfulPurchase(order) },
+    function(order) { showFailurefulPurchase(order) })"
+
+    class="btn btn-xs btn-outline btn-primary">Купить
+</a>
+</body>
+</html>

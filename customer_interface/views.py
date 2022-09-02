@@ -15,8 +15,10 @@ import json
 import time
 import random
 import requests
+from django.urls import reverse
 from shawarma_site.settings import DEBUG
 from apps.yookassa.backend import Yookassa
+from apps.sber.backend import Sber
 
 
 # Create your views here.
@@ -191,14 +193,22 @@ def create_order(request):
     if request.method == 'POST':
         form = ConfirmOrderForm(request.POST)
         if form.is_valid():
-            # yk = Yookassa('870966', 'test_k7g0-DyY5U4lbtDdF2nr7EmwRl7TmsUDwbX7BH9x8O8', ) # dell me
-            yk = Yookassa('936939', 'test_NrlH-8JYGRxaDHH0BfoLrh_Z65a1g2e7r4d4BzfgMiY', )
+            order_number = ''.join([random.choice('1234567890') for x in range(5)])
+            # yk = Yookassa('936939', 'test_NrlH-8JYGRxaDHH0BfoLrh_Z65a1g2e7r4d4BzfgMiY', )
             cleaned_data = form.cleaned_data
             phone_number = clean_phone_number(cleaned_data['phone_number'])
-            url = yk.create_payment(cleaned_data['total_price'], f'{phone_number}')
+            # url = yk.create_payment(cleaned_data['total_price'], f'{phone_number}')
+            sber = Sber()
+            res = sber.registrate_order(cleaned_data['total_price'], order_number)
+            if res[0]:
+                url = res[1]['formUrl']
+            else:
+                url = reverse('failed_payment')
+
             cleaned_data['phone_number'] = phone_number
             cleaned_data['order_content'] = adjust_ids(json.loads(cleaned_data['order_content']))
             response_data = send_order_data(cleaned_data)
+            response_data.update({'url': url})
             print(response_data)
             if DEBUG:
                 return JsonResponse({'success': True, 'url': url})

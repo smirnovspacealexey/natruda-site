@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'customer_interface.apps.CustomerInterfaceConfig',
     'apps.yookassa',
     'apps.signboard',
+    'apps.sber',
 ]
 
 MIDDLEWARE = [

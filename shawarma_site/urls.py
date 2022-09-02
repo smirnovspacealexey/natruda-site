@@ -20,6 +20,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from apps.signboard.urls import urlpatterns as urlpatterns_signboard
+from apps.sber.urls import urlpatterns as urlpatterns_sber
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/customer_interface/', permanent=True)),
@@ -28,4 +29,5 @@ urlpatterns = [
 ]
 
 urlpatterns += urlpatterns_signboard
+urlpatterns += urlpatterns_sber
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

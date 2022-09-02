@@ -1,0 +1,21 @@
+{% extends 'customer_interface/index.html' %}
+{% load static %}
+
+
+{% block header %}
+    <header style="text-align: center; display: block;">
+        <img src="{% static 'customer_interface/img/head_logo.png' %}" alt="#" class="head_logo">
+    </header>
+{% endblock %}
+
+{% block content %}
+    <main>
+        {% if orderNumber %}<h2>Заказ #{{ orderNumber }} на сумму {{ amount }}₽</h2>{% endif %}
+        <br/>
+        <h3>Оплата вашего заказа прошла успешно</h3>
+    </main>
+{% endblock %}
+
+{% block additional_JS %}
+
+{% endblock %}
