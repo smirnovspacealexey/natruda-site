@@ -23,7 +23,7 @@ class Signboard(models.Model):
 
         html = f'''
         <input size="35" type="text" value="{HOST + 'signboards/' + self.slug}" id="url-{self.pk}">
-        <button class="default" onclick="copyText('url-{self.pk}')">copy</button>
+        <button class="button" onclick="copyText('url-{self.pk}')">copy</button>
         '''
         return format_html(html)
 
