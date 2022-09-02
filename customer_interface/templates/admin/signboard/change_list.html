@@ -1,0 +1,14 @@
+{% extends "admin/change_list.html" %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {{ media.js }}
+    <script>
+        function copyText(obj_id) {
+            var copyText = document.getElementById(obj_id);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
+{% endblock %}

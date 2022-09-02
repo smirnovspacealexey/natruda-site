@@ -1,5 +1,6 @@
 from django.db import models
 from apps.tools.slugify import slugify
+from django.utils.html import format_html
 from shawarma_site.settings import HOST
 
 
@@ -19,5 +20,10 @@ class Signboard(models.Model):
 
     @property
     def signboard_url(self):
-        return HOST + self.slug
+
+        html = f'''
+        <input size="35" type="text" value="{HOST + 'signboards/' + self.slug}" id="url-{self.pk}">
+        <button class="default" onclick="copyText('url-{self.pk}')">copy</button>
+        '''
+        return format_html(html)
 
