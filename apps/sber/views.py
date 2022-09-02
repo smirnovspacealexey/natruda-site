@@ -19,7 +19,7 @@ def successful_payment(request):
         sber = Sber()
         res = sber.check_order_status(order_id=request.GET['orderId'])
         if res[0] and res[1]['actionCode'] == 0:
-            context.update({'orderNumber': res[1]['orderNumber'], 'amount': res[1]['amount']})
+            context.update({'orderNumber': res[1]['orderNumber'], 'amount': res[1]['amount']/100})
         else:
             return HttpResponseRedirect(reverse('failed_payment'))
 
