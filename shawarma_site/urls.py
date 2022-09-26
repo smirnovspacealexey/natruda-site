@@ -21,9 +21,10 @@ from django.contrib import admin
 from django.urls import path
 from apps.signboard.urls import urlpatterns as urlpatterns_signboard
 from apps.sber.urls import urlpatterns as urlpatterns_sber
+from apps.main.views import counter
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/customer_interface/', permanent=True)),
+    path('', counter, name='counter'),
     url(r'^customer_interface/', include('customer_interface.urls')),
     url(r'^admin/', admin.site.urls),
 ]

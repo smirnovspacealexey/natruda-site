@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from .forms import ConfirmOrderForm, CheckOrderStatus
 from .models import MacroProduct, SizeOption, ProductVariant, ProductOption, ContentOption, Menu, MacroProductContent
+from apps.main.models import Point
 from shawarma_site.settings import SHAW_QUEUE_URL, SEND_ORDER_URL, CHECK_ORDER_STATUS_URL, GET_MENU_URL
 from raven.contrib.django.raven_compat.models import client
 from urllib.parse import unquote
@@ -26,50 +27,50 @@ def index(request):
     print('index')
     update_menu(None)
     template = loader.get_template('customer_interface/index.html')
-    context = {
-        'categories': [
-            {
-                'customer_title': 'Шаурма',
-                'items': [
-                    {
-                        'id': 1,
-                        'name': 'Шаурма М',
-                        'price': 110
-                    },
-                    {
-                        'id': 2,
-                        'name': 'Шаурма С',
-                        'price': 150
-                    },
-                    {
-                        'id': 3,
-                        'name': 'Шаурма Б',
-                        'price': 210
-                    },
-                ]
-            },
-            {
-                'customer_title': 'Напитки',
-                'items': [
-                    {
-                        'id': 4,
-                        'name': 'Пепси',
-                        'price': 50
-                    },
-                    {
-                        'id': 5,
-                        'name': 'Кола',
-                        'price': 110
-                    },
-                    {
-                        'id': 6,
-                        'name': 'Фанта',
-                        'price': 70
-                    },
-                ]
-            }
-        ]
-    }
+    # context = {
+    #     'categories': [
+    #         {
+    #             'customer_title': 'Шаурма',
+    #             'items': [
+    #                 {
+    #                     'id': 1,
+    #                     'name': 'Шаурма М',
+    #                     'price': 110
+    #                 },
+    #                 {
+    #                     'id': 2,
+    #                     'name': 'Шаурма С',
+    #                     'price': 150
+    #                 },
+    #                 {
+    #                     'id': 3,
+    #                     'name': 'Шаурма Б',
+    #                     'price': 210
+    #                 },
+    #             ]
+    #         },
+    #         {
+    #             'customer_title': 'Напитки',
+    #             'items': [
+    #                 {
+    #                     'id': 4,
+    #                     'name': 'Пепси',
+    #                     'price': 50
+    #                 },
+    #                 {
+    #                     'id': 5,
+    #                     'name': 'Кола',
+    #                     'price': 110
+    #                 },
+    #                 {
+    #                     'id': 6,
+    #                     'name': 'Фанта',
+    #                     'price': 70
+    #                 },
+    #             ]
+    #         }
+    #     ]
+    # }
 
     macroproducts = MacroProduct.objects.filter(customer_appropriate=True)
     # context = {
@@ -133,6 +134,7 @@ def basket(request):
 
     template = loader.get_template('customer_interface/basket_template.html')
     context = {
+        'points': Point.objects.all(),
         'current_order': {
             'products': [
 

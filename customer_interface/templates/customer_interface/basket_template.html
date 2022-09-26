@@ -15,90 +15,90 @@
 {% endblock %}
 
 {% block content %}
-    {% load l10n %}
-    <input hidden id="urls" submit-order-url="{% url 'confirm_order' %}">
-    <main class="main_visible">
-        <div class="main_top">
-            <a href="{% url 'index' %}"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
-            <a href="{% url 'index' %}" class="main_menu">Меню</a>
-            <h1>КОРЗИНА</h1>
+{% load l10n %}
+<input hidden id="urls" submit-order-url="{% url 'confirm_order' %}">
+<main class="main_visible">
+    <div class="main_top">
+        <a href="{% url 'index' %}"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
+        <a href="{% url 'index' %}" class="main_menu">Меню</a>
+        <h1>КОРЗИНА</h1>
+    </div>
+    <div class="basket_wrap">
+        <div class="order-status-container">
+            <span id="order-status-success">Заказ <span id="order-number"></span> успешно добавлен!</span>
+            <span id="order-status-fail">При создании заказа возникла ошибка!</span>
         </div>
-        <div class="basket_wrap">
-            <div class="order-status-container">
-                <span id="order-status-success">Заказ <span id="order-number"></span> успешно добавлен!</span>
-                <span id="order-status-fail">При создании заказа возникла ошибка!</span>
-            </div>
-            {% for product in current_order.products %}
-                <div class="basket_prod" index="{{ forloop.counter0 }}">
-                    {% localize off %}
-                        <input class="product-properties" hidden
-                               value="{{ product.obj.title }}"
-                               customer-title="{{ product.obj.customer_title }}"
-                               product-id="{{ product.obj.menu_item.id }}"
-                               price="{{ product.obj.menu_item.price }}">
-                    {% endlocalize %}
-                    <span class="prod_name">
+        {% for product in current_order.products %}
+            <div class="basket_prod" index="{{ forloop.counter0 }}">
+                {% localize off %}
+                    <input class="product-properties" hidden
+                           value="{{ product.obj.title }}"
+                           customer-title="{{ product.obj.customer_title }}"
+                           product-id="{{ product.obj.menu_item.id }}"
+                           price="{{ product.obj.menu_item.price }}">
+                {% endlocalize %}
+                <span class="prod_name">
                         {{ product.obj.customer_title }}
                     </span>
-                    <div class="tooltip_info-wrap">
-                        <button id="info_btn" aria-describedby="tooltip" class="tooltip-btn info_btn"><img
-                                src="{% static 'customer_interface/img/info_ico.png' %}" alt=""></button>
-                        <div id="tooltip" class="tooltip_info" role="tooltip">
-                            {{ product.obj.macro_product_content.customer_description }}
-                            <div id="arrow" data-popper-arrow></div>
-                        </div>
-                    </div>
-                    <div class="tooltip_adds-wrap">
-                        <button id="adds_btn" aria-describedby="tooltip" class="tooltip-btn adds_btn"><img
-                                src="{% static 'customer_interface/img/adds_ico.png' %}" alt=""></button>
-                        <div id="tooltip" role="tooltip" class="tooltip_adds">
-                            <form class="main_desc main_desc-basket">
-                                {% if product.product_options %}
-                                    <div class="size_specific_properties"
-                                         product-id="{{ product.obj.menu_item.id }}"><span
-                                            class="adds_text">Добавки</span>
-                                        <ul class="adds_list">
-                                            {% for topping in product.product_options %}
-                                                <li>
-                                                    <span class="add_text">{{ topping.obj.menu_item.title }}</span>
-                                                    <div class="form-check form-switch">
-                                                        {% localize off %}
-                                                            <input value="{{ topping.obj.menu_item.title }}"
-                                                                   class="form-check-input"
-                                                                   type="checkbox"
-                                                                   id="topping-checkbox-{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
-                                                                   name="topping"
-                                                                   product-id="{{ topping.obj.menu_item.id }}"
-                                                                   price="{{ topping.obj.menu_item.price }}"
-                                                                   {% if topping.is_enabled %}checked{% endif %}
-                                                            >
-                                                        {% endlocalize %}
-                                                    </div>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                {% endif %}
-                            </form>
-                            <div id="arrow" data-popper-arrow></div>
-                        </div>
-                    </div>
-                    <div class="adds_submit">
-                        <div class="adds_submit-num">
-                            <button type="button" onclick="this.nextElementSibling.stepDown()"
-                                    class="adds_plus-btn"></button>
-                            <input type="number" min="1" max="10" value="{{ product.quantity }}" readonly
-                                   class="adds_plus-inp">
-                            <button type="button" onclick="this.previousElementSibling.stepUp()"
-                                    class="adds_plus-btn"></button>
-                        </div>
-                        <a class="remove_btn"><img src="{% static 'customer_interface/img/basket.png' %}" alt=""></a>
-                        <span class="main_cost">150<span> руб</span></span>
+                <div class="tooltip_info-wrap">
+                    <button id="info_btn" aria-describedby="tooltip" class="tooltip-btn info_btn"><img
+                            src="{% static 'customer_interface/img/info_ico.png' %}" alt=""></button>
+                    <div id="tooltip" class="tooltip_info" role="tooltip">
+                        {{ product.obj.macro_product_content.customer_description }}
+                        <div id="arrow" data-popper-arrow></div>
                     </div>
                 </div>
-            {% endfor %}
+                <div class="tooltip_adds-wrap">
+                    <button id="adds_btn" aria-describedby="tooltip" class="tooltip-btn adds_btn"><img
+                            src="{% static 'customer_interface/img/adds_ico.png' %}" alt=""></button>
+                    <div id="tooltip" role="tooltip" class="tooltip_adds">
+                        <form class="main_desc main_desc-basket">
+                            {% if product.product_options %}
+                                <div class="size_specific_properties"
+                                     product-id="{{ product.obj.menu_item.id }}"><span
+                                        class="adds_text">Добавки</span>
+                                    <ul class="adds_list">
+                                        {% for topping in product.product_options %}
+                                            <li>
+                                                <span class="add_text">{{ topping.obj.menu_item.title }}</span>
+                                                <div class="form-check form-switch">
+                                                    {% localize off %}
+                                                        <input value="{{ topping.obj.menu_item.title }}"
+                                                               class="form-check-input"
+                                                               type="checkbox"
+                                                               id="topping-checkbox-{{ forloop.parentloop.counter }}-{{ forloop.counter }}"
+                                                               name="topping"
+                                                               product-id="{{ topping.obj.menu_item.id }}"
+                                                               price="{{ topping.obj.menu_item.price }}"
+                                                               {% if topping.is_enabled %}checked{% endif %}
+                                                        >
+                                                    {% endlocalize %}
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </form>
+                        <div id="arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+                <div class="adds_submit">
+                    <div class="adds_submit-num">
+                        <button type="button" onclick="this.nextElementSibling.stepDown()"
+                                class="adds_plus-btn"></button>
+                        <input type="number" min="1" max="10" value="{{ product.quantity }}" readonly
+                               class="adds_plus-inp">
+                        <button type="button" onclick="this.previousElementSibling.stepUp()"
+                                class="adds_plus-btn"></button>
+                    </div>
+                    <a class="remove_btn"><img src="{% static 'customer_interface/img/basket.png' %}" alt=""></a>
+                    <span class="main_cost">150<span> руб</span></span>
+                </div>
+            </div>
+        {% endfor %}
 
-            {% comment %}<div class="basket_prod">
+        {% comment %}<div class="basket_prod">
               <span class="prod_name">
                 Шаурма с курицей
               </span>
@@ -226,50 +226,50 @@
                     <span class="main_cost">150<span> руб</span></span>
                 </div>
             </div>{% endcomment %}
+    </div>
+    <div class="payment_block">
+        <div class="payment_wrap">
+            <span>Всего: </span>
+            <span class="payment_sum"><span> руб</span></span>
+            <button class="adds_submit-btn btn basket_clear">Очистить корзину</button>
         </div>
-        <div class="payment_block">
-            <div class="payment_wrap">
-                <span>Всего: </span>
-                <span class="payment_sum"><span> руб</span></span>
-                <button class="adds_submit-btn btn basket_clear">Очистить корзину</button>
+        <div class="payment_info">
+            <div class="payment_info-text">
+                <span class="payment_info-title">Минимальная сумма <br> заказа: </span><br>
+                <span class="payment_info-main">500 руб</span>
             </div>
-            <div class="payment_info">
-                <div class="payment_info-text">
-                    <span class="payment_info-title">Минимальная сумма <br> заказа: </span><br>
-                    <span class="payment_info-main">500 руб</span>
-                </div>
-                <div class="payment_info-text">
-                    <span class="payment_info-title">Время ожидания: </span><br>
-                    <span class="payment_info-main">от 1 часа</span>
-                </div>
+            <div class="payment_info-text">
+                <span class="payment_info-title">Время ожидания: </span><br>
+                <span class="payment_info-main">от 1 часа</span>
             </div>
         </div>
-        <form action="" class="basket_form">
-            <div class="form_title">
-                Оформление заказа
-            </div>
-            <div class="form_textInp">
-                <label for="name">
-                    <span>Ваше имя</span>
-                    <input type="name" name="name" id="id_name">
-                </label>
-                <label for="phone">
-                    <span>Ваш телефон</span>
-                    <input type="phone" name="phone" id="id_phone_number">
-                </label>
-            </div>
-            <div class="prop prop_time">
-                <p>
-                    <label class="radio_label"><input type="radio" name="time" value="nearest_time"
-                                                      class="closest_time-inp">Ближайшее время</label>
-                    <label class="radio_label"><input type="radio" name="time" value="exact_time"
-                                                      class="exact_time-inp">Точное время</label>
-                </p>
-                <p class="nearest_time">Курьер доставит ваш заказ в скором времени <br> (от 1 часа)</p>
-                <p class="exact_time">Выберите удобное для вас время и получите заказ в назначенный час (от 1
-                    часа)</p>
-                <div class="exact_time-select" style="display: none">
-                    {% comment %}<label for="select" class="date_select">
+    </div>
+    <form action="" class="basket_form">
+        <div class="form_title">
+            Оформление заказа
+        </div>
+        <div class="form_textInp">
+            <label for="name">
+                <span>Ваше имя</span>
+                <input type="name" name="name" id="id_name">
+            </label>
+            <label for="phone">
+                <span>Ваш телефон</span>
+                <input type="phone" name="phone" id="id_phone_number">
+            </label>
+        </div>
+        <div class="prop prop_time">
+            <p>
+                <label class="radio_label"><input type="radio" name="time" value="nearest_time"
+                                                  class="closest_time-inp">Ближайшее время</label>
+                <label class="radio_label"><input type="radio" name="time" value="exact_time"
+                                                  class="exact_time-inp">Точное время</label>
+            </p>
+            <p class="nearest_time">Курьер доставит ваш заказ в скором времени <br> (от 1 часа)</p>
+            <p class="exact_time">Выберите удобное для вас время и получите заказ в назначенный час (от 1
+                часа)</p>
+            <div class="exact_time-select" style="display: none">
+                {% comment %}<label for="select" class="date_select">
                         <span>Дата</span>
                         <select class="form-select date_select-inp" aria-label="Default select example"
                                 name="select">
@@ -289,20 +289,20 @@
                             <option value="3">Алмаз</option>
                         </select>
                     </label>{% endcomment %}
-                    <label for="time">
-                        <input type="time" name="time_input" min="11:00" max="23:00">
-                    </label>
-                </div>
+                <label for="time">
+                    <input type="time" name="time_input" min="11:00" max="23:00">
+                </label>
             </div>
-            <div class="prop prop_del">
-                <p>
-                    <label class="radio_label"><input type="radio" name="is_delivery" value="false"
-                                                      class="delivery_inp-hide">Самовывоз</label>
-                    <label class="radio_label"><input type="radio" name="is_delivery" value="true"
-                                                      class="delivery_inp">Доставка</label>
-                </p>
-                <div class="delivery_inputs">
-                    {% comment %}                    <label for="street" class="street_label">
+        </div>
+        <div class="prop prop_del">
+            <p>
+                <label class="radio_label"><input type="radio" name="is_delivery" value="false"
+                                                  class="delivery_inp-hide">Самовывоз</label>
+                <label class="radio_label"><input type="radio" name="is_delivery" value="true"
+                                                  class="delivery_inp">Доставка</label>
+            </p>
+            <div class="delivery_inputs">
+                {% comment %}                    <label for="street" class="street_label">
                         <span>Улица</span>
                         <input type="text" name="street" id="">
                     </label>
@@ -314,55 +314,55 @@
                         <span>Квартира</span>
                         <input type="text" name="flat" id="">
                     </label>{% endcomment %}
-                    <label for="address" class="house_label">
-                        <span>Адрес</span>
-                        <input type="text" name="address" id="id_address">
-                        <label for="com" class="com_label">
-                            <span>Комментарий</span>
-                            <textarea name="com" class="com_textarea"></textarea>
-                        </label>
+                <label for="address" class="house_label">
+                    <span>Адрес</span>
+                    <input type="text" name="address" id="id_address">
+                    <label for="com" class="com_label">
+                        <span>Комментарий</span>
+                        <textarea name="com" class="com_textarea"></textarea>
                     </label>
-                </div>
-            </div>
-            <label for="select" class="delivery_place">
-                <span>Пункт выдачи</span>
-                <select class="form-select delivery_place-inp" aria-label="Default select example" name="select">
-                    <option selected></option>
-                    <option value="1">Труда</option>
-                    <option value="2">Победа</option>
-                    <option value="3">Алмаз</option>
-                </select>
-            </label>
-            <div class="prop prop_pay">
-                <p>
-                    <label class="radio_label"><input type="radio" name="payment" value="CLS"
-                                                      class="card_pay-rad">Картой</label>
-                    <label class="radio_label"><input type="radio" name="payment" value="CSH"
-                                                      class="cash_pay-rad">Наличными</label>
-                </p>
-                <label for="card_pay" class="cash_pay-label">
-                    <span>Сдача с:</span>
-                    <input type="text" name="cash_pay" id="" class="cash_pay-inp">
                 </label>
             </div>
-            {% comment %}          <div class="checkbox">
+        </div>
+        <label for="select" class="delivery_place">
+            <span>Пункт выдачи</span>
+            <select class="form-select delivery_place-inp" aria-label="Default select example" name="select">
+                <option selected></option>
+                {% for point in points %}
+                    <option value="{{ point.pk }}">{{ point.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <div class="prop prop_pay">
+            <p>
+                <label class="radio_label"><input type="radio" name="payment" value="CLS"
+                                                  class="card_pay-rad">Картой</label>
+                <label class="radio_label"><input type="radio" name="payment" value="CSH"
+                                                  class="cash_pay-rad">Наличными</label>
+            </p>
+            <label for="card_pay" class="cash_pay-label">
+                <span>Сдача с:</span>
+                <input type="text" name="cash_pay" id="" class="cash_pay-inp">
+            </label>
+        </div>
+        {% comment %}          <div class="checkbox">
                 <a class="checkbox_inp"></a>
                 <span class="checkbox_text">Обратный звонок оператора</span>
             </div>{% endcomment %}
-            <button class="adds_submit-btn btn form_submit-btn" id="submit-order">Заказать</button>
-        </form>
-    </main>
-    <main class="main_hidden">
-        <div class="main_top">
-            <a href="index.html"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
-            <a href="index.html" class="main_menu">Меню</a>
-            <h1>КОРЗИНА</h1>
-        </div>
-        <p class="empty-text">
-            <span>В корзине пока ничего нет. Выберите что-нибудь из меню, чтобы заказать</span>
-            <a class="btn adds_submit-btn basket_hidden-btn" href="index.html">Меню</a>
-        </p>
-    </main>
+        <button class="adds_submit-btn btn form_submit-btn" id="submit-order">Заказать</button>
+    </form>
+</main>
+<main class="main_hidden">
+    <div class="main_top">
+        <a href="index.html"><img src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
+        <a href="index.html" class="main_menu">Меню</a>
+        <h1>КОРЗИНА</h1>
+    </div>
+    <p class="empty-text">
+        <span>В корзине пока ничего нет. Выберите что-нибудь из меню, чтобы заказать</span>
+        <a class="btn adds_submit-btn basket_hidden-btn" href="index.html">Меню</a>
+    </p>
+</main>
 {% endblock %}
 
 {% block additional_JS %}

@@ -1,0 +1,33 @@
+{% extends 'customer_interface/index.html' %}
+
+{% load static %}
+
+{% block additional_CSS %}
+    <link rel="stylesheet" href="{% static 'customer_interface/css/basket.css' %}">
+    <link rel="stylesheet" href="{% static 'customer_interface/css/suggestion.css' %}">
+{% endblock %}
+
+{% block header %}
+    <header style="text-align: center; display: block;">
+        <a href="{% url 'index' %}"><img src="{% static 'customer_interface/img/head_logo.png' %}" alt="#"
+                                         class="head_logo"></a>
+    </header>
+{% endblock %}
+
+{% block content %}
+    {% load l10n %}
+    <main class="main_visible">
+        <div style="text-align: center;">
+            <label for="select" class="delivery_place">
+                <span>Пункт выдачи</span>
+                <select class="form-select delivery_place-inp" aria-label="Default select example" name="select">
+                    {% for point in points %}
+                        <option {% if forloop.first %}selected {% endif %}value="{{ point.pk }}">{{ point.name }}</option>
+                    {% endfor %}
+                </select>
+             <a href="{% url 'index' %}" class="adds_submit-btn">выбрать</a>
+            </label>
+        </div>
+    </main>
+
+{% endblock %}
