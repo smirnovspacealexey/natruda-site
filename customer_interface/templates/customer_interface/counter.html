@@ -17,17 +17,44 @@
 {% block content %}
     {% load l10n %}
     <main class="main_visible">
-        <div style="text-align: center;">
-            <label for="select" class="delivery_place">
-                <span>Пункт выдачи</span>
-                <select class="form-select delivery_place-inp" aria-label="Default select example" name="select">
-                    {% for point in points %}
-                        <option {% if forloop.first %}selected {% endif %}value="{{ point.pk }}">{{ point.name }}</option>
-                    {% endfor %}
-                </select>
-             <a href="{% url 'index' %}" class="adds_submit-btn">выбрать</a>
-            </label>
+
+        <div class="cards" style="text-align: center" id="ways">
+            <ul>
+                <li>
+                    <div class="adds_submit-btn btn" onclick="chooseWay('1')">Доставка</div>
+                </li>
+                <li>
+                    <div class="adds_submit-btn btn" onclick="chooseWay('2')">Самовывоз</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="cards" style="text-align: center; display: none" id="points">
+            <ul class="cards_list">
+                {% for point in points %}
+                    <li
+                            {% if point.picture %}
+                                style="background: url('{{ point.picture.url }}'); background-size: cover;"
+                            {% else %}
+                                style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
+                            {% endif %}>
+                        <a class="cards_item" href="{% url 'index' %}"><span class="cards_item-text">{{ point.name }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </main>
+{% endblock %}
 
+
+{% block additional_JS %}
+    <script>
+        let ways = $('#ways')
+        let points = $('#points')
+        function chooseWay(way) {
+            ways.hide();
+            points.show();
+        }
+    </script>
 {% endblock %}
