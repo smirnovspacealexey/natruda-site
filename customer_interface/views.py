@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from .forms import ConfirmOrderForm, CheckOrderStatus
-from .models import MacroProduct, SizeOption, ProductVariant, ProductOption, ContentOption, Menu, MacroProductContent
+from .models import MacroProduct, SizeOption, ProductVariant, ProductOption, ContentOption, Menu, MacroProductContent, Order
 from apps.main.models import Point
 from shawarma_site.settings import SHAW_QUEUE_URL, SEND_ORDER_URL, CHECK_ORDER_STATUS_URL, GET_MENU_URL
 from raven.contrib.django.raven_compat.models import client
@@ -195,13 +195,16 @@ def create_order(request):
     if request.method == 'POST':
         form = ConfirmOrderForm(request.POST)
         if form.is_valid():
-            order_number = ''.join([random.choice('1234567890') for x in range(5)])
+            order = Order.objects.create(message=str(request.COOKIES))
+            print(request.COOKIES)
+            # order_number = ''.join([random.choice('1234567890') for x in range(5)])
             # yk = Yookassa('936939', 'test_NrlH-8JYGRxaDHH0BfoLrh_Z65a1g2e7r4d4BzfgMiY', )
             cleaned_data = form.cleaned_data
             phone_number = clean_phone_number(cleaned_data['phone_number'])
             # url = yk.create_payment(cleaned_data['total_price'], f'{phone_number}')
             sber = Sber()
-            res = sber.registrate_order(cleaned_data['total_price'], order_number)
+            res = sber.registrate_order(cleaned_data['total_price'], '00000' + str(order.pk))
+            print(res)
             if res[0]:
                 url = res[1]['formUrl']
             else:

@@ -10,7 +10,7 @@
 {% block header %}
     <header style="text-align: center; display: block;">
         <a href="{% url 'counter' %}"><img src="{% static 'customer_interface/img/head_logo.png' %}" alt="#"
-                                         class="head_logo"></a>
+                                           class="head_logo"></a>
     </header>
 {% endblock %}
 
@@ -38,7 +38,7 @@
                             {% else %}
                                 style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
                             {% endif %}>
-                        <a class="cards_item" href="{% url 'index' %}"><span class="cards_item-text">{{ point.name }}</span>
+                        <a class="cards_item" href="#" onclick="choosePoint('{{ point.pk }}')"><span class="cards_item-text">{{ point.name }}</span>
                         </a>
                     </li>
                 {% endfor %}
@@ -53,8 +53,14 @@
         let ways = $('#ways')
         let points = $('#points')
         function chooseWay(way) {
+            setCookie('way', way);
             ways.hide();
             points.show();
+        }
+
+        function choosePoint(point) {
+            setCookie('point', point);
+            setTimeout(function () {location.replace({% url 'index' %});}, 1000);
         }
     </script>
 {% endblock %}

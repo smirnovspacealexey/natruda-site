@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Menu, MacroProduct, ContentOption, ProductOption, ProductVariant, SizeOption, MacroProductContent
+from .models import Menu, MacroProduct, ContentOption, ProductOption, ProductVariant, SizeOption, MacroProductContent, Order
 
 
 # Register your models here.
@@ -36,6 +36,7 @@ class MenuAdmin(admin.ModelAdmin):
     inlines = [ProductVariantInline, ProductOptionInline]
 
 
+admin.site.register(Order)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(MacroProduct, MacroProductAdmin)
 admin.site.register(MacroProductContent, MacroProductContentAdmin)
@@ -43,3 +44,4 @@ admin.site.register(ContentOption)
 admin.site.register(ProductOption)
 admin.site.register(ProductVariant)
 admin.site.register(SizeOption)
+

@@ -118,3 +118,12 @@ class ProductOption(models.Model):
 
     def __str__(self):
         return u"{}".format(self.title)
+
+
+class Order(models.Model):
+    message = models.TextField(verbose_name='message')
+    paid = models.BooleanField(verbose_name="оплачено", default=False)
+    date = models.DateTimeField('дата, время', default=timezone.now)
+
+    def __str__(self):
+        return str(self.pk)

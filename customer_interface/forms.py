@@ -44,7 +44,7 @@ class ConfirmOrderForm(forms.Form):
         (CASH_PAYMENT, 'Наличные'),
         (CASHLESS_PAYMENT, 'Безнал'),
         (MIXED_PAYMENT, 'Смешанная')]
-    payment = forms.ChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect)
+    payment = forms.ChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect, required=False)
     cash_pay = forms.CharField(widget=forms.TextInput(attrs={
         'pattern': '[0-9]',
     }), required=False)
