@@ -10,7 +10,8 @@ class Command(BaseCommand):
         # url = 'http://127.0.0.1:8001/shaw_queue/order-from-site/'
         url = 'http://shawarma.natruda/shaw_queue/order-from-site/'
         data = {'content': [{'id': 17, 'title': 'Соус Белый', 'price': 50, 'quantity': 1, 'note': 'НЕ ГОТОВИТЬ. ТЕСТОВЫЙ ЗАКАЗ!!!!!'}],
-                'delivery': True}
+                'delivery': True,
+                'point': '24'}
 
         res = requests.post(url, json=data)
         print(res)

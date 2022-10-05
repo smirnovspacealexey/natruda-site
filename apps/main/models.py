@@ -7,6 +7,7 @@ class Point(models.Model):
     address = models.CharField(max_length=500, verbose_name="Адрес точки")
     volume = models.IntegerField(default=100, verbose_name="рубли")
     picture = models.ImageField(upload_to="img/points", blank=True, null=True, verbose_name="картинка")
+    subnetwork = models.CharField(max_length=10, default="")
     ordering = models.IntegerField('ordering', default=0)
 
     def __str__(self):

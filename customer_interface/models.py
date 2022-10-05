@@ -19,6 +19,7 @@ class Menu(models.Model):
     meat_weight = models.IntegerField(verbose_name="Вес мяса в товаре", blank=True, null=True)
     # category = models.ForeignKey(MenuCategory, on_delete=models.SET_NULL, null=True)
     is_by_weight = models.BooleanField(verbose_name="На развес", default=False)
+    note = models.TextField(verbose_name="Описание", blank=True, null=True)
     customer_appropriate = models.BooleanField(verbose_name="Подходит для демонстрации покупателю", default=False)
     icon = models.ImageField(upload_to="img/icons", blank=True, null=True, verbose_name="Иконка")
 

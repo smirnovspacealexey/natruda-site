@@ -33,6 +33,8 @@ class MacroProductContentAdmin(admin.ModelAdmin):
 
 
 class MenuAdmin(admin.ModelAdmin):
+    list_display = ('title', 'customer_title', 'weight', 'price', 'note', 'customer_appropriate')
+    list_editable = ('customer_title', 'weight', 'price', 'note', 'customer_appropriate')
     inlines = [ProductVariantInline, ProductOptionInline]
 
 
