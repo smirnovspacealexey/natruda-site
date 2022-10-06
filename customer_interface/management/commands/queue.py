@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from customer_interface.models import *
 import requests
+import json
 
 
 class Command(BaseCommand):
@@ -14,7 +15,8 @@ class Command(BaseCommand):
                 'point': '24'}
 
         res = requests.post(url, json=data)
-        print(res)
+        response = json.loads(res.content.decode("utf-8"))
+        print(response)
         print('---------------------')
 
 
