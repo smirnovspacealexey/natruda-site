@@ -194,6 +194,9 @@ def create_order(request):
     template = loader.get_template('customer_interface/create_order.html')
     if request.method == 'POST':
         form = ConfirmOrderForm(request.POST)
+        import logging  # del me
+        logger_debug = logging.getLogger('debug_logger')  # del me
+
         if form.is_valid():
             order = Order.objects.create(message=str(request.COOKIES))
             print(request.COOKIES)
@@ -213,6 +216,7 @@ def create_order(request):
             cleaned_data['phone_number'] = phone_number
             cleaned_data['order_content'] = adjust_ids(json.loads(cleaned_data['order_content']))
             response_data = send_order_data(cleaned_data)
+            logger_debug.info(f'\nresponse_data{response_data}\n\n')
             response_data.update({'url': url})
             print(response_data)
             if DEBUG:
@@ -315,15 +319,15 @@ def send_order_data(order_data):
             result = requests.get(SEND_ORDER_URL, params=order_data)
         except ConnectionError:
             client.captureException()
-            return {'success': False}
+            return {'success': False, 'msg': 'ConnectionError'}
         except:
             client.captureException()
-            return {'success': False}
+            return {'success': False, 'msg': 'err'}
         if result.status_code == 200:
             json_results = result.json()
             return json_results
         else:
-            return {'success': False}
+            return {'success': False, 'msg': f'{result.status_code}'}
     else:
         return {'success': False}
 
