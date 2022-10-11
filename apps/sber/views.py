@@ -25,7 +25,7 @@ def successful_payment(request):
         sber = Sber()
         res = sber.check_order_status(order_id=request.GET['orderId'])
         if res[0] and res[1]['actionCode'] == 0:
-            order = Order.objects.filter(pk=res[1]['orderNumber'][5:]).first()
+            order = Order.objects.filter(pk=res[1]['orderNumber'][5:], paid=False).first()
             order.paid = True
             order.save()
 
