@@ -17,5 +17,8 @@
 {% endblock %}
 
 {% block additional_JS %}
-
+    <script src="{% static 'customer_interface/js/basket_handlers.js' %}"></script>
+    <script>
+        $('.remove_btn').click();
+    </script>
 {% endblock %}
