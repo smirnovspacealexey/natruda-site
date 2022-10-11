@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, resolve
 from customer_interface.models import Order
 from customer_interface.views import send_order_data
+import ast
 
 from .backend import Sber
 
@@ -26,8 +27,7 @@ def successful_payment(request):
             order.save()
             import logging  # del me
             logger_debug = logging.getLogger('debug_logger')  # del me
-
-            response_data = send_order_data(dict(order.data))
+            response_data = send_order_data(ast.literal_eval(order.data))
             logger_debug.info(f'\nsuccessful_payment\n {response_data}\n\n')
             context.update({'orderNumber': res[1]['orderNumber'], 'amount': res[1]['amount']/100})
         else:
