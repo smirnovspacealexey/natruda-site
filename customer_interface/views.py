@@ -204,6 +204,10 @@ def create_order(request):
             # yk = Yookassa('936939', 'test_NrlH-8JYGRxaDHH0BfoLrh_Z65a1g2e7r4d4BzfgMiY', )
             cleaned_data = form.cleaned_data
             phone_number = clean_phone_number(cleaned_data['phone_number'])
+            cleaned_data['phone_number'] = phone_number
+            cleaned_data['order_content'] = adjust_ids(json.loads(cleaned_data['order_content']))
+            order.data = str(cleaned_data)
+
             # url = yk.create_payment(cleaned_data['total_price'], f'{phone_number}')
             sber = Sber()
             res = sber.registrate_order(cleaned_data['total_price'], '00000' + str(order.pk))
@@ -213,15 +217,10 @@ def create_order(request):
             else:
                 url = reverse('failed_payment')
 
-            cleaned_data['phone_number'] = phone_number
-            cleaned_data['order_content'] = adjust_ids(json.loads(cleaned_data['order_content']))
-            response_data = send_order_data(cleaned_data)
-            logger_debug.info(f'\nresponse_data{response_data}\n\n')
-            response_data.update({'url': url})
-            print(response_data)
+            cleaned_data.update({'url': url})
             if DEBUG:
                 return JsonResponse({'success': True, 'url': url})
-            return JsonResponse(data=response_data)
+            return JsonResponse(data=cleaned_data)
         else:
             context = {
                 'form': ConfirmOrderForm(request.POST)
