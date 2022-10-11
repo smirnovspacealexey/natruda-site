@@ -2,6 +2,7 @@ from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, resolve
 from customer_interface.models import Order
+from customer_interface.views import send_order_data
 
 from .backend import Sber
 
@@ -23,6 +24,11 @@ def successful_payment(request):
             order = Order.objects.filter(pk=res[1]['orderNumber'][5:]).first()
             order.paid = True
             order.save()
+            import logging  # del me
+            logger_debug = logging.getLogger('debug_logger')  # del me
+
+            response_data = send_order_data(dict(order.data))
+            logger_debug.info(f'\nsuccessful_payment\n {response_data}\n\n')
             context.update({'orderNumber': res[1]['orderNumber'], 'amount': res[1]['amount']/100})
         else:
             return HttpResponseRedirect(reverse('failed_payment'))
