@@ -205,6 +205,8 @@ def create_order(request):
             cleaned_data = form.cleaned_data
             phone_number = clean_phone_number(cleaned_data['phone_number'])
             cleaned_data['phone_number'] = phone_number
+            cleaned_data['date'] = cleaned_data['date'].strftime("%d/%m/%Y") if cleaned_data['date'] else None
+            cleaned_data['time'] = cleaned_data['time'].strftime("%H:%M:%S") if cleaned_data['time'] else None
             cleaned_data['order_content'] = adjust_ids(json.loads(cleaned_data['order_content']))
             order = Order.objects.create(message=str(request.COOKIES), data=str(cleaned_data))
             # url = yk.create_payment(cleaned_data['total_price'], f'{phone_number}')
