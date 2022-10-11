@@ -28,7 +28,7 @@ def successful_payment(request):
             order = Order.objects.filter(pk=res[1]['orderNumber'][5:], paid=False).first()
             order.paid = True
             order.save()
-
+            logger_debug.info(f'\n----\n {order}\n{order.data}\n{type(order.data)}')
             data = ast.literal_eval(order.data)
             data.update({'is_paid': True})
             response_data = send_order_data(data)
