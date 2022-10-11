@@ -198,7 +198,7 @@ def create_order(request):
         logger_debug = logging.getLogger('debug_logger')  # del me
 
         if form.is_valid():
-            order = Order.objects.create(message=str(request.COOKIES))
+
             print(request.COOKIES)
             # order_number = ''.join([random.choice('1234567890') for x in range(5)])
             # yk = Yookassa('936939', 'test_NrlH-8JYGRxaDHH0BfoLrh_Z65a1g2e7r4d4BzfgMiY', )
@@ -206,8 +206,7 @@ def create_order(request):
             phone_number = clean_phone_number(cleaned_data['phone_number'])
             cleaned_data['phone_number'] = phone_number
             cleaned_data['order_content'] = adjust_ids(json.loads(cleaned_data['order_content']))
-            order.data = str(cleaned_data)
-
+            order = Order.objects.create(message=str(request.COOKIES), data=str(cleaned_data))
             # url = yk.create_payment(cleaned_data['total_price'], f'{phone_number}')
             sber = Sber()
             res = sber.registrate_order(cleaned_data['total_price'], '00000' + str(order.pk))
