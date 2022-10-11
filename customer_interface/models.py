@@ -123,6 +123,7 @@ class ProductOption(models.Model):
 
 class Order(models.Model):
     message = models.TextField(verbose_name='message')
+    data = models.TextField(verbose_name='data', default='')
     paid = models.BooleanField(verbose_name="оплачено", default=False)
     date = models.DateTimeField('дата, время', default=timezone.now)
 
