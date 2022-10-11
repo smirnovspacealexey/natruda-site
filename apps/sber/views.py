@@ -7,6 +7,9 @@ import ast
 
 from .backend import Sber
 
+import logging  # del me
+logger_debug = logging.getLogger('debug_logger')  # del me
+
 
 def test(request):
     template = loader.get_template('customer_interface/test.html')
@@ -25,9 +28,10 @@ def successful_payment(request):
             order = Order.objects.filter(pk=res[1]['orderNumber'][5:]).first()
             order.paid = True
             order.save()
-            import logging  # del me
-            logger_debug = logging.getLogger('debug_logger')  # del me
-            response_data = send_order_data(ast.literal_eval(order.data))
+
+            data = ast.literal_eval(order.data)
+            data.update({'is_paid': True})
+            response_data = send_order_data(data)
             logger_debug.info(f'\nsuccessful_payment\n {response_data}\n\n')
             context.update({'orderNumber': res[1]['orderNumber'], 'amount': res[1]['amount']/100})
         else:
