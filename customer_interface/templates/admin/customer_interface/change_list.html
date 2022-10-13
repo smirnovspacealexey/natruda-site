@@ -1,0 +1,9 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools %}
+  <ul>
+      <a href="/customer_interface/update_menu" class="button" style="padding: 10px; background-color: #28a745">Импорт</a>
+  </ul>
+    {{ block.super }}
+{% endblock %}
+

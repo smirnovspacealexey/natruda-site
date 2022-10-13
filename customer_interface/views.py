@@ -21,11 +21,14 @@ from shawarma_site.settings import DEBUG
 from apps.yookassa.backend import Yookassa
 from apps.sber.backend import Sber
 
+import logging  # del me
+logger_debug = logging.getLogger('debug_logger')  # del me
+
 
 # Create your views here.
 def index(request):
     print('index')
-    update_menu(None)
+
     template = loader.get_template('customer_interface/index.html')
     # context = {
     #     'categories': [
@@ -428,6 +431,7 @@ def update_menu(request):
     if result.status_code == 200:
         json_results = result.json()
         response = json_results
+        print(f'\n\n{len(response["menu_items"])}\n\'')  # del me
         for menu_item in response['menu_items']:
             try:
                 local_item = Menu.objects.get(internal_id=menu_item['id'])
@@ -613,7 +617,11 @@ def update_menu(request):
                         internal_id__in=product_variant['product_options_ids']):
                     new_product_variant__new_product_option.product_variants.add(new_product_variant)
 
+        if request:
+            return HttpResponseRedirect(reverse('admin:customer_interface_menu_changelist'))
         return response
     else:
+        if request:
+            return HttpResponseRedirect(reverse('admin:customer_interface_menu_changelist'))
         return {}
-    return {}
+
