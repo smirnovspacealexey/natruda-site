@@ -23,7 +23,7 @@ class ProductOptionInline(admin.TabularInline):
 
 class MacroProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ('title',)}
-    list_display = ('title', 'picture', 'preview', 'ordering', 'customer_appropriate')
+    list_display = ('title', 'picture', 'preview', 'ordering', 'with_content', 'customer_appropriate')
     list_editable = ('customer_appropriate', 'picture', 'ordering')
 
     fieldsets = (

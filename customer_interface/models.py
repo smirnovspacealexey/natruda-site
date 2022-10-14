@@ -55,6 +55,9 @@ class MacroProduct(models.Model):
     def preview(self):
         return get_html_img(self.picture)
 
+    def with_content(self):
+        return len(self.contents.all()) > 0
+
     class Meta:
         ordering = ('ordering', )
 
