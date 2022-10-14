@@ -61,6 +61,8 @@ class MacroProduct(models.Model):
         else:
             return mark_safe('◽')
 
+    with_content.short_description = 'содержит контент'
+
     class Meta:
         ordering = ('ordering', )
 
