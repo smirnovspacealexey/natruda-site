@@ -16,7 +16,7 @@
             <ul class="cards_list">
                 {% for content in contents %}
                     <li
-                            {% if category.picture %}
+                            {% if content.picture %}
                                 style="background: url('{{ content.picture.url }}')"
                             {% else %}
                                 style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
