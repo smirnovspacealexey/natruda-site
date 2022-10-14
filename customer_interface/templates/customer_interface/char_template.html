@@ -158,7 +158,7 @@
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="{% static 'customer_interface/img/main_card-1.png' %}"
+                            <img src="{% if product.icon %}{{ product.icon.url }}{% else %}{% static '/customer_interface/img/food_default.png' %}{% endif %}"
                                  class="d-block w-100 carousel_img" alt="...">
                         </div>
                         {% for carousel_photo in product.carousel_photos %}

@@ -114,7 +114,7 @@ def meat(request, category_slug):
     print(MacroProductContent.objects.filter(macro_product__slug=category_slug))
     context = {
         'category': MacroProduct.objects.get(slug=category_slug),
-        'contents': MacroProductContent.objects.filter(macro_product__slug=category_slug)
+        'contents': MacroProductContent.objects.filter(macro_product__slug=category_slug, customer_appropriate=True)
     }
     return HttpResponse(template.render(context, request))
 
@@ -506,12 +506,13 @@ def update_menu(request):
                     print(ContentOption.objects.filter(internal_id=macro_product_content['content_option_id']))
                     according_content = ContentOption.objects.get(internal_id=macro_product_content['content_option_id'])
                     new_mpc_option = MacroProductContent(title=macro_product_content['title'],
-                                                   customer_title=macro_product_content['customer_title'],
-                                                   internal_id=macro_product_content['id'],
-                                                   macro_product=according_macro,
-                                                   content_option=according_content,
-                                                   slug=slugify("{} {}".format(according_macro.customer_title,
-                                                                               according_content.customer_title)))
+                                                         customer_title=macro_product_content['customer_title'],
+                                                         internal_id=macro_product_content['id'],
+                                                         macro_product=according_macro,
+                                                         content_option=according_content,
+                                                         customer_appropriate=True,
+                                                         slug=slugify("{} {}".format(according_macro.customer_title,
+                                                                                       according_content.customer_title)))
                     new_mpc_option.save()
                 except:
                     print(f'ERROR: {traceback.format_exc()}')

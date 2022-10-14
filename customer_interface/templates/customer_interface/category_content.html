@@ -18,7 +18,12 @@
                     <li>
                         <a class="cards_item" href="{% url 'char' content.id %}"><span
                                 class="cards_item-text">{{ content.customer_title|upper }}</span><img
-                                src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
+                                src="{% if content.picture %}
+                                    {{ content.picture.url }}
+                                    {% else %}
+                                    {% static '/customer_interface/img/food_default.png' %}
+                                    {% endif %}>" alt="">
+                        </a>
                     </li>
                 {% endfor %}
             </ul>

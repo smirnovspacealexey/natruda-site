@@ -1,6 +1,7 @@
 from django.contrib import admin
-
-from .models import Menu, MacroProduct, ContentOption, ProductOption, ProductVariant, SizeOption, MacroProductContent, Order
+from django.utils.html import format_html
+from .models import Menu, MacroProduct, ContentOption, ProductOption, ProductVariant, SizeOption, MacroProductContent,\
+    Order, get_html_img
 
 
 # Register your models here.
@@ -22,27 +23,81 @@ class ProductOptionInline(admin.TabularInline):
 
 class MacroProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ('title',)}
-    list_display = ('title', 'customer_appropriate', 'ordering')
-    list_editable = ('customer_appropriate', 'ordering')
+    list_display = ('title', 'picture', 'preview', 'ordering', 'customer_appropriate')
+    list_editable = ('customer_appropriate', 'picture', 'ordering')
+
+    fieldsets = (
+        (None, {
+            'fields': ['title', 'customer_title', 'slug', 'internal_id', 'customer_appropriate', 'ordering']
+        }),
+        ('Картинка', {
+            'fields': ('picture', 'preview')
+        }),
+    )
     inlines = [MacroProductContentInline, ProductVariantInline]
+    readonly_fields = ["preview"]
+
+    def preview(self, obj):
+        return get_html_img(obj.picture)
 
 
 class MacroProductContentAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ('title',)}
     inlines = [ProductVariantInline]
 
+    list_display = ('title', 'customer_title', 'internal_id', 'picture', 'preview', 'customer_appropriate', 'customer_description')
+    list_editable = ('customer_title', 'customer_description', 'customer_appropriate', 'picture')
+    readonly_fields = ["preview"]
 
-class MenuAdmin(admin.ModelAdmin):
-    list_display = ('title', 'customer_title', 'weight', 'price', 'note', 'customer_appropriate')
-    list_editable = ('customer_title', 'weight', 'price', 'note', 'customer_appropriate')
+    fieldsets = (
+        (None, {
+            'fields': ['title', 'customer_title', 'customer_description', 'slug', 'content_option', 'macro_product', 'internal_id', 'customer_appropriate']
+        }),
+        ('Картинка', {
+            'fields': ('picture', 'preview')
+        }),
+    )
+
+    def preview(self, obj):
+        return get_html_img(obj.picture)
+
+
+class MenuAdmin(admin.ModelAdmin):     # customer_appropriate скрыто. так как не обрабатывается пока ещё в коде
+    list_display = ('title', 'customer_title', 'weight', 'price', 'icon', 'preview', 'note')
+    list_editable = ('customer_title', 'weight', 'price', 'icon', 'note')
     inlines = [ProductVariantInline, ProductOptionInline]
+    readonly_fields = ["preview"]
+
+    search_fields = ['title', 'customer_title', 'weight', 'price']
+    list_filter = ['is_by_weight']
+
+    def preview(self, obj):
+        return get_html_img(obj.icon)
+
+
+class ContentOptionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'customer_title', 'internal_id', 'picture', 'preview')
+    list_editable = ('customer_title', 'picture')
+    readonly_fields = ["preview"]
+
+    fieldsets = (
+        (None, {
+            'fields': ['title', 'customer_title', 'internal_id']
+        }),
+        ('Картинка', {
+            'fields': ('picture', 'preview')
+        }),
+    )
+
+    def preview(self, obj):
+        return get_html_img(obj.picture)
 
 
 admin.site.register(Order)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(MacroProduct, MacroProductAdmin)
 admin.site.register(MacroProductContent, MacroProductContentAdmin)
-admin.site.register(ContentOption)
+admin.site.register(ContentOption, ContentOptionAdmin)
 admin.site.register(ProductOption)
 admin.site.register(ProductVariant)
 admin.site.register(SizeOption)
