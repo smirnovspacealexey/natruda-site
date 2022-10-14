@@ -15,15 +15,15 @@
         <div class="cards">
             <ul class="cards_list">
                 {% for content in contents %}
-                    <li>
+                    <li
+                            {% if category.picture %}
+                                style="background: url('{{ content.picture.url }}')"
+                            {% else %}
+                                style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
+                            {% endif %}>
                         <a class="cards_item" href="{% url 'char' content.id %}"><span
                                 class="cards_item-text">{{ content.customer_title|upper }}</span><img
-                                src="{% if content.picture %}
-                                    {{ content.picture.url }}
-                                    {% else %}
-                                    {% static '/customer_interface/img/food_default.png' %}
-                                    {% endif %}>" alt="">
-                        </a>
+                                src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
                     </li>
                 {% endfor %}
             </ul>
