@@ -178,10 +178,12 @@
                     </a>
                 </div>
                 <div class="card_desc">
-                    <span class="card_head">Описание товара</span>
-                    <p class="card_desc-text">
-                        {{ product.customer_description }}
-                    </p>
+                    {% if product.customer_description %}
+                        <span class="card_head">Описание товара</span>
+                        <p class="card_desc-text">
+                            {{ product.customer_description }}
+                        </p>
+                    {% endif %}
 
                     {% for product_variant in product_variants %}
                         <div class="size_specific_properties" product-id="{{ product_variant.obj.menu_item.id }}">
