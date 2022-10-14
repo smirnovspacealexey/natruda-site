@@ -163,7 +163,7 @@
                         </div>
                         {% for carousel_photo in product.carousel_photos %}
                             <div class="carousel-item">
-                                <img src="{% static carousel_photo.path %}" class="d-block w-100"
+                                <img src="{{ carousel_photo }}" class="d-block w-100"
                                      alt="...">
                             </div>
                         {% endfor %}

@@ -324,15 +324,15 @@
                 </label>
             </div>
         </div>
-        <label for="select" class="delivery_place">
-            <span>Пункт выдачи</span>
-            <select class="form-select delivery_place-inp" aria-label="Default select example" name="select">
-                <option selected></option>
-                {% for point in points %}
-                    <option value="{{ point.pk }}">{{ point.name }}</option>
-                {% endfor %}
-            </select>
-        </label>
+{#        <label for="select" class="delivery_place">#}
+{#            <span>Пункт выдачи</span>#}
+{#            <select class="form-select delivery_place-inp" aria-label="Default select example" name="select">#}
+{#                <option selected></option>#}
+{#                {% for point in points %}#}
+{#                    <option value="{{ point.pk }}">{{ point.name }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+{#        </label>#}
         <div class="prop prop_pay">
             <label for="card_pay" class="cash_pay-label">
                 <span>Сдача с:</span>

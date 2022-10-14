@@ -17,7 +17,7 @@
                 {% for content in contents %}
                     <li
                             {% if content.picture %}
-                                style="background: url('{{ content.picture.url }}')"
+                                style="background: url('{{ content.picture.url }}'); background-size: cover;"
                             {% else %}
                                 style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
                             {% endif %}>

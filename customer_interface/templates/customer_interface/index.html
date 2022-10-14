@@ -141,13 +141,13 @@
                         {% if category.contents.all %}
                             <li
                                     {% if category.picture %}
-                                        style="background: url('{{ category.picture.url }}')"
+                                        style="background: url('{{ category.picture.url }}'); background-size: cover;"
                                     {% else %}
                                         style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
                                     {% endif %}
                             >
                                 <a class="cards_item" href="{% url 'meat' category.slug %}">
-                            <span class="cards_item-text">
+                            <span class="cards_item-text" style="word-break: break-all; font-size: {{ category.get_font_size }}px;">
                                 {{ category.customer_title|upper }}
                             </span>
                                 </a>

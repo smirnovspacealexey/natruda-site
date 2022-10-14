@@ -61,6 +61,9 @@ class MacroProduct(models.Model):
         else:
             return mark_safe('◽')
 
+    def get_font_size(self):
+        return 20 - len(self.customer_title) // 10
+
     with_content.short_description = 'содержит контент'
 
     class Meta:
@@ -109,6 +112,14 @@ class MacroProductContent(models.Model):
     macro_product = models.ForeignKey(MacroProduct, related_name='contents', on_delete=models.CASCADE, verbose_name="Макротовар")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
 
+    def carousel_photos(self):
+        photos = []
+        for variant in self.variants.all():
+            if hasattr(variant, 'menu_item') and variant.menu_item.icon:
+                photos.append(variant.menu_item.icon.url)
+        return photos
+
+
     def preview(self):
         return get_html_img(self.picture)
 
@@ -126,7 +137,7 @@ class ProductVariant(models.Model):
     size_option = models.ForeignKey(SizeOption, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Вариант размера")
     content_option = models.ForeignKey(ContentOption, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Вариант содержимого")
     macro_product = models.ForeignKey(MacroProduct, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Макротовар")
-    macro_product_content = models.ForeignKey(MacroProductContent, on_delete=models.CASCADE,
+    macro_product_content = models.ForeignKey(MacroProductContent, on_delete=models.CASCADE, related_name="variants",
                                               verbose_name="Содержимое макротовара", null=True)
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
 
