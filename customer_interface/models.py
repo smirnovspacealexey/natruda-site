@@ -56,7 +56,10 @@ class MacroProduct(models.Model):
         return get_html_img(self.picture)
 
     def with_content(self):
-        return len(self.contents.all()) > 0
+        if self.contents.all():
+            return mark_safe('✅')
+        else:
+            return mark_safe('◽')
 
     class Meta:
         ordering = ('ordering', )
