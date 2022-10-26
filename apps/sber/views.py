@@ -30,7 +30,12 @@ def successful_payment(request):
             order.save()
             logger_debug.info(f'\n----\n {order}\n{order.data}\n{type(order.data)}')
             data = ast.literal_eval(order.data)
-            data.update({'is_paid': True})
+            msg = ast.literal_eval(order.message)
+            data.update({'is_paid': True,
+                         'is_delivery': True if msg.get('way', '1') == '1' else False,
+                         'point': msg.get('point', None)})
+
+            logger_debug.info(f'\nsuccessful_payment, data\n {data}\n')
             response_data = send_order_data(data)
             logger_debug.info(f'\nsuccessful_payment\n {response_data}\n\n')
             context.update({'orderNumber': res[1]['orderNumber'], 'amount': res[1]['amount']/100})

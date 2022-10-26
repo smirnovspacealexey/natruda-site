@@ -24,7 +24,7 @@
                     <div class="adds_submit-btn btn" onclick="chooseWay('1')">Доставка</div>
                 </li>
                 <li>
-                    <div class="adds_submit-btn btn" onclick="chooseWay('2')">Самовывоз</div>
+                    <div class="adds_submit-btn btn" onclick="chooseWay('0')">Самовывоз</div>
                 </li>
             </ul>
         </div>
@@ -38,7 +38,7 @@
                             {% else %}
                                 style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
                             {% endif %}>
-                        <a class="cards_item" href="#" onclick="choosePoint('{{ point.pk }}')"><span class="cards_item-text">{{ point.name }}</span>
+                        <a class="cards_item" href="#" onclick="choosePoint('{{ point.subnetwork }}')"><span class="cards_item-text">{{ point.name }}</span>
                         </a>
                     </li>
                 {% endfor %}
