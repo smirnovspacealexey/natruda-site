@@ -38,7 +38,12 @@ def successful_payment(request):
             logger_debug.info(f'\nsuccessful_payment, data\n {data}\n')
             response_data = send_order_data(data)
             logger_debug.info(f'\nsuccessful_payment\n {response_data}\n\n')
-            context.update({'orderNumber': res[1]['orderNumber'], 'amount': res[1]['amount']/100})
+            if 'order_number' in response_data:
+                order_number = response_data['order_number']
+            else:
+                order_number = res[1]['orderNumber']
+            context.update({'orderNumber': order_number, 'amount': res[1]['amount']/100,
+                            'success_in_queue': response_data['success']})
         else:
             return HttpResponseRedirect(reverse('failed_payment'))
 
