@@ -65,7 +65,7 @@ class MacroProduct(models.Model):
             return mark_safe('◽')
 
     def get_font_size(self):
-        return 20 - len(self.customer_title) // 10
+        return 19 - len(self.customer_title) // 10
 
     with_content.short_description = 'содержит контент'
 
@@ -122,7 +122,7 @@ class MacroProductContent(models.Model):
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
 
     def get_font_size(self):
-        return 20 - len(self.customer_title) // 10
+        return 18 - len(self.customer_title) // 10
 
     def carousel_photos(self):
         photos = []
