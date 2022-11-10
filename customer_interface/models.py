@@ -30,6 +30,9 @@ class Menu(models.Model):
     customer_appropriate = models.BooleanField(verbose_name="Показывать", default=False)
     icon = models.ImageField(upload_to="img/icons", blank=True, null=True, verbose_name="Иконка")
 
+    def get_font_size(self):
+        return 20 - len(self.customer_title) // 10
+
     def preview(self):
         return get_html_img(self.icon)
 
@@ -78,6 +81,9 @@ class SizeOption(models.Model):
     customer_title = models.CharField(max_length=200, default="", verbose_name="Название для покупателя")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
 
+    def get_font_size(self):
+        return 20 - len(self.customer_title) // 10
+
     def __str__(self):
         return u"{}".format(self.title)
 
@@ -90,6 +96,9 @@ class ContentOption(models.Model):
     customer_title = models.CharField(max_length=200, default="", verbose_name="Название для покупателя")
     picture = models.ImageField(upload_to="img/content_pictures", blank=True, null=True, verbose_name="Иконка")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
+
+    def get_font_size(self):
+        return 20 - len(self.customer_title) // 10
 
     def preview(self):
         return get_html_img(self.picture)
@@ -111,6 +120,9 @@ class MacroProductContent(models.Model):
     content_option = models.ForeignKey(ContentOption, on_delete=models.CASCADE, verbose_name="Вариант содержимого")
     macro_product = models.ForeignKey(MacroProduct, related_name='contents', on_delete=models.CASCADE, verbose_name="Макротовар")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
+
+    def get_font_size(self):
+        return 20 - len(self.customer_title) // 10
 
     def carousel_photos(self):
         photos = []
@@ -141,6 +153,9 @@ class ProductVariant(models.Model):
                                               verbose_name="Содержимое макротовара", null=True)
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
 
+    def get_font_size(self):
+        return 20 - len(self.customer_title) // 10
+
     def __str__(self):
         return u"{}".format(self.title)
 
@@ -154,6 +169,9 @@ class ProductOption(models.Model):
     menu_item = models.ForeignKey(Menu, on_delete=models.CASCADE, verbose_name="Товар из меню 1С")
     product_variants = models.ManyToManyField(ProductVariant, verbose_name="Вариант товара")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
+
+    def get_font_size(self):
+        return 20 - len(self.customer_title) // 10
 
     def __str__(self):
         return u"{}".format(self.title)
