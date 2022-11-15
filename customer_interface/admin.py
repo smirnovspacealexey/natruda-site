@@ -93,12 +93,16 @@ class ContentOptionAdmin(admin.ModelAdmin):
         return get_html_img(obj.picture)
 
 
+class ProductVariantAdmin(admin.ModelAdmin):
+    list_display = ('title', 'customer_title', 'internal_id')
+
+
 admin.site.register(Order)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(MacroProduct, MacroProductAdmin)
 admin.site.register(MacroProductContent, MacroProductContentAdmin)
 admin.site.register(ContentOption, ContentOptionAdmin)
+admin.site.register(ProductVariant, ProductVariantAdmin)
 admin.site.register(ProductOption)
-admin.site.register(ProductVariant)
 admin.site.register(SizeOption)
 

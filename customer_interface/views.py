@@ -164,7 +164,8 @@ def basket(request):
 
 def char(request, macroproduct_content_id):
     template = loader.get_template('customer_interface/char_template.html')
-    print(ProductVariant.objects.filter(macro_product_content__id=macroproduct_content_id))
+    for i in ProductVariant.objects.filter(macro_product_content__id=macroproduct_content_id):
+        print(i, i.pk, i.internal_id)
     context = {
         'product': MacroProductContent.objects.get(id=macroproduct_content_id),
         'product_variants': [
@@ -605,18 +606,34 @@ def update_menu(request):
                                                                            product_variant['macro_product_content_id']).first()\
                     if 'macro_product_content_id' in product_variant else None
 
-                new_product_variant = ProductVariant(title=product_variant['title'],
-                                                     customer_title=product_variant['customer_title'],
-                                                     internal_id=product_variant['id'],
-                                                     menu_item=menu_item,
-                                                     content_option=content_option,
-                                                     size_option=size_option,
-                                                     macro_product=category,
-                                                     macro_product_content=macro_product_content)
-                new_product_variant.save()
-                for new_product_variant__new_product_option in ProductOption.objects.filter(
-                        internal_id__in=product_variant['product_options_ids']):
-                    new_product_variant__new_product_option.product_variants.add(new_product_variant)
+                local_product_variant = ProductVariant.objects.filter(internal_id=product_variant['id']).last()
+                if not local_product_variant:
+                    new_product_variant = ProductVariant(title=product_variant['title'],
+                                                         customer_title=product_variant['customer_title'],
+                                                         internal_id=product_variant['id'],
+                                                         menu_item=menu_item,
+                                                         content_option=content_option,
+                                                         size_option=size_option,
+                                                         macro_product=category,
+                                                         macro_product_content=macro_product_content)
+                    new_product_variant.save()
+                    for new_product_variant__new_product_option in ProductOption.objects.filter(
+                            internal_id__in=product_variant['product_options_ids']):
+                        new_product_variant__new_product_option.product_variants.add(new_product_variant)
+                else:
+                    local_product_variant.title = product_variant['title']
+                    local_product_variant.product_variant = product_variant['customer_title']
+                    local_product_variant.internal_id = product_variant['id']
+                    local_product_variant.menu_item = menu_item
+                    local_product_variant.content_option = content_option
+                    local_product_variant.size_option = size_option
+                    local_product_variant.macro_product = category
+                    local_product_variant.macro_product_content = macro_product_content
+                    local_product_variant.save()
+                    for new_product_variant__new_product_option in ProductOption.objects.filter(
+                            internal_id__in=product_variant['product_options_ids']):
+                        if local_product_variant not in new_product_variant__new_product_option.product_variants.all():
+                            new_product_variant__new_product_option.product_variants.add(local_product_variant)
 
         if request:
             return HttpResponseRedirect(reverse('admin:customer_interface_menu_changelist'))
