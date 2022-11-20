@@ -14,17 +14,26 @@
     </header>
 {% endblock %}
 
+{% block cmt %}
+    ⏳ Доставка скоро появится
+    <br/>
+    <label class="adds_submit-btn btn ok-btn" style="margin: 0 auto;" for="css-modal-checkbox">хорошо</label>
+{% endblock %}
+
 {% block content %}
     {% load l10n %}
     <main class="main_visible">
 
         <div class="cards" style="text-align: center" id="ways">
             <ul>
+                {#                <li>#}
+                {#                    <div class="adds_submit-btn btn" onclick="chooseWay('1')">Доставка</div>#}
+                {#                </li>#}
                 <li>
-                    <div class="adds_submit-btn btn" onclick="chooseWay('1')">Доставка</div>
+                    <label for="css-modal-checkbox" class="css-modal-checkbox adds_submit-btn btn">Доставка</label>
                 </li>
                 <li>
-                    <div class="adds_submit-btn btn" onclick="chooseWay('0')">Самовывоз</div>
+                    <label class="css-modal-checkbox adds_submit-btn btn" onclick="chooseWay('0')">Самовывоз</label>
                 </li>
             </ul>
         </div>

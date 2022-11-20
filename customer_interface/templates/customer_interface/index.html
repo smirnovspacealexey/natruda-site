@@ -33,6 +33,134 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
           integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'customer_interface/css/main.css' %}">
+    <style>
+        /* Контейнер для кнопки */
+        .css-modal-checkbox-container {
+            height: 60px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        /* Убираем флажок */
+        #css-modal-checkbox {
+            display: none;
+        }
+        /* Кнопка для открытия */
+        .css-modal-checkbox {
+            display: inline-flex;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .css-modal-checkbox:hover,
+        .css-modal-checkbox:active,
+        .css-modal-checkbox:focus {
+            color: #FFF;
+        }
+        .css-modal-checkbox:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50px;
+            bottom: 0;
+            left: 0;
+            border-right: 50px solid transparent;
+            border-top: 50px solid rgba(248, 91, 7, 0.76);
+            transition: transform 0.5s;
+            transform: translateX(-100%);
+            z-index: -1;
+        }
+        .css-modal-checkbox:hover:before,
+        .css-modal-checkbox:active:before,
+        .css-modal-checkbox:focus:before {
+            transform: translateX(0);
+        }
+
+        /* Контейнер, который затемняет страницу */
+        #css-modal-checkbox + .cmc {
+            display: none;
+        }
+        #css-modal-checkbox:checked + .cmc {
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index: 4;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            animation: bg 0.5s ease;
+            background: rgba(173, 190, 204, 0.25);
+        }
+
+        /* Модальное окно */
+        #css-modal-checkbox:checked + .cmc .cmt {
+            padding: 20px;
+            width:80%;
+            max-width: 600px;
+            max-height: 70%;
+            transition: 0.5s;
+            border-radius: 12px;
+            background: #000000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);
+            text-align: center;
+            overflow: auto;
+            animation: scale 0.5s ease;
+        }
+        /* Кнопка с крестиком закрывающая окно */
+        .css-modal-close {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            position: absolute;
+            z-index: 10;
+            top: 20px;
+            right: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 16px 20px rgba(0,0,0,0.2);
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffaf28' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cline x1='18' y1='6' x2='6' y2='18'%3e%3c/line%3e%3cline x1='6' y1='6' x2='18' y2='18'%3e%3c/line%3e%3c/svg%3e");
+            background-color: rgba(0, 0, 0, 0.5);
+            background-size: cover;
+            animation: move 0.5s ease;
+            cursor: pointer;
+        }
+
+        .ok-btn {
+            margin-right: 0;
+            box-shadow: none;
+            background-color: #fff !important;
+            color: #000 !important;
+            border: 1px solid #fff !important;
+            width: 156px;
+        }
+
+        /* Анимации */
+        @keyframes scale {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        @keyframes move {
+            0% {
+                right: -80px;
+            }
+            100% {
+                right: 20px;
+            }
+        }
+        @keyframes bg {
+            0% {
+                background: rgba(51, 122, 183, 0);
+            }
+            100% {
+                background: rgba(173, 190, 204, 0.31);
+            }
+        }
+    </style>
     {% block additional_CSS %}
     {% endblock %}
     <link rel="stylesheet" type="text/css" href="{% static 'customer_interface/css/media.css' %}">
@@ -60,7 +188,7 @@
                 </li>
             </ul>
             <a href="{% url 'counter' %}"><img src="{% static 'customer_interface/img/head_logo.png' %}" alt="#"
-                                             class="head_logo"></a>
+                                               class="head_logo"></a>
             <p class="head_phone">
 				<span class="head_phone-num">
 					700-700-1
@@ -80,7 +208,7 @@
         </header>
         <header class="header_mobile">
             <a href="{% url 'counter' %}"><img src="{% static 'customer_interface/img/head_logo.png' %}" alt="#"
-                                             class="head_logo"></a>
+                                               class="head_logo"></a>
             <p class="head_phone">
 				<span class="head_phone-num">
 					700-700-1
@@ -197,7 +325,16 @@
             </div>
         </footer>
     {% endblock %}
-
+</div>
+<!-- Модальное окно -->
+<input type="checkbox" id="css-modal-checkbox" />
+<div class="cmc">
+    <div class="cmt">
+        {% block cmt %}
+            BUM!
+        {% endblock %}
+    </div>
+    <label for="css-modal-checkbox" class="css-modal-close"></label>
 </div>
 </body>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"

@@ -9,7 +9,7 @@
 {% block header %}
     <header style="text-align: center; display: block;">
         <a href="{% url 'counter' %}"><img src="{% static 'customer_interface/img/head_logo.png' %}" alt="#"
-                                         class="head_logo"></a>
+                                           class="head_logo"></a>
     </header>
 {% endblock %}
 
@@ -346,8 +346,11 @@
                 <p>
                     <label class="radio_label"><input type="radio" name="delivery" value="Самовывоз"
                                                       class="delivery_inp-hide">Самовывоз</label>
-                    <label class="radio_label"><input type="radio" name="delivery" value="Доставка"
-                                                      class="delivery_inp">Доставка</label>
+                    {#                    <label class="radio_label"><input type="radio" name="delivery" value="Доставка"#}
+                    {#                                                      class="delivery_inp">Доставка</label>#}
+
+                    <label class="radio_label css-modal-checkbox" for="css-modal-checkbox"><input type="radio" name="delivery" value="Доставка">Доставка</label>
+
                 </p>
                 <div class="delivery_inputs">
                     <label for="street" class="street_label">
