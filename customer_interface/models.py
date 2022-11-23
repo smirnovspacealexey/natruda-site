@@ -28,6 +28,7 @@ class Menu(models.Model):
     is_by_weight = models.BooleanField(verbose_name="На развес", default=False)
     note = models.TextField(verbose_name="Описание", blank=True, null=True)
     customer_appropriate = models.BooleanField(verbose_name="Показывать", default=False)
+    minutes = models.IntegerField(verbose_name="время готовки в минутах", default=15)
     icon = models.ImageField(upload_to="img/icons", blank=True, null=True, verbose_name="Иконка")
 
     def get_font_size(self):
@@ -153,6 +154,10 @@ class ProductVariant(models.Model):
                                               verbose_name="Содержимое макротовара", null=True)
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
 
+    @property
+    def minutes(self):
+        return self.menu_item.minutes
+
     def get_font_size(self):
         return 20 - len(self.customer_title) // 10
 
@@ -172,6 +177,10 @@ class ProductOption(models.Model):
 
     def get_font_size(self):
         return 20 - len(self.customer_title) // 10
+
+    @property
+    def minutes(self):
+        return self.menu_item.minutes
 
     def __str__(self):
         return u"{}".format(self.title)

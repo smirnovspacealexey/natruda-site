@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block cmt %}
-    ⌚ будет готово: 15 минут после оплаты
+    ⌚ будет готово: {{ cooking_time }} минут после оплаты
     <br/>
     <label class="adds_submit-btn btn ok-btn" style="margin: 0 auto;" for="css-modal-checkbox">хорошо</label>
 {% endblock %}
@@ -272,7 +272,7 @@
 {#                                                      class="exact_time-inp">Точное время</label>#}
 
                 </p>
-                <label id="willBeReady" for="css-modal-checkbox" style="color: rgba(248,79,7,0.76)">⌚ будет готово: 15 минут после оплаты</label>
+                <label id="willBeReady" for="css-modal-checkbox" style="color: rgba(248,79,7,0.76)">⌚ будет готово: {{ cooking_time }} минут после оплаты</label>
                 <p class="nearest_time">Курьер доставит ваш заказ в скором времени <br> (от 1 часа)</p>
                 <p class="exact_time">Выберите удобное для вас время и получите заказ в назначенный час (от 1
                     часа)</p>

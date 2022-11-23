@@ -146,19 +146,28 @@ def basket(request):
     }
     print(product_ids)
     print(current_order)
+    cooking_time = 15
     for item in current_order:
         product_variant = ProductVariant.objects.filter(menu_item__id=item['id']).first()
+        product_options_query = ProductOption.objects.filter(product_variants=product_variant)
+        for product_option in product_options_query:
+            if product_option.minutes > cooking_time:
+                cooking_time = product_option.minutes
+
+        if product_variant and product_variant.minutes > cooking_time:
+            cooking_time = product_variant.minutes
+
         product_options = [
             {
                 'obj': product_option,
                 'is_enabled': True if product_option.id in get_products_id(item['toppings']) else False,
-            } for product_option in ProductOption.objects.filter(product_variants=product_variant)]
+            } for product_option in product_options_query]
         context['current_order']['products'].append({
             'obj': product_variant,
             'quantity': item['quantity'],
             'product_options': product_options,
         })
-
+    context['cooking_time'] = cooking_time
     return HttpResponse(template.render(context, request))
 
 
@@ -439,6 +448,7 @@ def update_menu(request):
                 local_item.title = menu_item['name']
                 local_item.customer_title = menu_item['name']
                 local_item.price = menu_item['price']
+                local_item.minutes = menu_item['minutes']
                 local_item.save()
             except MultipleObjectsReturned:
                 client.captureException()
