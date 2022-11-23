@@ -456,7 +456,7 @@ def update_menu(request):
                                                                                               menu_item['name']))
             except ObjectDoesNotExist:
                 new_menu_item = Menu(title=menu_item['name'], customer_title=menu_item['name'],
-                                     price=menu_item['price'], internal_id=menu_item['id'])
+                                     price=menu_item['price'], internal_id=menu_item['id'], minutes=menu_item['minutes'])
                 new_menu_item.save()
 
         for category in response['categories']:
