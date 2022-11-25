@@ -97,12 +97,18 @@ class ProductVariantAdmin(admin.ModelAdmin):
     list_display = ('title', 'customer_title', 'internal_id')
 
 
+class ProductOptionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'customer_title', 'internal_id')
+    filter_horizontal = ('product_variants', )
+    autocomplete_fields = ['menu_item']
+
+
 admin.site.register(Order)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(MacroProduct, MacroProductAdmin)
 admin.site.register(MacroProductContent, MacroProductContentAdmin)
 admin.site.register(ContentOption, ContentOptionAdmin)
 admin.site.register(ProductVariant, ProductVariantAdmin)
-admin.site.register(ProductOption)
+admin.site.register(ProductOption, ProductOptionAdmin)
 admin.site.register(SizeOption)
 
