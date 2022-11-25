@@ -63,7 +63,7 @@ class MacroProductContentAdmin(admin.ModelAdmin):
 
 
 class MenuAdmin(admin.ModelAdmin):     # customer_appropriate скрыто. так как не обрабатывается пока ещё в коде
-    list_display = ('title', 'customer_title', 'weight', 'price', 'icon', 'preview', 'note')
+    list_display = ('__str__', 'customer_title', 'weight', 'price', 'icon', 'preview', 'note')
     list_editable = ('customer_title', 'weight', 'price', 'icon', 'note')
     inlines = [ProductVariantInline, ProductOptionInline]
     readonly_fields = ["preview"]
