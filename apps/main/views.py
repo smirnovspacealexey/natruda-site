@@ -2,6 +2,7 @@ from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, resolve
 from .models import Point, Data
+from shawarma_site.settings import HOST
 
 
 def counter(request):
