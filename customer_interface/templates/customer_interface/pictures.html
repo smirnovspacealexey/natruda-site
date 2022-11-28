@@ -78,12 +78,12 @@
 <div class="wrap">
     <header>
         {% for picture in pictures %}
-            <label for="slide-{{ picture.slug }}-trigger"><img title="{{ picture.title }}" src="{{ picture.picture.url }}" height="40px"><br/>{{ picture.title }}</label>
+            <label for="slide-slug{{ picture.slug }}-trigger"><img title="{{ picture.title }}" src="{{ picture.picture.url }}" height="40px"><br/>{{ picture.title }}</label>
         {% endfor %}
     </header>
 
     {% for picture in pictures %}
-        <input id="slide-{{ picture.slug }}-trigger" type="radio" name="slides"{% if forloop.first %} checked{% endif %}>
+        <input id="slide-slug{{ picture.slug }}-trigger" type="radio" name="slides"{% if forloop.first %} checked{% endif %}>
         <section class="slide {{ picture.slug }}">
             <h1>{{ picture.title }}</h1>
         </section>
