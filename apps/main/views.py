@@ -27,11 +27,13 @@ def menu_pdf(request):
 def menu_pictures(request):
     current = Data.current()
     template = loader.get_template('customer_interface/pictures.html')
+    mobile = request.user_agent.is_mobile
     HOST = 'http://127.0.0.1:8000/'
     context = {
         'HOST': HOST[:-1],
-        'pictures': current.menu_pictures.all().order_by('ordering'),
+        'pictures': current.menu_pictures.filter(mobile=mobile).order_by('ordering'),
         'title': 'меню',
+        'mobile': mobile,
         'picture': current.menu_pictures.first()
     }
     return HttpResponse(template.render(context, request))

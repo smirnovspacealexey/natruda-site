@@ -10,8 +10,8 @@ class PointAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'title', 'picture', 'preview', 'ordering']
-    list_editable = ('picture', 'ordering',)
+    list_display = ['pk', 'title', 'picture', 'preview', 'mobile', 'ordering']
+    list_editable = ('picture', 'ordering', 'mobile',)
     readonly_fields = ["preview"]
     prepopulated_fields = {"slug": ('title',)}
 

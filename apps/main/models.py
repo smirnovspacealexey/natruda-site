@@ -28,6 +28,7 @@ class Image(models.Model):
     title = models.CharField(max_length=200, verbose_name="Имя картинки", default='')
     slug = models.CharField(max_length=200, verbose_name="slug картинки", default='')
     picture = models.ImageField(upload_to="img/main", blank=True, null=True, verbose_name="картинка")
+    mobile = models.BooleanField('mobile', default=False)
     ordering = models.IntegerField('ordering', default=0)
 
     def __str__(self):
