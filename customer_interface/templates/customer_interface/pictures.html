@@ -58,7 +58,7 @@
             width: 99%;
             height: 84%;
         {% else %}
-            width: 65%;
+            width: 99%;
             height: 100%;
         {% endif %}
         }
@@ -68,7 +68,7 @@
     {% if mobile %}
         left: 0;
     {% else %}
-        left: 15%;
+        left: 0;
     {% endif %}
         z-index: 100;
         transition: left 0.65s ease-out;
@@ -94,11 +94,11 @@
     </header>
     {% for picture in pictures %}
         <input id="slide-slug{{ picture.slug }}-trigger" type="radio" name="slides"{% if forloop.first %} checked{% endif %}>
-        <section class="slide slug{{ picture.slug }}" style="top: 70px" {% if mobile %}onmousemove='zoom(event)'{% endif %}>
+        <section class="slide slug{{ picture.slug }}" style="top: 70px" {% if not mobile %}onmousemove='zoom(event)'{% endif %}>
         </section>
     {% endfor %}
 </div>
-{% if mobile %}
+{% if not mobile %}
     <script>
         function zoom(e){
             var zoomer = e.currentTarget;
