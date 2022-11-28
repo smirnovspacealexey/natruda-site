@@ -90,9 +90,10 @@
             <label for="slide-slug{{ picture.slug }}-trigger"><img title="{{ picture.title }}" src="{{ picture.picture.url }}" height="40px"><br/>{{ picture.title }}</label>
         {% endfor %}
     </header>
+    {% if mobile %}<br/>{% endif %}
     {% for picture in pictures %}
         <input id="slide-slug{{ picture.slug }}-trigger" type="radio" name="slides"{% if forloop.first %} checked{% endif %}>
-        <section class="slide slug{{ picture.slug }}" style="top: {% if mobile %}100px{% else %}70px{% endif %};">
+        <section class="slide slug{{ picture.slug }}" style="top: 70px">
         </section>
     {% endfor %}
 </div>
