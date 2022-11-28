@@ -20,7 +20,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from apps.signboard.urls import urlpatterns as urlpatterns_signboard
-from apps.main.views import menu_pdf
+from apps.main.views import menu_pdf, menu_pictures
 from apps.sber.urls import urlpatterns as urlpatterns_sber
 from apps.main.views import counter
 
@@ -28,7 +28,8 @@ urlpatterns = [
     path('', counter, name='counter'),
     url(r'^customer_interface/', include('customer_interface.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^menu/', menu_pdf),
+    url(r'^menu-pdf/', menu_pdf),
+    url(r'^menu/', menu_pictures),
 ]
 
 urlpatterns += urlpatterns_signboard

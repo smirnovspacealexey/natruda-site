@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<style>
+    html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .wrap {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        background: #120103;
+        color: #fff;
+        text-align: center;
+    }
+    header {
+        background: #3e474f;
+        box-shadow: 0 0.5em 1em #111;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 900;
+        width: 100%;
+    }
+    header label {
+        color: #788188;
+        cursor: pointer;
+        display: inline-block;
+        line-height: 1.25em;
+        font-size: 1em;
+        font-weight: bold;
+        padding: 0 1em;
+    }
+    header label:hover {
+        background: #2e353b;
+    }
+    .slide {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        z-index: 10;
+        padding: 8em 1em 0;
+        background-color: #120103;
+        background-position: 50% 50%;
+        background-size: cover;
+        transition: left 0s 0.75s;
+    }
+
+    {% for picture in pictures %}
+        .{{ picture.slug }} {
+            background-image: url({{ picture.picture.url }});
+        }
+    {% endfor %}
+
+    [id^="slide"]:checked + .slide {
+        left: 0;
+        z-index: 100;
+        transition: left 0.65s ease-out;
+    }
+
+    .slide h1 {
+        opacity: 0;
+        transform: translateY(100%);
+        transition: transform 0.5s 0.5s, opacity 0.5s;
+    }
+
+    [id^="slide"]:checked + .slide h1 {
+        opacity: 1;
+        transform: translateY(0);
+        transition: all 0.5s 0.5s;
+    }
+</style>
+<div class="wrap">
+    <header>
+        {% for picture in pictures %}
+            <label for="slide-{{ picture.slug }}-trigger"><img title="{{ picture.title }}" src="{{ picture.picture.url }}" height="40px"><br/>{{ picture.title }}</label>
+        {% endfor %}
+    </header>
+
+    {% for picture in pictures %}
+        <input id="slide-{{ picture.slug }}-trigger" type="radio" name="slides"{% if forloop.first %} checked{% endif %}>
+        <section class="slide {{ picture.slug }}">
+            <h1>{{ picture.title }}</h1>
+        </section>
+    {% endfor %}
+
+</div>
+</html>

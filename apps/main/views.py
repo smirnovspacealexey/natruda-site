@@ -24,3 +24,16 @@ def menu_pdf(request):
     return HttpResponse(template.render(context, request))
 
 
+def menu_pictures(request):
+    current = Data.current()
+    template = loader.get_template('customer_interface/pictures.html')
+    HOST = 'http://127.0.0.1:8000/'
+    context = {
+        'HOST': HOST[:-1],
+        'pictures': current.menu_pictures.all().order_by('-ordering'),
+        'title': 'меню',
+        'picture': current.menu_pictures.first()
+    }
+    return HttpResponse(template.render(context, request))
+
+
