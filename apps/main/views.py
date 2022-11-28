@@ -18,7 +18,7 @@ def menu_pdf(request):
     current = Data.current()
     template = loader.get_template('customer_interface/pdf.html')
     context = {
-        'url': current.menu.url,
+        'url': HOST[:-1] + current.menu.url,
         'title': 'меню'
     }
     return HttpResponse(template.render(context, request))
