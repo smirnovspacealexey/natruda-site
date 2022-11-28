@@ -30,7 +30,7 @@ def menu_pictures(request):
     HOST = 'http://127.0.0.1:8000/'
     context = {
         'HOST': HOST[:-1],
-        'pictures': current.menu_pictures.all().order_by('-ordering'),
+        'pictures': current.menu_pictures.all().order_by('ordering'),
         'title': 'меню',
         'picture': current.menu_pictures.first()
     }

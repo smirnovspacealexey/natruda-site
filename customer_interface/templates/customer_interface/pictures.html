@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <style>
+
     html, body {
         height: 100%;
         width: 100%;
@@ -9,7 +10,6 @@
     }
     .wrap {
         height: 100%;
-        width: 100%;
         position: relative;
         overflow: hidden;
         background: #120103;
@@ -38,8 +38,7 @@
         background: #2e353b;
     }
     .slide {
-        height: 100%;
-        width: 100%;
+
         position: absolute;
         top: 0;
         left: 100%;
@@ -54,6 +53,8 @@
     {% for picture in pictures %}
         .slug{{ picture.slug }} {
             background-image: url({{ picture.picture.url }});
+            width: 87%;
+            height: 87%;
         }
     {% endfor %}
 
@@ -81,13 +82,42 @@
             <label for="slide-slug{{ picture.slug }}-trigger"><img title="{{ picture.title }}" src="{{ picture.picture.url }}" height="40px"><br/>{{ picture.title }}</label>
         {% endfor %}
     </header>
-
     {% for picture in pictures %}
         <input id="slide-slug{{ picture.slug }}-trigger" type="radio" name="slides"{% if forloop.first %} checked{% endif %}>
-        <section class="slide slug{{ picture.slug }}">
-            <h1>{{ picture.title }}</h1>
+        <section class="slide slug{{ picture.slug }}" style="left: 5%; top: 5%">
         </section>
     {% endfor %}
 
 </div>
+<script>
+    // 'svg' is type of {SVGSVGElement}
+    let slide = document.getElementsByClassName('slide');
+
+    let scale = 1;
+    // mouse wheel, trackpad pitch
+    slide.addEventListener('wheel', /** @param {WheelEvent} evt */ evt => {
+        evt.preventDefault();
+
+
+        // calc nextScale
+
+        const delta = evt.deltaY || evt.deltaX;
+        const scaleStep = Math.abs(delta) < 50
+            ? 0.05  // touchpad pitch
+            : 0.25; // mouse wheel
+
+        const scaleDelta = delta < 0 ? scaleStep : -scaleStep;
+        const nextScale = scale + scaleDelta; // 'scale' is previous scale
+
+
+        // calc fixedPoint
+        const fixedPoint = { x: evt.clientX, y: evt.clientY };
+
+
+        // scale
+        // 'svgEl' is element to scale
+        svgScale(svgEl, fixedPoint, scale, nextScale);
+        scale = nextScale;
+    });
+</script>
 </html>
