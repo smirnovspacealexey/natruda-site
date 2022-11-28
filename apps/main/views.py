@@ -1,7 +1,7 @@
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse, resolve
-from .models import Point
+from .models import Point, Data
 
 
 def counter(request):
@@ -11,3 +11,10 @@ def counter(request):
         'points': Point.objects.all()
     }
     return HttpResponse(template.render(context, request))
+
+
+def menu_pdf(request):
+    current = Data.current()
+    print(current.menu.url)
+    return HttpResponseRedirect(current.menu.url)
+

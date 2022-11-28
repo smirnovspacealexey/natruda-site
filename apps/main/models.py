@@ -17,3 +17,16 @@ class Point(models.Model):
         ordering = ('ordering', )
 
 
+class Data(models.Model):
+    menu = models.FileField(upload_to="datas", blank=True, null=True, verbose_name="Меню")
+    active = models.BooleanField('active', default=True)
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if self.active:
+            type(self).objects.exclude(pk=self.pk).update(active=False)
+        super().save()
+
+    @staticmethod
+    def current():
+        return Data.objects.filter(active=True).last()
+
