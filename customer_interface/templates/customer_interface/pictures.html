@@ -42,6 +42,7 @@
         top: 0;
         left: 100%;
         z-index: 10;
+        {% if mobile %}margin-top: 30px;{% endif %}
         padding: 8em 1em 0;
         background-color: #120103;
         background-position: 50% 50%;
@@ -90,25 +91,25 @@
             <label for="slide-slug{{ picture.slug }}-trigger"><img title="{{ picture.title }}" src="{{ picture.picture.url }}" height="40px"><br/>{{ picture.title }}</label>
         {% endfor %}
     </header>
-    {% if mobile %}<br/>{% endif %}
     {% for picture in pictures %}
         <input id="slide-slug{{ picture.slug }}-trigger" type="radio" name="slides"{% if forloop.first %} checked{% endif %}>
-        <section class="slide slug{{ picture.slug }}" style="top: 70px">
+        <section class="slide slug{{ picture.slug }}" style="top: 70px" {% if mobile %}onmousemove='zoom(event)'{% endif %}>
         </section>
     {% endfor %}
 </div>
+{% if mobile %}
+    <script>
+        function zoom(e){
+            var zoomer = e.currentTarget;
+            e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+            e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
 
-<script>
-    function zoom(e){
-        var zoomer = e.currentTarget;
-        e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
-        e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
-
-        x = offsetX/zoomer.offsetWidth*150
-        y = offsetY/zoomer.offsetHeight*150
-        zoomer.style.backgroundPosition = x + '% ' + y + '%';
-    }
-</script>
+            x = offsetX/zoomer.offsetWidth*150
+            y = offsetY/zoomer.offsetHeight*150
+            zoomer.style.backgroundPosition = x + '% ' + y + '%';
+        }
+    </script>
+{% endif %}
 </html>
 
 
