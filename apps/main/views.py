@@ -15,6 +15,11 @@ def counter(request):
 
 def menu_pdf(request):
     current = Data.current()
-    print(current.menu.url)
-    return HttpResponseRedirect(current.menu.url)
+    template = loader.get_template('customer_interface/pdf.html')
+    context = {
+        'url': current.menu.url,
+        'title': 'меню'
+    }
+    return HttpResponse(template.render(context, request))
+
 
