@@ -55,8 +55,8 @@
         .slug{{ picture.slug }} {
             background-image: url({{ picture.picture.url }});
         {% if mobile %}
-            width: 98%;
-            height: 80%;
+            width: 99%;
+            height: 85%;
         {% else %}
             width: 65%;
             height: 100%;
@@ -89,7 +89,7 @@
 <div class="wrap">
     <header>
         {% for picture in pictures %}
-            <label for="slide-slug{{ picture.slug }}-trigger"><img title="{{ picture.title }}" src="{{ picture.picture.url }}" height="40px"><br/>{{ picture.title }}</label>
+            <label for="slide-slug{{ picture.slug }}-trigger"><img title="{{ picture.title }}" src="{{ picture.picture.url }}" width="50px"><br/>{{ picture.title }}</label>
         {% endfor %}
     </header>
     {% for picture in pictures %}
