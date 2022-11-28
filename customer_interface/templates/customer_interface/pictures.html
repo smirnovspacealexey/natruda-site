@@ -52,8 +52,13 @@
     {% for picture in pictures %}
         .slug{{ picture.slug }} {
             background-image: url({{ picture.picture.url }});
-            width: 70%;
-            height: 100%;
+        {% if mobile %}
+            width: 90%;
+            height: 65%;
+        {% else %}
+            width: 65%;
+            height: 90%;
+        {% endif %}
         }
     {% endfor %}
 
