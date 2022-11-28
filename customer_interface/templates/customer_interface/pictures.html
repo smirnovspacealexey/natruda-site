@@ -52,16 +52,17 @@
     {% for picture in pictures %}
         .slug{{ picture.slug }} {
             background-image: url({{ picture.picture.url }});
-        {% if mobile %}
             width: 70%;
-            height: 70%;
-            {% else %}
-        {% endif %}
+            height: 100%;
         }
     {% endfor %}
 
     [id^="slide"]:checked + .slide {
+    {% if mobile %}
         left: 5%;
+    {% else %}
+        left: 15%;
+    {% endif %}
         z-index: 100;
         transition: left 0.65s ease-out;
     }
@@ -86,7 +87,7 @@
     </header>
     {% for picture in pictures %}
         <input id="slide-slug{{ picture.slug }}-trigger" type="radio" name="slides"{% if forloop.first %} checked{% endif %}>
-        <section class="slide slug{{ picture.slug }}" style="top: 70px;" onmousemove='zoom(event)'>
+        <section class="slide slug{{ picture.slug }}" style="top: 70px;">
         </section>
     {% endfor %}
 </div>
