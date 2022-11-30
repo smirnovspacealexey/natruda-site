@@ -29,7 +29,7 @@
             cursor: pointer;
             position: fixed;
             top: 0;
-            width: 25%;
+            {% if mobile %}width: 7%;{% else %}width: 30%;{% endif %}
             height: 90%;
             color: white;
             user-select: none;
