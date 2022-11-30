@@ -95,14 +95,12 @@
     {% if mobile %}
         {% for picture in pictures %}
             <div class="mySlides fade">
-                <div class="numbertext">{{ picture.title }}</div>
                 <img src="{{ picture.picture.url }}" style="max-width: 100%;">
             </div>
         {% endfor %}
     {% else %}
         {% for picture in pictures %}
             <div class="mySlides fade">
-                <div class="numbertext">{{ picture.title }}</div>
                 <img class="fullHeight" src="{{ picture.picture.url }}" style="max-width: 100%;" onclick="reSize(this)">
             </div>
         {% endfor %}
