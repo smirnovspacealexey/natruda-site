@@ -40,10 +40,10 @@
         {% if not mobile %}
             .left, .right {
                 top: 20%;
-                z-index: 999;
                 position: fixed;
                 font-size:100pt;
                 color: rgba(255, 255, 255, 0.9);
+                user-select:none
             }
             .right {
                 right: 13%;
@@ -110,8 +110,8 @@
     <a class="prev" onclick="plusSlides(-1)" onmouseover="showLeft()" title="предыдущий"></a>
     <a class="next" onclick="plusSlides(1)" onmouseover="showRight()" title="следующий"></a>
     {% if not mobile %}
-        <div class="left hide" title="предыдущий">❮</div>
-        <div class="right hide" title="следующий">❯</div>
+        <a class="left hide fade" title="предыдущий">❮</a>
+        <a class="right hide fade" title="следующий">❯</a>
     {% endif %}
 </div>
 <br/>
@@ -187,17 +187,17 @@
     {% else %}
         function showLeft(){
             let elem = document.querySelector('.left');
-            elem.classList.toggle('hide')
+            elem.classList.remove('hide')
             setTimeout(function () {
-                elem.classList.toggle('hide')
-            }, 3000)
+                elem.classList.add('hide')
+            }, 5000)
         }
         function showRight(){
             let elem = document.querySelector('.right');
-            elem.classList.toggle('hide')
+            elem.classList.remove('hide')
             setTimeout(function () {
-                elem.classList.toggle('hide')
-            }, 3000)
+                elem.classList.add('hide')
+            }, 5000)
         }
     {% endif %}
 </script>
