@@ -26,7 +26,7 @@ def menu_pdf(request):
 
 def menu_pictures(request):
     current = Data.current()
-    template = loader.get_template('customer_interface/pictures.html')
+    template = loader.get_template('customer_interface/pictures-new.html')
     mobile = request.user_agent.is_mobile
     HOST = 'http://127.0.0.1:8000/'
     context = {
