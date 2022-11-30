@@ -43,8 +43,9 @@ class Image(models.Model):
 
     @property
     def rank(self):
+        current = Data.current()
         n = 1
-        for img in Image.objects.filter(mobile=self.mobile).order_by('ordering'):
+        for img in current.menu_pictures.filter(mobile=self.mobile).order_by('ordering'):
             if img.pk == self.pk:
                 return n
             n += 1
