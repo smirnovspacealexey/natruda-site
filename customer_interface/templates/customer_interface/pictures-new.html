@@ -28,18 +28,13 @@
             right: 0;
             border-radius: 3px 0 0 3px;
         }
-
-        /* Подпись под изображением */
-        .text {
+        .numbertext {
             color: #ffffff;
-            font-size: 15px;
+            font-size: 12px;
             padding: 8px 12px;
             position: absolute;
-            bottom: 8px;
-            width: 100%;
-            text-align: center;
+            top: 0;
         }
-
         /* Точки/маркеры/указатели */
         .dot {
             cursor: pointer;
@@ -79,7 +74,7 @@
 <div class="slideshow-container">
     {% for picture in pictures %}
         <div class="mySlides fade">
-            <div class="text">{{ picture.title }}</div>
+            <div class="numbertext">{{ picture.title }}</div>
             <img src="{{ picture.picture.url }}" style="max-width: 100%">
         </div>
     {% endfor %}
