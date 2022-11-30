@@ -34,7 +34,7 @@ class Image(models.Model):
 
     def __str__(self):
         if self.title:
-            return self.title
+            return self.title + ' ' + str(self.pk)
         else:
             return str(self.pk)
 
@@ -43,7 +43,11 @@ class Image(models.Model):
 
     @property
     def rank(self):
-        return len(Image.objects.filter(ordering__lte=self.ordering, mobile=self.mobile).exclude(pk=self.pk)) + 1
+        n = 1
+        for img in Image.objects.filter(mobile=self.mobile).order_by('ordering'):
+            if img.pk == self.pk:
+                return n
+            n += 1
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.slug = slugify(self.slug)
