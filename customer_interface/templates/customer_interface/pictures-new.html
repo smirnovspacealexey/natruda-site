@@ -68,7 +68,7 @@
     </style>
 </head>
 <body>
-<div class="slideshow-container">
+<div class="slideshow-container" id="content">
     {% for picture in pictures %}
         <div class="mySlides fade">
             <div class="numbertext">{{ picture.title }}</div>
@@ -112,53 +112,39 @@
         mini_slides[slideIndex-1].style.border = "0.5rem solid rgba(250, 77, 2, 0.63)";
         slides[slideIndex-1].style.display = "block";
     }
-
-    document.addEventListener('touchstart', handleTouchStart, false);
-    document.addEventListener('touchmove', handleTouchMove, false);
-    var xDown = null;
-    var yDown = null;
-
-    function getTouches(evt) {
-        return evt.touches || // чистый API JS
-            evt.originalEvent.touches; // jQuery
-    }
-
-    function handleTouchStart(evt) {
-        const firstTouch = getTouches(evt)[0];
-        xDown = firstTouch.clientX;
-        yDown = firstTouch.clientY;
-    };
-
-    function handleTouchMove(evt) {
-        if ( ! xDown || ! yDown ) {
-            return;
-        }
-
-        var xUp = evt.touches[0].clientX;
-        var yUp = evt.touches[0].clientY;
-
-        var xDiff = xDown - xUp;
-        var yDiff = yDown - yUp;
-
-        if ( Math.abs( xDiff ) &gt; Math.abs( yDiff ) ) {/* отлавливаем разницу в движении */
-            if ( xDiff &gt; 0 ) {
-                /* swipe влево */
-                plusSlides(-1)
-            } else {
-                /* swipe вправо */
-                plusSlides(1)
+    {% if mobile %}
+        (function() {
+            var min_horizontal_move = 30;
+            var max_vertical_move = 30;
+            var within_ms = 1000;
+            var start_xPos;
+            var start_yPos;
+            var start_time;
+            function touch_start(event) {
+                start_xPos = event.touches[0].pageX;
+                start_yPos = event.touches[0].pageY;
+                start_time = new Date();
             }
-        } else {
-            if ( yDiff &gt; 0 ) {
-                /* swipe вверх */
-            } else {
-                /* swipe вниз */
+            function touch_end(event) {
+                var end_xPos = event.changedTouches[0].pageX;
+                var end_yPos = event.changedTouches[0].pageY;
+                var end_time = new Date();
+                let move_x = end_xPos - start_xPos;
+                let move_y = end_yPos - start_yPos;
+                let elapsed_time = end_time - start_time;
+                if (Math.abs(move_x) > min_horizontal_move && Math.abs(move_y) < max_vertical_move && elapsed_time < within_ms) {
+                    if (move_x < 0) {
+                        plusSlides(1)
+                    } else {
+                        plusSlides(-1)
+                    }
+                }
             }
-        }
-        /* свайп был, обнуляем координаты */
-        xDown = null;
-        yDown = null;
-    };
+            var content = document.getElementById("content");
+            content.addEventListener('touchstart', touch_start);
+            content.addEventListener('touchend', touch_end);
+        })();
+    {% endif %}
 </script>
 </body>
 </html>
