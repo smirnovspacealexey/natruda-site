@@ -24,6 +24,9 @@
             text-shadow: 3px 3px 5px #000;
             color: rgba(255, 77, 0, 0.98);
         }
+        .fullHeight {
+            height: 100vh;
+        }
         /* Кнопки next & previous*/
         .prev, .next {
             cursor: pointer;
@@ -34,6 +37,26 @@
             color: white;
             user-select: none;
         }
+        {% if not mobile %}
+            .left, .right {
+                top: 20%;
+                z-index: 999;
+                position: fixed;
+                font-size:100pt;
+                color: rgba(255, 255, 255, 0.9);
+            }
+            .right {
+                right: 13%;
+            }
+            .left {
+                left: 13%;
+            }
+
+            .hide {
+                display: none;
+            }
+        {% endif %}
+
         /* Измените положение "next button" */
         .next {
             right: 0;
@@ -69,17 +92,30 @@
 </head>
 <body>
 <div class="slideshow-container" id="content">
-    {% for picture in pictures %}
-        <div class="mySlides fade">
-            <div class="numbertext">{{ picture.title }}</div>
-            <img src="{{ picture.picture.url }}" style="max-width: 100%;{% if not mobile %} height: 100vh;{% endif %}">
-        </div>
-    {% endfor %}
-    <a class="prev" onclick="plusSlides(-1)" title="предыдущий"></a>
-    <a class="next" onclick="plusSlides(1)" title="следующий"></a>
+    {% if mobile %}
+        {% for picture in pictures %}
+            <div class="mySlides fade">
+                <div class="numbertext">{{ picture.title }}</div>
+                <img src="{{ picture.picture.url }}" style="max-width: 100%;">
+            </div>
+        {% endfor %}
+    {% else %}
+        {% for picture in pictures %}
+            <div class="mySlides fade">
+                <div class="numbertext">{{ picture.title }}</div>
+                <img class="fullHeight" src="{{ picture.picture.url }}" style="max-width: 100%;" onclick="reSize(this)">
+            </div>
+        {% endfor %}
+    {% endif %}
+    <a class="prev" onclick="plusSlides(-1)" onmouseover="showLeft()" title="предыдущий"></a>
+    <a class="next" onclick="plusSlides(1)" onmouseover="showRight()" title="следующий"></a>
+    {% if not mobile %}
+        <div class="left hide" title="предыдущий">❮</div>
+        <div class="right hide" title="следующий">❯</div>
+    {% endif %}
 </div>
-<br>
-<div style="text-align:center; z-index: 999">
+<br/>
+<div style="text-align:center; z-index: 999">full_height
     {% for picture in pictures %}
         <span onclick="currentSlide({{ picture.rank }})" style="position: relative"><img class="miniSlides" src="{{ picture.picture.url }}" style="width: 10%; margin: 8px"><span class="text">{{ picture.title }}</span></span>
     {% endfor %}
@@ -94,6 +130,10 @@
 
     function currentSlide(n) {
         showSlides(slideIndex = n);
+    }
+
+    function reSize(obj) {
+        obj.classList.toggle('fullHeight');
     }
 
     function showSlides(n) {
@@ -144,6 +184,21 @@
             content.addEventListener('touchstart', touch_start);
             content.addEventListener('touchend', touch_end);
         })();
+    {% else %}
+        function showLeft(){
+            let elem = document.querySelector('.left');
+            elem.classList.toggle('hide')
+            setTimeout(function () {
+                elem.classList.toggle('hide')
+            }, 3000)
+        }
+        function showRight(){
+            let elem = document.querySelector('.right');
+            elem.classList.toggle('hide')
+            setTimeout(function () {
+                elem.classList.toggle('hide')
+            }, 3000)
+        }
     {% endif %}
 </script>
 </body>
