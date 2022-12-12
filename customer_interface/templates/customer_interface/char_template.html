@@ -75,7 +75,7 @@
             <a href="{% url 'meat' product.macro_product.slug %}"><img
                     src="{% static 'customer_interface/img/back.png' %}" alt=""></a>
             <a href="{% url 'index' %}" class="main_menu">Меню</a>
-            <h1>{{ product.title }}</h1>
+            <h1>{{ product.customer_title }}</h1>
         </div>
         <div class="main_content">
             <div class="main_prop">
@@ -90,10 +90,10 @@
                         {% localize off %}
                             {% for product_variant in product_variants %}
                                 <label class="radio_label"><input type="radio" name="size"
-                                                                  value="{{ product_variant.obj.size_option.title }}"
+                                                                  value="{{ product_variant.obj.size_option.customer_title }}"
                                                                   customer-title="{{ product_variant.obj.customer_title }}"
                                                                   product-id="{{ product_variant.obj.menu_item.id }}"
-                                                                  price="{{ product_variant.obj.menu_item.price }}">{{ product_variant.obj.size_option.title }}
+                                                                  price="{{ product_variant.obj.menu_item.price }}">{{ product_variant.obj.size_option.customer_title }}
                                 </label>
                             {% endfor %}
 
@@ -127,9 +127,9 @@
                                 <ul class="adds_list">
                                     {% for topping in product_variant.product_options %}
                                         <li>
-                                            <span class="add_text">{{ topping.menu_item.title }}</span>
+                                            <span class="add_text">{{ topping.menu_item.customer_title }}</span>
                                             <div class="form-check form-switch">
-                                                <input value="{{ topping.menu_item.title }}" class="form-check-input"
+                                                <input value="{{ topping.menu_item.customer_title }}" class="form-check-input"
                                                        type="checkbox"
                                                        id="topping-checkbox-{{ product_variant.obj.id }}-{{ forloop.counter }}"
                                                        name="topping" product-id="{{ topping.id }}"

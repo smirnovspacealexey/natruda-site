@@ -38,7 +38,7 @@
                 <div class="basket_prod" index="{{ forloop.counter0 }}">
                     {% localize off %}
                         <input class="product-properties" hidden
-                               value="{{ product.obj.title }}"
+                               value="{{ product.obj.customer_title }}"
                                customer-title="{{ product.obj.customer_title }}"
                                product-id="{{ product.obj.menu_item.id }}"
                                price="{{ product.obj.menu_item.price }}">
@@ -66,10 +66,10 @@
                                         <ul class="adds_list">
                                             {% for topping in product.product_options %}
                                                 <li>
-                                                    <span class="add_text">{{ topping.obj.menu_item.title }}</span>
+                                                    <span class="add_text">{{ topping.obj.menu_item.customer_title }}</span>
                                                     <div class="form-check form-switch">
                                                         {% localize off %}
-                                                            <input value="{{ topping.obj.menu_item.title }}"
+                                                            <input value="{{ topping.obj.menu_item.customer_title }}"
                                                                    class="form-check-input"
                                                                    type="checkbox"
                                                                    id="topping-checkbox-{{ forloop.parentloop.counter }}-{{ forloop.counter }}"

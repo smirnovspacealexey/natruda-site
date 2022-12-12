@@ -10,6 +10,7 @@ shaw_queue_url = ""
 check_order_status_url = "http://shawarma.natruda/shaw_queue/check_order_status/"
 send_order_url = "http://shawarma.natruda/shaw_queue/register_customer_order/"
 get_menu_url = "http://shawarma.natruda/shaw_queue/send_customers_menu/"
+# get_menu_url = "http://127.0.0.1:8001/shaw_queue/send_customers_menu/"
 
 db_name = 'shawa_site'
 db_login = 'shawa_site'
