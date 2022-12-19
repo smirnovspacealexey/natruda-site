@@ -168,6 +168,7 @@ def basket(request):
             'product_options': product_options,
         })
     context['cooking_time'] = cooking_time
+    logger_debug.info(f'basket: {context}')
     return HttpResponse(template.render(context, request))
 
 
