@@ -147,6 +147,8 @@ def basket(request):
     print(product_ids)
     print(current_order)
     cooking_time = 15
+    logger_debug.info(f'basket current_order: {current_order}')
+
     for item in current_order:
         product_variant = ProductVariant.objects.filter(menu_item__id=item['id']).first()
         product_options_query = ProductOption.objects.filter(product_variants=product_variant)
