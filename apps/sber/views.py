@@ -1,5 +1,5 @@
 from django.template import loader
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse, resolve
 from customer_interface.models import Order
 from customer_interface.views import send_order_data
@@ -57,4 +57,9 @@ def failed_payment(request):
     context = {
     }
     return HttpResponse(template.render(context, request))
+
+
+def sber_result(request):
+    logger_debug.info(f'sber_result\n----\n {request.GET}{request.GET}\n')
+    return JsonResponse({'success': True})
 
