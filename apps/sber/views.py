@@ -4,6 +4,8 @@ from django.urls import reverse, resolve
 from customer_interface.models import Order
 from customer_interface.views import send_order_data
 import ast
+import requests
+
 
 from .backend import Sber
 
@@ -60,6 +62,17 @@ def failed_payment(request):
 
 
 def sber_result(request):
-    logger_debug.info(f'sber_result\n----\n {request.GET}{request.GET}\n')
+    logger_debug.info(f'sber_result\n----\n {request.GET}\n{request.GET.get("operation")}')
+    if request.GET.get('operation') == 'deposited' and request.GET.get('status') == '1':
+        data = {
+            "daily_number": request.GET.get('orderNumber'),
+            "success": True,
+        }
+
+        res = requests.get('http://shawarma.natruda/sber/result', params=data)
+        logger_debug.info(f'res\n {res}\n')
+
     return JsonResponse({'success': True})
+
+
 
