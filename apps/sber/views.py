@@ -66,9 +66,9 @@ def sber_result(request):
     try:
         logger_debug.info(f'sber_result\n----\n {request.GET}\n{request.GET.get("operation")}')
         logger_debug.info(f"{request.GET.get('operation') == 'deposited' and request.GET.get('status') == '1'}")
-
-        result = requests.get('http://shawarma.natruda/shaw_queue/send_customers_menu/')
-        logger_debug.info(f'result\n {result}\n')
+        #
+        # result = requests.get('http://shawarma.natruda/shaw_queue/send_customers_menu/')
+        # logger_debug.info(f'result\n {result}\n')
 
         if request.GET.get('operation') == 'deposited' and request.GET.get('status') == '1':
             data = {
