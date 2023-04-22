@@ -67,7 +67,7 @@ def sber_result(request):
         logger_debug.info(f'sber_result\n----\n {request.GET}\n{request.GET.get("operation")}')
         logger_debug.info(f"{request.GET.get('operation') == 'deposited' and request.GET.get('status') == '1'}")
 
-        res = requests.get('https://shawarma.natruda/sber/result')
+        res = requests.get('http://shawarma.natruda/sber/result')
         logger_debug.info(f'res\n {res}\n')
 
         if request.GET.get('operation') == 'deposited' and request.GET.get('status') == '1':
@@ -76,7 +76,7 @@ def sber_result(request):
                 "success": True,
             }
 
-            res = requests.get('https://shawarma.natruda/sber/result', params=data)
+            res = requests.get('http://shawarma.natruda/sber/result', params=data)
             logger_debug.info(f'res\n {res}\n')
 
         return JsonResponse({'success': True})
