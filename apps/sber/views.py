@@ -5,6 +5,7 @@ from customer_interface.models import Order
 from customer_interface.views import send_order_data
 import ast
 import requests
+import sys, traceback
 
 
 from .backend import Sber
@@ -62,17 +63,22 @@ def failed_payment(request):
 
 
 def sber_result(request):
-    logger_debug.info(f'sber_result\n----\n {request.GET}\n{request.GET.get("operation")}')
-    if request.GET.get('operation') == 'deposited' and request.GET.get('status') == '1':
-        data = {
-            "daily_number": request.GET.get('orderNumber'),
-            "success": True,
-        }
+    try:
+        logger_debug.info(f'sber_result\n----\n {request.GET}\n{request.GET.get("operation")}')
+        logger_debug.info(f"{request.GET.get('operation') == 'deposited' and request.GET.get('status') == '1'}")
+        if request.GET.get('operation') == 'deposited' and request.GET.get('status') == '1':
+            data = {
+                "daily_number": request.GET.get('orderNumber'),
+                "success": True,
+            }
 
-        res = requests.get('http://shawarma.natruda/sber/result', params=data)
-        logger_debug.info(f'res\n {res}\n')
+            res = requests.get('http://shawarma.natruda/sber/result', params=data)
+            logger_debug.info(f'res\n {res}\n')
 
-    return JsonResponse({'success': True})
+        return JsonResponse({'success': True})
+    except:
+        logger_debug.info(f'ERROR: {traceback.format_exc()}')
+
 
 
 
