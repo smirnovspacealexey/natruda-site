@@ -80,7 +80,7 @@ def sber_result(request):
                 "success": True,
             }
 
-            res = requests.get('http://78.29.36.194/sber/result', params=data)
+            res = requests.get('http://shawarma.natruda/sber/result', params=data)
             logger_debug.info(f'res\n {res}\n')
 
         return JsonResponse({'success': True})
