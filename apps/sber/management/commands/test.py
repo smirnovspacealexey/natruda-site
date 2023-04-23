@@ -11,7 +11,7 @@ logger_debug = logging.getLogger('debug_logger')
 class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
-            res = requests.get('http://shawarma.natruda/sber/result?daily_number=881533')
+            res = requests.get('http://78.29.36.194/sber/result?daily_number=881533')
             logger_debug.info(f'res\n {res}\n')
             print(res)
 
