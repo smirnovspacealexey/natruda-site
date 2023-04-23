@@ -22,6 +22,10 @@ def test(request):
     return HttpResponse(template.render(context, request))
 
 
+def test1(request):  # del me
+    logger_debug.info(f'test1\n {request.GET}\n')
+
+
 def successful_payment(request):
     context = {}
     if request.GET and 'orderId' in request.GET:
