@@ -11,7 +11,12 @@ logger_debug = logging.getLogger('debug_logger')
 class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
-            res = requests.get('http://78.29.36.194/sber/result?daily_number=881533')
+            if args:
+                daily_number = args[0]
+            else:
+                daily_number = '0'
+
+            res = requests.get(f'http://78.29.36.194/sber/result?daily_number={daily_number}')
             logger_debug.info(f'res\n {res}\n')
             print(res)
 
