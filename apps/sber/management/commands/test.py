@@ -14,7 +14,7 @@ class Command(BaseCommand):
             if args:
                 daily_number = args[0]
             else:
-                daily_number = '0'
+                daily_number = '384026'
 
             res = requests.get(f'http://78.29.36.194/sber/result?daily_number={daily_number}')
             logger_debug.info(f'res\n {res}\n')
