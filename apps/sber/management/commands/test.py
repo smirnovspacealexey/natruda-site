@@ -16,7 +16,7 @@ class Command(BaseCommand):
             else:
                 daily_number = '384026'
 
-            res = requests.get(f'http://78.29.36.194/sber/result?daily_number={daily_number}')
+            res = requests.get(f'http://192.168.20.20/sber/result?daily_number={daily_number}')
             logger_debug.info(f'res\n {res}\n')
             print(res)
 
