@@ -468,8 +468,7 @@ def update_menu(request):
                 local_category.title = category['title']
                 local_category.customer_title = category['customer_title']
                 local_category.slug = slugify(category['title'])
-                if not local_category.picture:
-                    local_category.customer_appropriate = True  # временно, пока нет картинок
+
                 local_category.save()
             except MultipleObjectsReturned:
                 client.captureException()
@@ -478,7 +477,7 @@ def update_menu(request):
             except ObjectDoesNotExist:
                 new_category = MacroProduct(title=category['title'], customer_title=category['customer_title'],
                                             slug=slugify(category['title']),
-                                            internal_id=category['id'])
+                                            internal_id=category['id'], customer_appropriate=False)
                 new_category.save()
 
         for content_option in response['content_options']:
