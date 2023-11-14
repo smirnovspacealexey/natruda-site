@@ -1,4 +1,7 @@
 {% load static %}
+{% load extras %}
+{% get_points as points%}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -195,15 +198,11 @@
 				</span>
             </p>
             <p class="head_adr">
-				<span class="head_adr-txt">
-					Труда 148
-				</span>
-                <span class="head_adr-txt">
-					Пр-т Победы 396/1
-				</span>
-                <span class="head_adr-txt">
-					Копейское шоссе 58
-				</span>
+                {% for point in points %}
+                    <span class="head_adr-txt">
+					{{ point.address }}
+				    </span>
+                {% endfor %}
             </p>
         </header>
         <header class="header_mobile">
@@ -237,7 +236,7 @@
 
     {% block content %}
         <main>
-        ! время готовки у разных продуктов может отличаться
+            ! время готовки у разных продуктов может отличаться
             <div class="cards">
                 <ul class="cards_list">
                     {% comment %}
@@ -287,8 +286,8 @@
             </div>
         </main>
     {% endblock %}
-<img style="margin-left: 40%; margin-top: 15%" src="https://gruenerbungalow.de/rc_images/tool.png" height="150px"><br>
-<p style="color: red; margin-left: 30%; margin-top: 5%">САЙТ НАХОДИТСЯ В РАЗРАБОТКЕ</p>
+    <img style="margin-left: 40%; margin-top: 15%" src="https://gruenerbungalow.de/rc_images/tool.png" height="150px"><br>
+    <p style="color: red; margin-left: 30%; margin-top: 5%">САЙТ НАХОДИТСЯ В РАЗРАБОТКЕ</p>
 
     {% block footer %}
         <footer>

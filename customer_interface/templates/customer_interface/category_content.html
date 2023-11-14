@@ -4,6 +4,31 @@
 
 {% block additional_CSS %}
     <link rel="stylesheet" href="{% static 'customer_interface/css/meat.css' %}">
+    <style>
+        h2 {
+            position: absolute;
+            left: 20%;
+            top: 90px;
+            font-size: 2.3em;
+            color: rgba(246, 146, 0, 0.7);
+            text-shadow: -0   -1px 0   #000000,
+            0   -1px 0   #000000,
+            -0    1px 0   #000000,
+            0    1px 0   #000000,
+            -1px -0   0   #000000,
+            1px -0   0   #000000,
+            -1px  0   0   #000000,
+            1px  0   0   #000000,
+            -1px -1px 0   #000000,
+            1px -1px 0   #000000,
+            -1px  1px 0   #000000,
+            1px  1px 0   #000000,
+            -1px -1px 0   #000000,
+            1px -1px 0   #000000,
+            -1px  1px 0   #000000,
+            1px  1px 0   #000000;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -15,16 +40,20 @@
         <div class="cards">
             <ul class="cards_list">
                 {% for content in contents %}
-                    <li
-                            {% if content.picture %}
-                                style="background: url('{{ content.picture.url }}'); background-size: cover;"
-                            {% else %}
-                                style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
-                            {% endif %}>
-                        <a class="cards_item" href="{% url 'char' content.id %}"><span
-                                class="cards_item-text" style="word-break: break-all; font-size: {{ content.get_font_size }}px;">{{ content.customer_title|upper }}</span><img
-                                src="{% static 'customer_interface/img/meat_price.png' %}" alt=""></a>
-                    </li>
+                    {% if content.low_price %}
+                        <li
+                                {% if content.picture %}
+                                    style="background: url('{{ content.picture.url }}'); background-size: cover;"
+                                {% else %}
+                                    style="background: url('{% static '/customer_interface/img/food_default.png' %}'); background-size: cover;"
+                                {% endif %}>
+                            <a class="cards_item" href="{% url 'char' content.id %}"><span
+                                    class="cards_item-text" style="word-break: break-all; text-shadow: 0 -1px 0 rgba(246,146,0,0.7); font-size: {{ content.get_font_size }}px;">{{ content.customer_title|upper }}</span>
+                                {#                                <img src="{% static 'customer_interface/img/meat_price.png' %}" alt="">#}
+                                <h2 class="img">#от {{ content.low_price }} руб</h2>
+                            </a>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>

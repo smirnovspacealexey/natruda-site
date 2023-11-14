@@ -123,7 +123,7 @@ class MacroProductContent(models.Model):
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
 
     def get_font_size(self):
-        return 18 - len(self.customer_title) // 10
+        return 21 - len(self.customer_title) // 9
 
     def carousel_photos(self):
         photos = []
@@ -132,6 +132,16 @@ class MacroProductContent(models.Model):
                 photos.append(variant.menu_item.icon.url)
         return photos
 
+    def low_price(self):
+        variants = self.variants.all()
+        if len(variants) > 0:
+            price = 99999
+            for variant in self.variants.all():
+                if variant.menu_item.price < price:
+                    price = variant.menu_item.price
+            return int(price)
+        else:
+            return None
 
     def preview(self):
         return get_html_img(self.picture)
