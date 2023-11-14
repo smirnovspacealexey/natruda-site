@@ -615,7 +615,7 @@ def update_menu(request):
                                                                                              product_variant['name'] if 'name' in product_variant else 'noname'))
             except ObjectDoesNotExist:
                 print('ObjectDoesNotExist')
-                continue
+                # continue
                 menu_item = Menu.objects.get(internal_id=product_variant['menu_item_id'])
                 content_option = ContentOption.objects.get(internal_id=product_variant['content_option_id']) if \
                     'content_option_id' in product_variant else None
