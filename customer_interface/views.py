@@ -514,7 +514,7 @@ def update_menu(request):
                                                                                            macro_product_content[
                                                                                                'title']))
             except ObjectDoesNotExist:
-                continue
+                # continue
                 try:
                     according_macro = MacroProduct.objects.filter(internal_id=macro_product_content['macro_product_id']).first()
                     according_content = ContentOption.objects.filter(internal_id=macro_product_content['content_option_id']).first()
