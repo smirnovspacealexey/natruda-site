@@ -127,7 +127,7 @@
                                 <ul class="adds_list">
                                     {% for topping in product_variant.product_options %}
                                         <li>
-                                            <span class="add_text">{{ topping.menu_item.customer_title }}!</span>
+                                            <span class="add_text">{{ topping.customer_title }}</span>
                                             <div class="form-check form-switch">
                                                 <input value="{{ topping.menu_item.customer_title }}" class="form-check-input"
                                                        type="checkbox"
