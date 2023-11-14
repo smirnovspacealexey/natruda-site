@@ -514,20 +514,32 @@ def update_menu(request):
                                                                                            macro_product_content[
                                                                                                'title']))
             except ObjectDoesNotExist:
-                # continue
+                continue
                 try:
-                    according_macro = MacroProduct.objects.get(internal_id=macro_product_content['macro_product_id'])
-                    print(ContentOption.objects.filter(internal_id=macro_product_content['content_option_id']))
-                    according_content = ContentOption.objects.get(internal_id=macro_product_content['content_option_id'])
-                    new_mpc_option = MacroProductContent(title=macro_product_content['title'],
-                                                         customer_title=macro_product_content['customer_title'],
-                                                         internal_id=macro_product_content['id'],
-                                                         macro_product=according_macro,
-                                                         content_option=according_content,
-                                                         customer_appropriate=True,
-                                                         slug=slugify("{} {}".format(according_macro.customer_title,
-                                                                                       according_content.customer_title)))
-                    new_mpc_option.save()
+                    according_macro = MacroProduct.objects.filter(internal_id=macro_product_content['macro_product_id']).first()
+                    according_content = ContentOption.objects.filter(internal_id=macro_product_content['content_option_id']).first()
+
+                    local_mpc_option = MacroProductContent.objects.filter(internal_id=macro_product_content['id']).first()
+                    if local_mpc_option:
+                        local_mpc_option.title = macro_product_content['title']
+                        local_mpc_option.customer_title = macro_product_content['content_option_id']
+                        local_mpc_option.internal_id = macro_product_content['customer_title']
+                        local_mpc_option.macro_product = macro_product_content['id']
+                        local_mpc_option.content_option = according_macro
+                        local_mpc_option.customer_appropriate = True
+                        local_mpc_option.slug = slugify("{} {}".format(according_macro.customer_title, according_content.customer_title))
+                    else:
+
+                        print(ContentOption.objects.filter(internal_id=macro_product_content['content_option_id']))
+                        new_mpc_option = MacroProductContent(title=macro_product_content['title'],
+                                                             customer_title=macro_product_content['customer_title'],
+                                                             internal_id=macro_product_content['id'],
+                                                             macro_product=according_macro,
+                                                             content_option=according_content,
+                                                             customer_appropriate=True,
+                                                             slug=slugify("{} {}".format(according_macro.customer_title,
+                                                                                           according_content.customer_title)))
+                        new_mpc_option.save()
                 except:
                     print(f'ERROR: {traceback.format_exc()}')
 
@@ -603,7 +615,7 @@ def update_menu(request):
                                                                                              product_variant['name'] if 'name' in product_variant else 'noname'))
             except ObjectDoesNotExist:
                 print('ObjectDoesNotExist')
-                # continue
+                continue
                 menu_item = Menu.objects.get(internal_id=product_variant['menu_item_id'])
                 content_option = ContentOption.objects.get(internal_id=product_variant['content_option_id']) if \
                     'content_option_id' in product_variant else None
