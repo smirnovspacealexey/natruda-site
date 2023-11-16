@@ -93,7 +93,10 @@
                                                                   value="{{ product_variant.obj.size_option.customer_title }}"
                                                                   customer-title="{{ product_variant.obj.customer_title }}"
                                                                   product-id="{{ product_variant.obj.menu_item.id }}"
-                                                                  price="{{ product_variant.obj.menu_item.price }}">{{ product_variant.obj.size_option.customer_title }}
+                                                                  price="{{ product_variant.obj.menu_item.price }}"
+                                                                  note="{{ product_variant.obj.menu_item.note }}"
+                                >{{ product_variant.obj.size_option.customer_title }}
+
                                 </label>
                             {% endfor %}
 
@@ -126,18 +129,18 @@
                                     class="adds_text">Добавки</span>
                                 <ul class="adds_list">
                                     {% for topping in product_variant.product_options %}
-{#                                        {% if topping.menu_item.customer_appropriate %}#}
-                                            <li>
-                                                <span class="add_text">{{ topping.customer_title }}</span>
-                                                <div class="form-check form-switch">
-                                                    <input value="{{ topping.menu_item.customer_title }}" class="form-check-input"
-                                                           type="checkbox"
-                                                           id="topping-checkbox-{{ product_variant.obj.id }}-{{ forloop.counter }}"
-                                                           name="topping" product-id="{{ topping.id }}"
-                                                           price="{{ topping.menu_item.price }}">
-                                                </div>
-                                            </li>
-{#                                        {% endif %}#}
+                                        {#                                        {% if topping.menu_item.customer_appropriate %}#}
+                                        <li>
+                                            <span class="add_text">{{ topping.customer_title }}</span>
+                                            <div class="form-check form-switch">
+                                                <input value="{{ topping.menu_item.customer_title }}" class="form-check-input"
+                                                       type="checkbox"
+                                                       id="topping-checkbox-{{ product_variant.obj.id }}-{{ forloop.counter }}"
+                                                       name="topping" product-id="{{ topping.id }}"
+                                                       price="{{ topping.menu_item.price }}">
+                                            </div>
+                                        </li>
+                                        {#                                        {% endif %}#}
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -180,13 +183,11 @@
                     </a>
                 </div>
                 <div class="card_desc">
-                    {% if product.customer_description %}
-                        <span class="card_head">Описание товара</span>
-                        <br>
-                        <p class="card_desc-text">
-                            {{ product.customer_description }}
-                        </p>
-                    {% endif %}
+                    <br>
+                    <p class="card_desc-text" id="product_note">
+                        {{ product.customer_description }}
+                    </p>
+
 
                     {% for product_variant in product_variants %}
                         <div class="size_specific_properties" product-id="{{ product_variant.obj.menu_item.id }}">
@@ -219,6 +220,13 @@
 {% endblock %}
 
 {% block additional_JS %}
+    <script>
+        {% if product.customer_description %}
+            let default_product_note = "{{ product.customer_description }}"
+        {% else %}
+            let default_product_note = ""
+        {% endif %}
+    </script>
     <script src="{% static 'customer_interface/js/char_handlers.js' %}"></script>
 {% endblock %}
 {% comment %}<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script> {% endcomment %}
