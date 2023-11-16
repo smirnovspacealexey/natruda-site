@@ -83,7 +83,6 @@ class SizeOption(models.Model):
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
     ordering = models.IntegerField('ordering', default=0)
 
-
     def get_font_size(self):
         return 20 - len(self.customer_title) // 10
 

@@ -184,7 +184,7 @@ def char(request, macroproduct_content_id):
             {
                 'obj': product_variant,
                 'product_options': product_variant.productoption_set.all()
-            } for product_variant in ProductVariant.objects.filter(macro_product_content__id=macroproduct_content_id)
+            } for product_variant in ProductVariant.objects.filter(macro_product_content__id=macroproduct_content_id).order_by('size_option__ordering')
         ]
     }
     return HttpResponse(template.render(context, request))
