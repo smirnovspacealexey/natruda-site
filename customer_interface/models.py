@@ -20,7 +20,7 @@ class Menu(models.Model):
     title = models.CharField(max_length=200)
     customer_title = models.CharField(max_length=200, default="", verbose_name="Название для покупателя")
     price = models.FloatField(default=0, validators=[MinValueValidator(0, "Price can't be negative!")])
-    guid_1c = models.CharField(max_length=100, default="")
+    # guid_1c = models.CharField(max_length=100, default="")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
     weight = models.IntegerField(verbose_name="Вес товара", blank=True, null=True)
     meat_weight = models.IntegerField(verbose_name="Вес мяса в товаре", blank=True, null=True)
