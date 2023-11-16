@@ -126,7 +126,7 @@
                                     class="adds_text">Добавки</span>
                                 <ul class="adds_list">
                                     {% for topping in product_variant.product_options %}
-                                        {% if topping.menu_item.customer_appropriate %}
+{#                                        {% if topping.menu_item.customer_appropriate %}#}
                                             <li>
                                                 <span class="add_text">{{ topping.customer_title }}</span>
                                                 <div class="form-check form-switch">
@@ -137,7 +137,7 @@
                                                            price="{{ topping.menu_item.price }}">
                                                 </div>
                                             </li>
-                                        {% endif %}
+{#                                        {% endif %}#}
                                     {% endfor %}
                                 </ul>
                             </div>
