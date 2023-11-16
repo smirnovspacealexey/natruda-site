@@ -27,9 +27,9 @@ class Menu(models.Model):
     # category = models.ForeignKey(MenuCategory, on_delete=models.SET_NULL, null=True)
     is_by_weight = models.BooleanField(verbose_name="На развес", default=False)
     note = models.TextField(verbose_name="Описание", blank=True, null=True)
-    customer_appropriate = models.BooleanField(verbose_name="Показывать", default=False)
+    customer_appropriate = models.BooleanField(verbose_name="Показывать", default=False, help_text="виден покупателю на сайте")
     minutes = models.IntegerField(verbose_name="время готовки в минутах", default=15)
-    icon = models.ImageField(upload_to="img/icons", blank=True, null=True, verbose_name="Иконка")
+    icon = models.ImageField(upload_to="img/icons", blank=True, null=True, verbose_name="Иконка", help_text='картинка товара на сайте для покупателя')
 
     def get_font_size(self):
         return 20 - len(self.customer_title) // 10
@@ -48,9 +48,9 @@ class MacroProduct(models.Model):
     title = models.CharField(max_length=200)
     customer_title = models.CharField(max_length=200, default="", verbose_name="Название для покупателя")
     slug = models.SlugField(unique=True, default='')
-    picture = models.ImageField(upload_to="img/category_pictures", blank=True, null=True, verbose_name="Иконка")
+    picture = models.ImageField(upload_to="img/category_pictures", blank=True, null=True, verbose_name="Иконка", help_text='картинка товара на сайте для покупателя')
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
-    customer_appropriate = models.BooleanField(verbose_name="Показывать", default=False)
+    customer_appropriate = models.BooleanField(verbose_name="Показывать", default=False, help_text="виден покупателю на сайте")
     ordering = models.IntegerField('ordering', default=0)
 
     def __str__(self):
@@ -95,7 +95,7 @@ class ContentOption(models.Model):
     """
     title = models.CharField(max_length=200)
     customer_title = models.CharField(max_length=200, default="", verbose_name="Название для покупателя")
-    picture = models.ImageField(upload_to="img/content_pictures", blank=True, null=True, verbose_name="Иконка")
+    picture = models.ImageField(upload_to="img/content_pictures", blank=True, null=True, verbose_name="Иконка", help_text='картинка товара на сайте для покупателя')
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
 
     def get_font_size(self):
@@ -116,8 +116,8 @@ class MacroProductContent(models.Model):
     customer_title = models.CharField(max_length=200, default="", verbose_name="Название для покупателя")
     customer_description = models.TextField(max_length=312, default="", verbose_name="Описание товара", blank=True, null=True)
     slug = models.SlugField(unique=True, default='')
-    picture = models.ImageField(upload_to="img/category_pictures", blank=True, null=True, verbose_name="Иконка")
-    customer_appropriate = models.BooleanField(verbose_name="Показывать", default=False)
+    picture = models.ImageField(upload_to="img/category_pictures", blank=True, null=True, verbose_name="Иконка", help_text='картинка товара на сайте для покупателя')
+    customer_appropriate = models.BooleanField(verbose_name="Показывать", default=False, help_text="виден покупателю на сайте")
     content_option = models.ForeignKey(ContentOption, on_delete=models.CASCADE, verbose_name="Вариант содержимого")
     macro_product = models.ForeignKey(MacroProduct, related_name='contents', on_delete=models.CASCADE, verbose_name="Макротовар")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
@@ -194,6 +194,9 @@ class ProductOption(models.Model):
 
     def __str__(self):
         return u"{}".format(self.title)
+
+    class Meta:
+        ordering = ['customer_title']
 
 
 class Order(models.Model):

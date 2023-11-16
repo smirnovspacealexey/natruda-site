@@ -537,7 +537,7 @@ def update_menu(request):
                                                              content_option=according_content,
                                                              customer_appropriate=True,
                                                              slug=slugify("{} {}".format(according_macro.customer_title,
-                                                                                           according_content.customer_title)))
+                                                                                         according_content.customer_title)))
                         new_mpc_option.save()
                 except:
                     print(f'ERROR: {traceback.format_exc()}')
@@ -627,7 +627,7 @@ def update_menu(request):
 
                 print(product_variant['macro_product_content_id'])
                 macro_product_content = MacroProductContent.objects.filter(internal_id=
-                                                                           product_variant['macro_product_content_id']).first()\
+                                                                           product_variant['macro_product_content_id']).first() \
                     if 'macro_product_content_id' in product_variant else None
 
                 local_product_variant = ProductVariant.objects.filter(internal_id=product_variant['id']).last()
