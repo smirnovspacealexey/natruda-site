@@ -81,12 +81,17 @@ class SizeOption(models.Model):
     title = models.CharField(max_length=200)
     customer_title = models.CharField(max_length=200, default="", verbose_name="Название для покупателя")
     internal_id = models.IntegerField(default=-1, verbose_name="ID из внутренней базы")
+    ordering = models.IntegerField('ordering', default=0)
+
 
     def get_font_size(self):
         return 20 - len(self.customer_title) // 10
 
     def __str__(self):
         return u"{}".format(self.title)
+
+    class Meta:
+        ordering = ('ordering', )
 
 
 class ContentOption(models.Model):

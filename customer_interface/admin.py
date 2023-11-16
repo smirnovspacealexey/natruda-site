@@ -103,6 +103,11 @@ class ProductOptionAdmin(admin.ModelAdmin):
     autocomplete_fields = ['menu_item']
 
 
+class SizeOptionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'customer_title', 'internal_id', 'ordering')
+    list_editable = ('customer_title', 'ordering')
+
+
 admin.site.register(Order)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(MacroProduct, MacroProductAdmin)
@@ -110,5 +115,5 @@ admin.site.register(MacroProductContent, MacroProductContentAdmin)
 admin.site.register(ContentOption, ContentOptionAdmin)
 admin.site.register(ProductVariant, ProductVariantAdmin)
 admin.site.register(ProductOption, ProductOptionAdmin)
-admin.site.register(SizeOption)
+admin.site.register(SizeOption, SizeOptionAdmin)
 
