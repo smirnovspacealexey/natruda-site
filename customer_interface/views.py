@@ -239,7 +239,7 @@ def create_order(request):
             msg = ast.literal_eval(order.message)
             data.update({'is_paid': True,
                          'is_delivery': True if msg.get('way', '1') == '1' else False,
-                         'point': msg.get('point', None)})
+                         'point': 26)
 
             logger_debug.info(f'\nsuccessful_payment, data\n {data}\n')
             response_data = send_order_data(data)
