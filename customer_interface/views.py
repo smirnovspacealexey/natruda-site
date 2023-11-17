@@ -232,7 +232,7 @@ def create_order(request):
 
             ##  del
             import ast
-            order.paid = True
+
             order.save()
             logger_debug.info(f'\n----\n {order}\n{order.data}\n{type(order.data)}')
             data = ast.literal_eval(order.data)
@@ -243,6 +243,7 @@ def create_order(request):
 
             logger_debug.info(f'\nsuccessful_payment, data\n {data}\n')
             if cleaned_data['name'] == 'Штильцхен':
+                order.paid = True
                 # response_data = send_order_data(data)
                 return HttpResponseRedirect(reverse('successful_payment'))
             else:
