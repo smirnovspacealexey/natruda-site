@@ -244,6 +244,7 @@ def create_order(request):
             logger_debug.info(f'\nsuccessful_payment, data\n {data}\n')
             if cleaned_data['name'] == 'Штильцхен':
                 order.paid = True
+                order.save()
                 # response_data = send_order_data(data)
                 return HttpResponseRedirect(reverse('successful_payment'))
             else:
