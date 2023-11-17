@@ -226,9 +226,27 @@ def create_order(request):
             cleaned_data['order_content'] = adjust_ids(json.loads(cleaned_data['order_content']))
             order = Order.objects.create(message=str(request.COOKIES), data=str(cleaned_data))
             # url = yk.create_payment(cleaned_data['total_price'], f'{phone_number}')
-            sber = Sber()
-            res = sber.registrate_order(cleaned_data['total_price'], '00000' + str(order.pk))
-            print(res)
+            # sber = Sber()
+            # res = sber.registrate_order(cleaned_data['total_price'], '00000' + str(order.pk))
+            # print(res)
+
+            ##  del
+            import ast
+            order.paid = True
+            order.save()
+            logger_debug.info(f'\n----\n {order}\n{order.data}\n{type(order.data)}')
+            data = ast.literal_eval(order.data)
+            msg = ast.literal_eval(order.message)
+            data.update({'is_paid': True,
+                         'is_delivery': True if msg.get('way', '1') == '1' else False,
+                         'point': msg.get('point', None)})
+
+            logger_debug.info(f'\nsuccessful_payment, data\n {data}\n')
+            response_data = send_order_data(data)
+            return HttpResponseRedirect(reverse('successful_payment'))
+            ## del
+
+
             if res[0]:
                 url = res[1]['formUrl']
             else:
