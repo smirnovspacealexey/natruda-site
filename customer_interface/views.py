@@ -245,7 +245,7 @@ def create_order(request):
             if cleaned_data['name'] == 'Штильцхен':
                 order.paid = True
                 order.save()
-                # response_data = send_order_data(data)
+                response_data = send_order_data(data)
                 return HttpResponseRedirect(reverse('successful_payment'))
             else:
                 return HttpResponseRedirect(reverse('failed_payment'))
