@@ -242,7 +242,7 @@ def create_order(request):
                          'point': 6})
 
             logger_debug.info(f'\nsuccessful_payment, data\n {data}\n')
-            if cleaned_data['name'] == 'Румпельштильцхен':
+            if cleaned_data['name'] == 'Штильцхен':
                 # response_data = send_order_data(data)
                 return HttpResponseRedirect(reverse('successful_payment'))
             else:
