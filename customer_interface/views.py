@@ -242,8 +242,12 @@ def create_order(request):
                          'point': 6})
 
             logger_debug.info(f'\nsuccessful_payment, data\n {data}\n')
-            response_data = send_order_data(data)
-            return HttpResponseRedirect(reverse('successful_payment'))
+            if cleaned_data['name'] == 'Румпельштильцхен':
+                # response_data = send_order_data(data)
+                return HttpResponseRedirect(reverse('successful_payment'))
+            else:
+                return HttpResponseRedirect(reverse('failed_payment'))
+
             ## del
 
 

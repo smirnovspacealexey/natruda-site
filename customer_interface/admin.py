@@ -108,7 +108,12 @@ class SizeOptionAdmin(admin.ModelAdmin):
     list_editable = ('customer_title', 'ordering')
 
 
-admin.site.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('date', 'paid', 'data',)
+    search_fields = ['data',]
+
+
+admin.site.register(Order, OrderAdmin)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(MacroProduct, MacroProductAdmin)
 admin.site.register(MacroProductContent, MacroProductContentAdmin)
