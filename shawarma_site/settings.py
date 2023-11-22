@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'customer_interface.apps.CustomerInterfaceConfig',
-    'easy_pdf',
+    # 'easy_pdf',
     'django_user_agents',
     'apps.yookassa',
     'apps.signboard',
