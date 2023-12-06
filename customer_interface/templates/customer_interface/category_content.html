@@ -40,7 +40,7 @@
         <div class="cards">
             <ul class="cards_list">
                 {% for content in contents %}
-{#                    {% if content.low_price %}#}
+                    {% if content.low_price %}
                         <li
                                 {% if content.picture %}
                                     style="background: url('{{ content.picture.url }}'); background-size: cover;"
@@ -53,7 +53,7 @@
                                 <h2 class="img">#от {{ content.low_price }} руб</h2>
                             </a>
                         </li>
-{#                    {% endif %}#}
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>
