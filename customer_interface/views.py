@@ -2,7 +2,7 @@ from typing import AnyStr
 from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from slugify import slugify
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from .forms import ConfirmOrderForm, CheckOrderStatus
 from .models import MacroProduct, SizeOption, ProductVariant, ProductOption, ContentOption, Menu, MacroProductContent, Order
@@ -88,8 +88,7 @@ def index(request):
     context = {
         'categories': macroproducts
     }
-    # return HttpResponse(template.render(context, request))
-    return HttpResponseNotFound("Not Found")
+    return HttpResponse(template.render(context, request))
 
 
 def contacts(request):

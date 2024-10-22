@@ -1,5 +1,5 @@
 from django.template import loader
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse, resolve
 from .models import Point, Data
 from shawarma_site.settings import HOST
@@ -11,7 +11,8 @@ def counter(request):
     context = {
         'points': Point.objects.all()
     }
-    return HttpResponse(template.render(context, request))
+    return HttpResponseNotFound("Not Found")
+    # return HttpResponse(template.render(context, request))
 
 
 def menu_pdf(request):
