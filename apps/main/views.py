@@ -11,7 +11,7 @@ def counter(request):
     context = {
         'points': Point.objects.all()
     }
-    return HttpResponseNotFound("Not Found")
+    return HttpResponseNotFound()
     # return HttpResponse(template.render(context, request))
 
 
