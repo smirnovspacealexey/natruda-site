@@ -25,43 +25,73 @@
             padding: 10px;
             border-radius: 5px;
         }
-        #shawarmaGallery {
+        .shawarmaGallery {
             position: absolute;
-            bottom: 10px;
             left: 10px;
             display: flex;
             gap: 10px;
         }
+        #shawarmaGallery0 {
+            bottom: 10px;
+        }
         
-        
+        #shawarmaGallery1 {
+            bottom: 60px;
+        }
+        #shawarmaGallery2 {
+            bottom: 110px;
+        }
+        #shawarmaGallery3 {
+            bottom: 160px;
+        }
+        #shawarmaGallery4 {
+            bottom: 210px;
+        }
+        #shawarmaGallery5 {
+            bottom: 260px;
+        }
+        #shawarmaGallery6 {
+            bottom: 310px;
+        }
+        #shawarmaGallery7 {
+            bottom: 360px;
+        }
+        #shawarmaGallery8 {
+            bottom: 410px;
+        }
+        #shawarmaGallery9 {
+            bottom: 560px;
+        }
+
+
         .shawarma {
             width: 40px;
             height: 40px;
-        }        
-        
-        
+        }
+
+
         .shawarma0 {
             background: url('{% static 'customer_interface/img/game/shawa0.png' %}') center/cover;
-        }  
+        }
         .shawarma1 {
             background: url('{% static 'customer_interface/img/game/shawa1.png' %}') center/cover;
         }
         .shawarma0 {
             background: url('{% static 'customer_interface/img/game/shawa0.png' %}') center/cover;
-        }  
-        .shawarma2 {
-            background: url('{% static 'customer_interface/img/game/shawa2.png' %}') center/cover;  
         }
-        .shawarma3 {      
-            background: url('{% static 'customer_interface/img/game/shawa3.png' %}') center/cover;  
-        }  
+        .shawarma2 {
+            background: url('{% static 'customer_interface/img/game/shawa2.png' %}') center/cover;
+        }
+        .shawarma3 {
+            background: url('{% static 'customer_interface/img/game/shawa3.png' %}') center/cover;
+        }
         .shawarma4 {
             background: url('{% static 'customer_interface/img/game/shawa4.png' %}') center/cover;
         }
         .shawarma5 {
             background: url('{% static 'customer_interface/img/game/shawa5.png' %}') center/cover;
-        }  
-        .shawarma6 {  
+        }
+        .shawarma6 {
             background: url('{% static 'customer_interface/img/game/shawa6.png' %}') center/cover;
         }
         .shawarma7 {
@@ -69,11 +99,11 @@
         }
         .shawarma8 {
             background: url('{% static 'customer_interface/img/game/shawa8.png' %}') center/cover;
-        }  
+        }
         .shawarma9 {
             background: url('{% static 'customer_interface/img/game/shawa9.png' %}') center/cover;
-        }            
-        
+        }
+
     </style>
 </head>
 <body>
@@ -81,7 +111,17 @@
         <div>Собрано шаурм: <span id="score">0</span></div>
         <div>Текущие ингредиенты: <span id="currentIngredients">0 / 5</span></div>
     </div>
-    <div id="shawarmaGallery"></div>
+    <div id="shawarmaGallery0" class="shawarmaGallery"></div>
+    <div id="shawarmaGallery1" class="shawarmaGallery"></div>
+    <div id="shawarmaGallery2" class="shawarmaGallery"></div>
+    <div id="shawarmaGallery3" class="shawarmaGallery"></div>
+    <div id="shawarmaGallery4" class="shawarmaGallery"></div>
+    <div id="shawarmaGallery5" class="shawarmaGallery"></div>
+    <div id="shawarmaGallery6" class="shawarmaGallery"></div>
+    <div id="shawarmaGallery7" class="shawarmaGallery"></div>
+    <div id="shawarmaGallery8" class="shawarmaGallery"></div>
+    <div id="shawarmaGallery9" class="shawarmaGallery"></div>
+
     <canvas id="gameCanvas"></canvas>
 
     <script>
@@ -89,7 +129,9 @@
         const ctx = canvas.getContext("2d");
         const scoreElement = document.getElementById("score");
         const currentIngredientsElement = document.getElementById("currentIngredients");
-        const gallery = document.getElementById("shawarmaGallery");
+        
+        let shawarmaGallery_num = 0;
+        let current_shaws_score = 0;
 
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -143,7 +185,7 @@
                 : invalidIngredients[Math.floor(Math.random() * invalidIngredients.length)];
             const x = Math.random() * (canvas.width - 50);
             const y = -50;
-            const speed = Math.random() * 2 + 1;
+            const speed = Math.random() * 2 + Math.random() * shawarmaGallery_num + shawarmaGallery_num % 2;
             items.push(new FallingItem(name, x, y, speed, isValid));
         }
 
@@ -167,9 +209,11 @@
             if (currentIngredients.length === 5) {
                 if (isSpoiled) {
                     resetGallery();
+                    score = 0;
                 } else {
                     addShawarmaToGallery();
                     score++;
+                    current_shaws_score++;
                 }
                 resetShawarma();
             }
@@ -180,15 +224,28 @@
             isSpoiled = false;
         }
 
-        function addShawarmaToGallery() {
+        function addShawarmaToGallery() {             
+            
+            if (current_shaws_score > 6) {
+                shawarmaGallery_num++;
+                current_shaws_score = 0;
+            }    
+            
+            if (shawarmaGallery_num > 9) {
+                alert('Ну хватит уже');
+                return;
+            }
+            
             const shawarma = document.createElement("div");
             shawarma.classList.add("shawarma" + getRandomNumber());
             shawarma.classList.add("shawarma");
-            gallery.appendChild(shawarma);
+            document.getElementById("shawarmaGallery" + shawarmaGallery_num).appendChild(shawarma);           
+         
         }
 
         function resetGallery() {
-            gallery.innerHTML = "";
+            document.getElementById("shawarmaGallery" + shawarmaGallery_num).innerHTML = "";
+            shawarmaGallery_num = 0;
         }
 
         canvas.addEventListener("click", (event) => {
@@ -219,10 +276,10 @@
 
         setInterval(spawnItem, 1000);
         gameLoop();
-        
+
         function getRandomNumber() {
             return Math.floor(Math.random() * 10);
-        }        
+        }
     </script>
 </body>
 </html>
