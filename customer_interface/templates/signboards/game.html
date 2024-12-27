@@ -103,7 +103,30 @@
         .shawarma9 {
             background: url('{% static 'customer_interface/img/game/shawa9.png' %}') center/cover;
         }
-
+        
+        .notification {
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            padding: 10px 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            font-size: 18px;
+            line-height: 1.5;
+            z-index: 1000;
+            animation: fadeIn 2s linear forwards;
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
     </style>
 </head>
 <body>
@@ -209,9 +232,11 @@
         function checkShawarma() {
             if (currentIngredients.length === 5) {
                 if (isSpoiled) {
+                    showNotification("ой ☣");
                     resetGallery();
                     score = 0;
                 } else {
+                    showNotification("ദ്ദി");
                     addShawarmaToGallery();
                     score++;
                     current_shaws_score++;
@@ -233,7 +258,7 @@
             }    
             
             if (shawarmaGallery_num > 9) {
-                alert('Ну хватит уже');
+                showNotification('Ну хватит уже');
                 return;
             }
             
@@ -264,7 +289,9 @@
                         isSpoiled = true;
                     }
                     if (item.name === "кити") {
-                        alert("ты што наделал ;3");
+                        showNotification("ты што наделал ;3");
+                        resetGallery();
+                        score = 0;
                     }
                     currentIngredients.push(item);
                     items.splice(index, 1);
@@ -283,6 +310,21 @@
 
         function getRandomNumber() {
             return Math.floor(Math.random() * 10);
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+            notification.style.animation = 'fadeOut 2s linear forwards';
+            }, 3000);
+            
+            notification.addEventListener('animationend', () => {
+            notification.remove();
+            });
         }
     </script>
 </body>
