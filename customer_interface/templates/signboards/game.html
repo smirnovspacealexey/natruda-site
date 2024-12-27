@@ -150,7 +150,7 @@
         };
 
         const validIngredients = ["мясо", "огурцы", "помидоры", "майонез", "салат"];
-        const invalidIngredients = ["камень", "ветка", "мусор", "бумага", "кити"];
+        const invalidIngredients = ["камень", "ветка", "мусор", "бумага", "кити", "кити"];
         let items = [];
         let score = 0;
         let currentIngredients = [];
@@ -179,13 +179,14 @@
         }
 
         function spawnItem() {
-            const isValid = Math.random() > 0.5;
+            const isValid = Math.random() > 0.4;
             const name = isValid
                 ? validIngredients[Math.floor(Math.random() * validIngredients.length)]
                 : invalidIngredients[Math.floor(Math.random() * invalidIngredients.length)];
             const x = Math.random() * (canvas.width - 50);
             const y = -50;
-            const speed = Math.random() * 2 + Math.random() * shawarmaGallery_num + shawarmaGallery_num % 2;
+            const speed = Math.random() * 2 + Math.random() * shawarmaGallery_num + shawarmaGallery_num % 2;           
+         
             items.push(new FallingItem(name, x, y, speed, isValid));
         }
 
@@ -261,6 +262,9 @@
                 ) {
                     if (!item.isValid) {
                         isSpoiled = true;
+                    }
+                    if (item.name === "кити") {
+                        alert("ты што наделал ;3");
                     }
                     currentIngredients.push(item);
                     items.splice(index, 1);
