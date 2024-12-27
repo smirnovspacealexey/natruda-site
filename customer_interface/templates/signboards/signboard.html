@@ -23,6 +23,100 @@
     <title>{{ slug }}</title>
 </head>
 <body>
+
+<style>
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999; 
+        pointer-events: none; 
+    }
+</style>
+<canvas id="snowCanvas"></canvas>
+
+<script>    
+    
+    const urlParams = new URLSearchParams(window.location.search);
+
+    
+    const canvas = document.getElementById("snowCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const snowflakes = [];
+
+    class Snowflake {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.radius = Math.random() * 10 + 2;
+            this.speed = Math.random() * 1 + 0.5;
+            this.wind = Math.random() * 0.5 - 0.25;
+        }
+
+        update() {
+            this.y += this.speed;
+            this.x += this.wind;
+
+            if (this.y > canvas.height) {
+                this.y = -this.radius;
+                this.x = Math.random() * canvas.width;
+            }
+            if (this.x > canvas.width || this.x < 0) {
+                this.x = Math.random() * canvas.width;
+            }
+        }
+
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.strokeStyle = "white";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) { // Шесть "лучей" снежинки
+                ctx.moveTo(0, 0);
+                ctx.lineTo(0, -this.radius);
+                ctx.translate(0, -this.radius / 2);
+                ctx.moveTo(-this.radius / 4, 0);
+                ctx.lineTo(this.radius / 4, 0);
+                ctx.translate(0, this.radius / 2);
+                ctx.rotate(Math.PI / 3); // Угол 60° между лучами
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+    }
+
+    function createSnowflakes(count) {
+        for (let i = 0; i < count; i++) {
+            snowflakes.push(new Snowflake());
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (const snowflake of snowflakes) {
+            snowflake.update();
+            snowflake.draw();
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+    createSnowflakes(50); // Количество снежинок
+    animate();   
+</script>
+
+
 <a href="{% url 'signboards' %}">
     <div class="bg"></div>
 </a>
