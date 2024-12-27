@@ -21,3 +21,11 @@ def signboards(request):
     }
     return HttpResponse(template.render(context, request))
 
+
+def game(request):
+    template = loader.get_template('signboards/game.html')
+
+    context = {
+    }
+    return HttpResponse(template.render(context, request))
+

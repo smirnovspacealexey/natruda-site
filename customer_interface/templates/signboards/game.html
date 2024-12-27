@@ -1,0 +1,228 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шаурма Кликер</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            display: block;
+            background: #f0e68c;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #shawarmaGallery {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        
+        .shawarma {
+            width: 100px;
+            height: 100px;
+        }        
+        
+        
+        .shawarma0 {
+            background: url('{% static 'customer_interface/img/game/shawa0.png' %}') center/cover;
+        }  
+        .shawarma1 {
+            background: url('{% static 'customer_interface/img/game/shawa1.png' %}') center/cover;
+        }
+        .shawarma0 {
+            background: url('{% static 'customer_interface/img/game/shawa0.png' %}') center/cover;
+        }  
+        .shawarma2 {
+            background: url('{% static 'customer_interface/img/game/shawa2.png' %}') center/cover;  
+        }
+        .shawarma3 {      
+            background: url('{% static 'customer_interface/img/game/shawa3.png' %}') center/cover;  
+        }  
+        .shawarma4 {
+            background: url('{% static 'customer_interface/img/game/shawa4.png' %}') center/cover;
+        }
+        .shawarma5 {
+            background: url('{% static 'customer_interface/img/game/shawa5.png' %}') center/cover;
+        }  
+        .shawarma6 {  
+            background: url('{% static 'customer_interface/img/game/shawa6.png' %}') center/cover;
+        }
+        .shawarma7 {
+            background: url('{% static 'customer_interface/img/game/shawa7.png' %}') center/cover;
+        }
+        .shawarma8 {
+            background: url('{% static 'customer_interface/img/game/shawa8.png' %}') center/cover;
+        }  
+        .shawarma9 {
+            background: url('{% static 'customer_interface/img/game/shawa9.png' %}') center/cover;
+        }            
+        
+    </style>
+</head>
+<body>
+    <div id="info">
+        <div>Собрано шаурм: <span id="score">0</span></div>
+        <div>Текущие ингредиенты: <span id="currentIngredients">0 / 5</span></div>
+    </div>
+    <div id="shawarmaGallery"></div>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreElement = document.getElementById("score");
+        const currentIngredientsElement = document.getElementById("currentIngredients");
+        const gallery = document.getElementById("shawarmaGallery");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const ingredientImages = {
+            "мясо": "{% static 'customer_interface/img/game/meat.png' %}",
+            "огурцы": "{% static 'customer_interface/img/game/cucumber.png' %}",
+            "помидоры": "{% static 'customer_interface/img/game/tomato.png' %}",
+            "майонез": "{% static 'customer_interface/img/game/sauce.png' %}",
+            "салат": "{% static 'customer_interface/img/game/salad.png' %}",
+            "камень": "{% static 'customer_interface/img/game/rock.png' %}",
+            "ветка": "{% static 'customer_interface/img/game/stick.png' %}",
+            "мусор": "{% static 'customer_interface/img/game/trash.png' %}",
+            "бумага": "{% static 'customer_interface/img/game/paper.png' %}",
+            "кити": "{% static 'customer_interface/img/game/kitty.png' %}",
+        };
+
+        const validIngredients = ["мясо", "огурцы", "помидоры", "майонез", "салат"];
+        const invalidIngredients = ["камень", "ветка", "мусор", "бумага", "кити"];
+        let items = [];
+        let score = 0;
+        let currentIngredients = [];
+        let isSpoiled = false;
+
+        class FallingItem {
+            constructor(name, x, y, speed, isValid) {
+                this.name = name;
+                this.x = x;
+                this.y = y;
+                this.speed = speed;
+                this.isValid = isValid;
+                this.image = new Image();
+                this.image.src = ingredientImages[name];
+                this.width = 50;
+                this.height = 50;
+            }
+
+            draw() {
+                ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            }
+
+            update() {
+                this.y += this.speed;
+            }
+        }
+
+        function spawnItem() {
+            const isValid = Math.random() > 0.5;
+            const name = isValid
+                ? validIngredients[Math.floor(Math.random() * validIngredients.length)]
+                : invalidIngredients[Math.floor(Math.random() * invalidIngredients.length)];
+            const x = Math.random() * (canvas.width - 50);
+            const y = -50;
+            const speed = Math.random() * 2 + 1;
+            items.push(new FallingItem(name, x, y, speed, isValid));
+        }
+
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            items.forEach((item, index) => {
+                item.update();
+                item.draw();
+
+                if (item.y > canvas.height) {
+                    items.splice(index, 1);
+                }
+            });
+
+            currentIngredientsElement.textContent = `${currentIngredients.length} / 5`;
+            scoreElement.textContent = score;
+        }
+
+        function checkShawarma() {
+            if (currentIngredients.length === 5) {
+                if (isSpoiled) {
+                    resetGallery();
+                } else {
+                    addShawarmaToGallery();
+                    score++;
+                }
+                resetShawarma();
+            }
+        }
+
+        function resetShawarma() {
+            currentIngredients = [];
+            isSpoiled = false;
+        }
+
+        function addShawarmaToGallery() {
+            const shawarma = document.createElement("div");
+            shawarma.classList.add("shawarma" + getRandomNumber());
+            shawarma.classList.add("shawarma");
+            gallery.appendChild(shawarma);
+        }
+
+        function resetGallery() {
+            gallery.innerHTML = "";
+        }
+
+        canvas.addEventListener("click", (event) => {
+            const clickX = event.clientX;
+            const clickY = event.clientY;
+
+            items.forEach((item, index) => {
+                if (
+                    clickX > item.x &&
+                    clickX < item.x + item.width &&
+                    clickY > item.y &&
+                    clickY < item.y + item.height
+                ) {
+                    if (!item.isValid) {
+                        isSpoiled = true;
+                    }
+                    currentIngredients.push(item);
+                    items.splice(index, 1);
+                    checkShawarma();
+                }
+            });
+        });
+
+        function gameLoop() {
+            update();
+            requestAnimationFrame(gameLoop);
+        }
+
+        setInterval(spawnItem, 1000);
+        gameLoop();
+        
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 10);
+        }        
+    </script>
+</body>
+</html>
