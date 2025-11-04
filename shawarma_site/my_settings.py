@@ -4,7 +4,7 @@ dadata_token = '495696251dafe4bbf30fe367d9a1a84d2a62ddd4'
 raven_dsn = 'https://3dda7bd304a94f409f701610cfd8d80d:88208d431b4b4ab7b7887d0ed0a9e4f5@sentry.io/299281'
 
 allowed_hosts = ['natruda.ru', '*']
-debug_flag = True
+debug_flag = False
 
 shaw_queue_url = ""
 check_order_status_url = "http://shawarma.natruda/shaw_queue/check_order_status/"
