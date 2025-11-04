@@ -26,7 +26,7 @@ from apps.main.views import counter
 
 urlpatterns = [
     path('', counter, name='counter'),
-    url(r'^customer_interface/', include('customer_interface.urls')),
+    # url(r'^customer_interface/', include('customer_interface.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^menu-pdf/', menu_pdf),
     url(r'^menu/', menu_pictures),
