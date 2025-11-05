@@ -63,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
+    'apps.main.middleware.RedirectToHomeMiddleware',
 ]
 
 ROOT_URLCONF = 'shawarma_site.urls'
