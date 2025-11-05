@@ -31,6 +31,6 @@ class RedirectUnknownURLsMiddleware:
 
     def __call__(self, request):
         if self.should_redirect(request.path):
-            return redirect('home')
+            return redirect('counter')
 
         return self.get_response(request)
